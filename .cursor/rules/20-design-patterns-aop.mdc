@@ -1,0 +1,69 @@
+---
+description: Patrones de diseño GoF y Programación Orientada a Aspectos para el backend de Arrow Maze.
+alwaysApply: true
+---
+
+# Patrones de Diseño (GoF) y AOP
+
+## Patrones GoF obligatorios
+
+El backend **debe** implementar y justificar al menos un patrón de cada una de las tres categorías clásicas. Cada patrón implementado debe documentarse en el README (sección "Patrones de Diseño") indicando: nombre, ubicación en el código, problema que resuelve y justificación.
+
+### Creacionales (al menos uno)
+
+Ejemplos válidos en el contexto Arrow Maze:
+
+- **Factory Method** para construir distintos tipos de celdas (`ArrowCell`, `WallCell`, `GoalCell`, `EmptyCell`) o tipos de niveles.
+- **Abstract Factory** para crear familias de objetos relacionados (ej. componentes de un nivel según dificultad).
+- **Singleton** para gestores globales **estrictamente** necesarios (ej. configuración cargada una sola vez). Prefiérase inyección de dependencias antes que Singleton clásico.
+- **Builder** para ensamblar entidades complejas como `Level` con muchas propiedades opcionales.
+
+### Estructurales (al menos uno)
+
+- **Adapter** para integrar librerías externas (ej. adaptar un cliente de Firebase / Postgres a la interfaz `LevelRepository` del dominio).
+- **Facade** para simplificar subsistemas complejos (ej. un `AuthFacade` que esconde JWT signing, hashing y persistencia de usuario).
+- **Decorator** para añadir responsabilidades sin modificar el objeto base (ej. `LoggingRepositoryDecorator`).
+- **Composite** si se modela el tablero como composición de celdas/regiones.
+
+### De Comportamiento (al menos uno)
+
+- **Observer** para notificar eventos del dominio (ej. `LevelCompleted`, `PlayerScored`) a múltiples suscriptores (logging, leaderboard, sincronización).
+- **Strategy** para algoritmos intercambiables (ej. estrategias de generación procedural de niveles, estrategias de validación de movimientos).
+- **Command** para encapsular acciones del jugador como objetos (`MoveCommand`, `UndoCommand`).
+- **State** para modelar el ciclo de vida de una partida (`InProgress`, `Won`, `Lost`).
+
+## Reglas al introducir un patrón
+
+1. El patrón debe **resolver un problema real**, no añadirse por moda.
+2. Debe respetar la regla de dependencia de Clean Architecture.
+3. Debe estar acompañado de tests unitarios.
+4. Debe registrarse en `docs/design-patterns.md` con el formato:
+
+   ```md
+   ## <Nombre del patrón> — <Categoría>
+   - Ubicación: `src/.../File.ts`
+   - Problema que resuelve: ...
+   - Alternativas consideradas: ...
+   ```
+
+## Programación Orientada a Aspectos (AOP)
+
+Es **obligatorio** implementar al menos un aspecto para separar **responsabilidades transversales** (cross-cutting concerns) de la lógica de negocio.
+
+### Aspectos típicos a implementar
+
+- **Logging** estructurado de entrada/salida de casos de uso.
+- **Manejo centralizado de excepciones** que traduce errores de dominio a respuestas HTTP.
+- **Auditoría** de operaciones sensibles.
+- **Seguridad / Autorización** (verificación de roles antes de ejecutar un caso de uso).
+- **Métricas** (tiempos de ejecución, contadores).
+
+### Reglas de implementación
+
+- El aspecto **no debe contaminar** la firma ni el cuerpo de los casos de uso. Implementarlo vía:
+  - Decoradores (TypeScript / Python) sobre clases de caso de uso.
+  - Middleware en la capa `interfaces/` para concerns HTTP.
+  - Interceptores del framework (NestJS Interceptors, Spring AOP, etc.) cuando aplique.
+- El aspecto vive en `infrastructure/aspects/` o `shared/aspects/`, **nunca** dentro de `domain/`.
+- Cada aspecto debe tener su propio test unitario.
+- Documentar en el README la lista de aspectos activos y qué responsabilidad cubren.

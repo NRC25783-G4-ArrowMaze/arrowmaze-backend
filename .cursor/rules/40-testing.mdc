@@ -1,0 +1,84 @@
+---
+description: Estrategia de pruebas obligatoria para el backend Arrow Maze (TDD, pirámide, CI/CD).
+alwaysApply: true
+---
+
+# Estrategia de Pruebas
+
+## Principios
+
+- Todo código nuevo debe ir acompañado de pruebas automatizadas.
+- Se sigue un enfoque **TDD** siempre que sea factible: red → green → refactor.
+- **Si ya existen tests para la funcionalidad que tocas, NO los modifiques para "hacerlos pasar"**: el cambio correcto va en el código de producción. Solo se modifica un test si:
+  - El requisito cambió y el test refleja el comportamiento antiguo.
+  - El test estaba mal escrito (falso positivo / falso negativo) — y se documenta el motivo en el commit.
+
+## CI/CD
+
+- El repositorio cuenta con un pipeline de CI/CD (preferentemente **GitHub Actions**) que en cada PR ejecuta como mínimo:
+  1. Instalación de dependencias.
+  2. Lint y formato.
+  3. Pruebas unitarias.
+  4. Pruebas de integración.
+  5. Reporte de cobertura.
+- Un PR no se mergea si el CI no está en verde.
+- Cobertura mínima sugerida: **80 % de líneas en `domain/` y `application/`**. Las capas externas pueden tener cobertura menor pero nunca inferior al 60 %.
+
+## Pirámide de Pruebas
+
+```
+        /\
+       /  \   E2E (pocas, lentas, caras)
+      /----\
+     /      \  Integration (moderadas)
+    /--------\
+   /          \  Unit (muchas, rápidas, baratas)
+  /____________\
+```
+
+### Pruebas Unitarias
+
+- Aíslan una unidad (clase / función / caso de uso) de sus dependencias usando **dobles de prueba** (stubs, fakes, mocks) para los puertos.
+- Estructura **AAA** (Arrange–Act–Assert) explícita en cada test:
+
+  ```ts
+  it("should_complete_level_when_all_arrows_resolved", () => {
+    // Arrange
+    const level = aLevel().withArrowsResolved().build();
+    const useCase = new CompleteLevelUseCase(repo);
+
+    // Act
+    const result = useCase.execute(level.id);
+
+    // Assert
+    expect(result.status).toBe("completed");
+  });
+  ```
+
+- Convención de nombres: `should_<resultado>_when_<condicion>`.
+- Una sola aserción conceptual por test (varias `expect` permitidas si validan el mismo resultado).
+- Velocidad objetivo: < 50 ms por test unitario.
+
+### Pruebas de Integración
+
+- Validan la interacción entre **casos de uso reales** y **repositorios reales** (o **bases de datos en memoria** equivalentes, ej. SQLite in-memory, contenedores efímeros con Testcontainers).
+- Cubren caminos felices y los errores más representativos.
+- Se aíslan entre sí: cada test arranca con estado conocido (transacciones, truncate, fixtures).
+
+### Pruebas de Contrato
+
+- Se recomienda usar **Pact** (u otra herramienta equivalente) para garantizar que el contrato entre el cliente Arrow Maze y este backend se respeta.
+- El consumidor (cliente) publica el contrato; el proveedor (este backend) lo verifica en CI.
+- Cualquier cambio breaking en la API debe versionarse (`/api/v2/...`) y notificarse al equipo del cliente.
+
+### Pruebas E2E (opcional, recomendado)
+
+- Pocas, sobre flujos críticos (registro → login → completar nivel → consultar score).
+- Corren en una etapa separada del pipeline para no penalizar el tiempo de feedback.
+
+## Reglas adicionales
+
+- **Datos de prueba expresivos:** preferir builders / object mothers (`aPlayer().withScore(100).build()`) frente a literales mágicos.
+- **Tests legibles:** un test es documentación viva; debe leerse como una especificación del comportamiento.
+- **Sin lógica condicional en tests:** si un test tiene `if`, probablemente debería ser dos tests.
+- **Determinismo:** prohibido depender de la fecha actual, aleatoriedad o red sin abstraer esos componentes y inyectarlos como puertos.

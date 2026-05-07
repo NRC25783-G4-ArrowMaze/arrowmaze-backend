@@ -1,0 +1,69 @@
+---
+description: Flujo de trabajo del agente Cursor en este repositorio (commits, PRs, documentación de IA).
+alwaysApply: true
+---
+
+# Flujo de Trabajo del Agente IA
+
+Estas reglas aplican específicamente cuando un agente Cursor (u otra IA) realiza cambios en este repositorio.
+
+## Antes de escribir código
+
+1. **Extraer contexto completo**:
+   - ¿Qué problema específico estoy resolviendo?
+   - ¿Cuáles son los requisitos funcionales y no funcionales?
+   - ¿Qué tecnologías/frameworks ya están en uso?
+   - ¿Hay restricciones de rendimiento, seguridad o compatibilidad?
+2. **Preguntas obligatorias** (al menos respondérselas internamente):
+   - ¿Este código se integra con algo existente? ¿Existe ya una función o módulo que resuelva esta tarea?
+   - ¿Qué casos borde debo considerar?
+   - ¿Cómo voy a testear esto?
+   - ¿Hay patrones establecidos en el proyecto que deba seguir?
+3. **Contextualizar la acción al usuario** antes de empezar a editar: explicar brevemente qué se hará y por qué.
+
+## Durante el cambio
+
+- Aplicar estrictamente las reglas de:
+  - `00-project-overview.mdc`
+  - `10-architecture-clean-ddd.mdc`
+  - `20-design-patterns-aop.mdc`
+  - `30-solid-clean-code.mdc`
+  - `40-testing.mdc`
+  - `50-database.mdc`
+- **TDD respetuoso:** si existen tests previos, NO modificarlos para hacerlos pasar; ajustar la implementación.
+- **Claridad > cleverness**: preferir código claro sobre código "inteligente".
+- **Simplicidad > perfección**: una solución simple que funciona vale más que una perfecta que no existe (YAGNI).
+
+## Commits
+
+- Conventional Commits en inglés (ver `00-project-overview.mdc`).
+- Un commit = un cambio lógico.
+- Mensaje claro del **porqué** en el cuerpo cuando aporte contexto.
+
+## Pull Requests
+
+- Crear PR en cuanto haya un cambio coherente y testeado, aunque sea iterativo.
+- Mantener el PR pequeño y revisable.
+- Antes de cerrar la tarea, asegurarse de:
+  - CI en verde.
+  - Tests añadidos / actualizados.
+  - Documentación pertinente actualizada (README, docs, OpenAPI).
+  - **`AI_USAGE.md` actualizado** con el uso de IA realizado en esta tarea.
+
+## Registro de uso de IA (`AI_USAGE.md`)
+
+Cada vez que un agente IA produzca cambios significativos, debe **añadir una entrada** al archivo `AI_USAGE.md` de la raíz con el siguiente formato:
+
+```md
+### YYYY-MM-DD — <Resumen de la tarea>
+- **Herramienta:** <Cursor / Claude / GPT / Copilot / etc.>
+- **Modelo / versión:** <si se conoce>
+- **Autor humano responsable:** <nombre o handle>
+- **Prompt(s) representativo(s):**
+  - "..."
+- **Salida tomada de la IA:** <archivos / bloques principales generados>
+- **Modificaciones manuales del equipo:** <qué se ajustó, por qué>
+- **Validación realizada:** <tests, lint, revisión humana>
+```
+
+Esta entrada se incluye en el mismo PR que introduce los cambios.
