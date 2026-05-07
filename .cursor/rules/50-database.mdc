@@ -1,0 +1,45 @@
+---
+description: Reglas para la base de datos del backend Arrow Maze (versionado, migraciones, independencia).
+alwaysApply: true
+---
+
+# Base de Datos
+
+## Control de Versiones del Esquema
+
+- El esquema de la base de datos es **código** y debe vivir **dentro del repositorio**, bajo control de versiones.
+- Ubicación recomendada: `migrations/` o `db/migrations/` en la raíz del proyecto.
+- Prohibido modificar el esquema directamente desde una consola conectada al entorno (`ALTER TABLE` ad-hoc): cualquier cambio entra por una migración revisada en PR.
+
+## Migraciones
+
+- Toda evolución del esquema se aplica mediante **migraciones**:
+  - Nombradas con prefijo cronológico (`20260507_120000_create_players_table.sql` o equivalente con la herramienta elegida: Flyway, Liquibase, Prisma Migrate, TypeORM migrations, Alembic, etc.).
+  - **Inmutables** una vez aplicadas en cualquier entorno: si se necesita corregir, se crea una nueva migración.
+  - **Idempotentes y atómicas** dentro de una transacción cuando el motor lo permita.
+- Cada migración debe tener su contraparte de **rollback** (down) o un plan documentado de reversión.
+- El CI corre las migraciones contra una base de datos limpia para validarlas.
+- Antes de mergear, las migraciones deben revisarse pensando en compatibilidad hacia atrás (zero-downtime deployments cuando aplique).
+
+## Independencia del Motor
+
+- La base de datos es un **detalle de implementación**.
+- El **núcleo del negocio** (`domain/` y `application/`) **no debe depender** de un motor concreto (PostgreSQL, MySQL, Firebase, Mongo, etc.).
+- Toda interacción pasa por **interfaces de repositorio** definidas en el dominio, implementadas en `infrastructure/`.
+- Debe ser viable cambiar el motor (ej. de Firebase a PostgreSQL) sustituyendo únicamente la implementación de repositorios y configuración.
+
+## Buenas prácticas adicionales
+
+- **Naming consistente** y en inglés: tablas en `snake_case` plural (`players`, `level_runs`), columnas en `snake_case` singular.
+- **Claves primarias** explícitas; preferir UUIDs para entidades expuestas externamente (evita enumeración de IDs).
+- **Índices** justificados por consultas reales del backend; documentar en la migración el motivo del índice.
+- **Restricciones de integridad** en la base de datos (FKs, NOT NULL, CHECK), **además** de validaciones en la aplicación. La base de datos es la última línea de defensa de la integridad.
+- **Datos sensibles** (contraseñas, tokens) nunca en claro. Hashing/cifrado a nivel de aplicación antes de persistir.
+- **Seeds** para entornos de desarrollo y testing, separados de las migraciones de esquema.
+- **Backups** y estrategia de recuperación documentados en `docs/database.md`.
+
+## Acceso desde la aplicación
+
+- Prohibido escribir SQL crudo dentro de `domain/` o `application/`.
+- En `infrastructure/` se permite SQL crudo o uso de ORM, siempre detrás de una implementación de repositorio.
+- Las consultas N+1 deben detectarse y eliminarse; preferir cargas explícitas (joins, batch loaders) dentro del repositorio.

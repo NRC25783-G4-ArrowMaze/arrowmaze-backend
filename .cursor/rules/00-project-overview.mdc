@@ -1,0 +1,85 @@
+---
+description: Reglas generales del proyecto Arrow Maze (backend). Aplica siempre a este repositorio.
+alwaysApply: true
+---
+
+# Arrow Maze — Backend (Reglas Generales del Proyecto)
+
+Este repositorio contiene **únicamente** el backend (API REST) del proyecto **Arrow Maze**. El cliente (juego) vive en un repositorio independiente.
+
+## Estructura de repositorios
+
+- Se mantienen **dos repositorios independientes** en GitHub:
+  - `arrowmaze-game` → cliente / juego.
+  - `arrowmaze-backend` → este repositorio (API REST).
+- Está prohibido mezclar código del cliente y del backend en este repositorio.
+
+## Idioma
+
+- **Código, identificadores, commits y PRs:** en inglés.
+- **Documentación funcional, README y comunicación de equipo:** en español (salvo que el equipo decida lo contrario).
+
+## Gestión de ramas
+
+- Las ramas principales (`main`, y de existir `develop`) deben estar **protegidas** en GitHub:
+  - Prohibido el push directo.
+  - Requieren PR aprobado y CI en verde para mergear.
+- Convención de nombres de rama:
+  - `feat/<scope>-<descripcion-corta>`
+  - `fix/<scope>-<descripcion-corta>`
+  - `chore/<descripcion-corta>`
+  - `refactor/<scope>-<descripcion-corta>`
+  - `docs/<descripcion-corta>`
+- Las ramas creadas por agentes Cursor deben usar el prefijo `cursor/`.
+
+## Conventional Commits (obligatorio)
+
+Todo commit debe seguir [Conventional Commits](https://www.conventionalcommits.org/) en **inglés**:
+
+```
+<type>(<scope>): <short description>
+```
+
+Tipos permitidos: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+
+Ejemplos válidos:
+
+- `feat(board): add logic for arrow propagation`
+- `fix(player): correct movement on edge cells`
+- `refactor(auth): extract JWT signing into adapter`
+- `test(usecase): cover invalid level submission`
+
+Reglas adicionales:
+
+- Una unidad lógica de cambio = un commit.
+- El cuerpo del commit debe explicar **el porqué**, no solo el qué.
+- Prohibido `git push --force` y `git commit --amend` sobre commits ya publicados, salvo autorización explícita.
+
+## Pull Requests
+
+- Toda integración a una rama protegida se hace vía **Pull Request**.
+- El PR debe contener:
+  - Descripción del problema y de la solución.
+  - Checklist de tests, documentación y reglas SOLID afectadas.
+  - Enlace al issue / tarea relacionada.
+- Historial limpio: preferir **squash merge** o **rebase merge** para mantener un historial semántico.
+
+## Uso de IA (obligatorio documentar)
+
+- Está permitido usar herramientas de IA (Cursor, ChatGPT, Copilot, Claude, etc.).
+- Es **obligatorio** mantener actualizado el archivo `AI_USAGE.md` en la **raíz** de este repositorio, registrando:
+  - Herramienta utilizada.
+  - Prompts representativos.
+  - Modificaciones manuales realizadas por el equipo sobre la salida de la IA.
+  - Fecha y autor.
+
+## README
+
+El `README.md` debe seguir las mejores prácticas de la industria e incluir:
+
+- Descripción del proyecto y propósito del backend.
+- **Badges** de estado (build, coverage, licencia, versión).
+- **Diagramas de arquitectura** (Clean Architecture, despliegue).
+- Instrucciones de instalación, ejecución y testing.
+- **Ejemplos reales de aplicación de cada principio SOLID** dentro del código.
+- Referencias a documentación de API (Swagger / OpenAPI).

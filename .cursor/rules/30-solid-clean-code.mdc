@@ -1,0 +1,96 @@
+---
+description: SOLID y Clean Code obligatorios para todo el código del backend Arrow Maze.
+alwaysApply: true
+---
+
+# SOLID y Clean Code
+
+## SOLID (obligatorio)
+
+Todo el código debe **evidenciar** la aplicación de los cinco principios SOLID. En el `README.md` debe documentarse, como mínimo, **un ejemplo real** por cada principio, con enlace al archivo correspondiente.
+
+### S — Single Responsibility Principle
+
+- Una clase/módulo tiene **una y solo una razón para cambiar**.
+- Si una clase tiene métodos que pertenecen a más de un actor (negocio, persistencia, presentación), divídela.
+- Señal de alarma: clases con sufijos `Manager`, `Helper`, `Util` que crecen sin control.
+
+### O — Open/Closed Principle
+
+- Las entidades de software deben estar **abiertas a la extensión** y **cerradas a la modificación**.
+- Para añadir un nuevo tipo de celda, un nuevo algoritmo de generación, un nuevo proveedor de auth → **extender**, no modificar el código existente.
+- Implementaciones típicas: Strategy, Factory Method, polimorfismo.
+
+### L — Liskov Substitution Principle
+
+- Cualquier subclase debe poder usarse en lugar de su clase base sin romper el comportamiento esperado.
+- Prohibido lanzar `NotImplementedException` en métodos heredados.
+- Prohibido fortalecer precondiciones o debilitar postcondiciones en subclases.
+
+### I — Interface Segregation Principle
+
+- Muchas interfaces específicas son mejores que una interfaz general.
+- Un cliente **no debe depender** de métodos que no usa.
+- Aplicación típica: separar `LevelReader` de `LevelWriter` cuando un consumidor solo lee.
+
+### D — Dependency Inversion Principle
+
+- Los módulos de alto nivel **no deben depender** de los de bajo nivel; ambos dependen de abstracciones.
+- En la práctica: los casos de uso reciben **interfaces** (puertos) por constructor; el wiring concreto se hace en un **composition root** (`main.ts` / `app.module.ts` / contenedor DI).
+- Es la base que sostiene la regla de dependencia de Clean Architecture.
+
+## Clean Code — Reglas activas
+
+### Regla del Boy Scout
+
+> "Deja el campamento más limpio de como lo encontraste."
+
+- En cada commit, refactoriza pequeños detalles del código que tocaste: nombres confusos, duplicaciones obvias, comentarios obsoletos.
+- Estos micro-refactors van en el mismo PR, claramente identificados (commit `refactor(...)`).
+
+### Nombres significativos
+
+- Los nombres deben **revelar la intención** y pertenecer al dominio del problema.
+- Prohibido nombres como `data`, `info`, `tmp`, `aux`, `obj`, `mgr`, `proc`.
+- Booleanos: `isCompleted`, `hasArrows`, `canMove` (no `flag`, `status`).
+- Funciones: verbo + objeto del dominio (`completeLevel`, `validateMove`, `applyArrowEffect`).
+
+### Funciones pequeñas
+
+- Una función hace **una sola cosa**.
+- Objetivo: ≤ 20 líneas, idealmente < 10. Si excede, extrae sub-funciones.
+- Máximo recomendado de parámetros: **3**. Más de 3 → encapsular en un objeto/DTO.
+- Nivel de indentación máximo: **2** dentro del cuerpo de la función.
+- Evitar efectos secundarios ocultos: si la función modifica estado externo, debe ser evidente desde el nombre.
+
+### DRY — Don't Repeat Yourself
+
+- No duplicar **conocimiento** ni lógica de negocio.
+- Tres apariciones del mismo patrón → extraer a una abstracción.
+- DRY se refiere a **conocimiento**, no a código que coincidentemente se ve igual; no abstraigas prematuramente cosas que cambian por razones distintas.
+
+### Comentarios
+
+- Preferir **código autoexplicativo** sobre comentarios.
+- Los comentarios explican **el porqué**, nunca **el qué** (eso lo dice el código).
+- Prohibido comentar código muerto: bórralo, el control de versiones lo recuerda.
+- Docstrings sí son obligatorios en clases públicas, casos de uso y endpoints (describiendo propósito, parámetros, errores y ejemplos cuando aplique).
+
+### Estilo y formato
+
+- Adherirse al **style guide oficial** del lenguaje elegido (PEP 8 para Python, Google Style para Java, ESLint/Prettier estándar para TypeScript, etc.).
+- Configuración de linter y formatter versionada en el repositorio.
+- El CI debe fallar si el código no pasa lint/format checks.
+
+## Validación y manejo de errores
+
+- **Validar las entradas** en el borde del sistema (controllers / DTOs), no dentro del dominio.
+- El dominio asume que recibe datos válidos y lanza errores de dominio tipados si una invariante de negocio se viola.
+- Nunca tragar excepciones (`catch` vacío). Si se captura, se loguea o se re-lanza con contexto.
+
+## Seguridad básica
+
+- Nunca loguear secretos (tokens, contraseñas, JWT completos).
+- Hashear contraseñas con un algoritmo moderno (bcrypt/argon2). Prohibido almacenar contraseñas en claro o con MD5/SHA1.
+- Validar y sanear toda entrada externa.
+- Variables sensibles solo vía variables de entorno, **nunca** commiteadas. Mantener `.env.example` actualizado.

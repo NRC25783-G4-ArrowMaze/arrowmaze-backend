@@ -1,0 +1,83 @@
+---
+description: Reglas de arquitectura del backend Arrow Maze — Clean Architecture y Domain-Driven Design.
+alwaysApply: true
+---
+
+# Arquitectura: Clean Architecture + DDD
+
+El backend de Arrow Maze **debe** seguir estrictamente Clean Architecture y los principios fundamentales de DDD. Estas reglas son inviolables: cualquier PR que las rompa debe ser rechazado.
+
+## Capas de Clean Architecture
+
+Se definen cuatro capas, de adentro hacia afuera:
+
+1. **Entities (Dominio)** — Modelos de negocio puros, sin dependencias externas.
+2. **Use Cases (Aplicación)** — Orquestan reglas de negocio específicas de la aplicación.
+3. **Interface Adapters** — Controladores HTTP, presentadores, gateways/repositorios (interfaces).
+4. **Frameworks & Drivers (Infraestructura)** — Web framework, ORM, base de datos, librerías externas, JWT, Swagger, etc.
+
+### Estructura de carpetas sugerida
+
+```
+src/
+  domain/              # Entities + value objects + domain services + repository interfaces
+  application/         # Use cases + DTOs de aplicación + puertos
+  infrastructure/      # Implementaciones concretas (DB, JWT, email, etc.)
+  interfaces/          # Controllers HTTP, mappers, presenters
+  shared/              # Utilidades transversales puras (sin lógica de negocio)
+tests/
+  unit/
+  integration/
+  contract/
+```
+
+> Si el equipo decide variar nombres, debe documentarse en el README y mantenerse **consistente** en todo el repositorio.
+
+## Regla de Dependencia (THE rule)
+
+> **Las dependencias del código fuente solo pueden apuntar hacia adentro.**
+
+- `domain/` **no** puede importar nada de `application/`, `infrastructure/` ni `interfaces/`.
+- `application/` solo puede importar de `domain/`.
+- `infrastructure/` e `interfaces/` pueden importar de `application/` y `domain/`, pero **nunca al revés**.
+- Las capas internas exponen **interfaces (puertos)**; las externas implementan esas interfaces (adaptadores).
+- Inyección de dependencias **siempre** hacia interfaces, no hacia clases concretas.
+
+Si necesitas que el dominio "hable" con la base de datos, defines una interfaz de repositorio en `domain/` y su implementación en `infrastructure/`.
+
+## Domain-Driven Design (DDD)
+
+### Lenguaje Ubicuo (Ubiquitous Language)
+
+- Los nombres de clases, métodos, variables, endpoints y tablas deben pertenecer al **dominio del problema** (Arrow Maze): `Board`, `Cell`, `Arrow`, `Level`, `Player`, `Run`, `Score`, `Move`, etc.
+- Prohibido usar terminología técnica genérica donde aplica el dominio (`DataManager`, `Helper`, `Util`, `Processor` no aportan significado).
+- El glosario del dominio se mantiene en `docs/ubiquitous-language.md` (crear si no existe).
+
+### Aislamiento del Dominio
+
+- La lógica de dominio **no debe conocer**:
+  - Frameworks web (Express, Fastify, Spring, etc.).
+  - Librerías de persistencia (TypeORM, Prisma, JPA, Mongoose).
+  - Detalles de serialización HTTP/JSON.
+  - Sistemas de autenticación (JWT) — el dominio recibe una identidad ya validada.
+- Objetivo: evitar el anti-patrón **Big Ball of Mud**.
+
+### Patrón Repositorio
+
+- Por cada Aggregate Root del dominio existe una **interfaz de repositorio** en `domain/` (o en `application/ports/` si se prefiere).
+- Las implementaciones concretas (SQL, in-memory, Firebase, etc.) viven en `infrastructure/`.
+- Los repositorios **no exponen** detalles de la base de datos hacia arriba (nada de `QueryBuilder`, `EntityManager` filtrándose).
+- Operaciones típicas: `findById`, `save`, `delete`. Evitar exponer `findByRawSQL` u operaciones que filtren la implementación.
+
+## Funcionalidades obligatorias del backend
+
+- **Autenticación:** registro e inicio de sesión con **JWT**. La validación del token vive en un middleware de `interfaces/`; el dominio solo recibe la identidad (`UserId`, roles).
+- **Documentación de API:** todos los endpoints deben estar documentados con **Swagger / OpenAPI** y servirse en una ruta dedicada (ej. `/docs`).
+- **Sincronización:** endpoints para sincronizar el progreso del jugador y gestionar definiciones de niveles.
+- **Versionado de API:** los endpoints deben versionarse (`/api/v1/...`).
+
+## Manejo de errores
+
+- El dominio lanza **errores de dominio** tipados (ej. `LevelNotFoundError`, `InvalidMoveError`).
+- La capa de `interfaces/` traduce esos errores a respuestas HTTP semánticas (404, 422, etc.) en un único lugar (ver regla AOP / manejo centralizado en `30-solid-clean-code.mdc`).
+- Prohibido usar `throw new Error("string")` genéricos en lógica de dominio.
