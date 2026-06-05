@@ -72,8 +72,6 @@ export class AuthController {
     }
     
     if (error instanceof AuthError) {
-      // Aquí está el 'cause' original. Si tuvieras un logger como Winston,
-      // aquí podrías hacer: logger.error(error.message, { cause: error.cause })
       if (error.cause) {
         console.error('Detalle técnico interno:', error.cause);
       }

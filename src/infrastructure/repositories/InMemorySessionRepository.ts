@@ -15,9 +15,6 @@ export class InMemorySessionRepository implements ISessionRepository {
       return false; // No está en la lista negra
     }
 
-    // Opcional: Si está en la lista negra pero ya pasó su fecha de expiración original,
-    // a nivel lógico da igual porque el JWT fallará su propia validación de tiempo.
-    // Pero lo mantenemos simple: si está en el map, está revocado.
     return true;
   }
 }

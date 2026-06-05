@@ -9,8 +9,6 @@ export class JwtTokenService implements ITokenService {
   ) {}
 
   async generate(payload: Omit<TokenPayload, 'exp' | 'iat'>): Promise<string> {
-    // Le indicamos explícitamente a TypeScript que este string cumple con 
-    // las reglas estrictas de tiempo que jsonwebtoken requiere.
     const options: SignOptions = {
       expiresIn: this.expiresIn as SignOptions['expiresIn']
     };

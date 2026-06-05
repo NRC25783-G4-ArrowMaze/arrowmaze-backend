@@ -2,7 +2,6 @@ import { type Request, type Response, type NextFunction } from 'express';
 import { type ITokenService } from '../../application/ports/ITokenService';
 import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
 
-// Extendemos la interfaz Request de Express para inyectar el accountId
 declare global {
   namespace Express {
     interface Request {
