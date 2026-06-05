@@ -46,6 +46,29 @@ Cada cambio significativo asistido por IA debe añadir una nueva entrada al fina
   - Revisión cruzada de las reglas contra el enunciado original del proyecto Arrow Maze para asegurar cobertura completa de los puntos solicitados (estructura de repos, Conventional Commits, PRs, IA, README, Clean Architecture, DDD, JWT, Swagger, sincronización, SOLID, patrones GoF, AOP, Clean Code, pirámide de pruebas, CI/CD, control de versiones del esquema, migraciones, independencia del motor).
   - No se ejecuta lint ni test porque el repositorio aún no contiene código fuente ni configuración de un stack concreto; estas validaciones se incorporarán al introducir el primer scaffold del backend.
 
+### 2026-06-04 — Diseño de Arquitectura Base e Implementación del Módulo de Autenticación
+- **Herramienta:** Gemini
+- **Modelo / versión:** Gemini 3.1 pro
+- **Autor humano responsable:** Santiago Chirinos
+- **Prompt(s) representativo(s):**
+  - "Implementación de la capa de presentación utilizando Express, conectando controladores y middlewares de autenticación sin acoplar la lógica de negocio."
+  - "Estructuración del Composition Root aplicando el patrón Factory en la capa `main` para manejar la Inyección de Dependencias manual y escalar las funcionalidades."
+  - "Aplicar tipado estricto en todas las variables e inyecciones, requiriendo el uso exclusivo de `import type` para interfaces y contratos."
+- **Salida tomada de la IA:** Implementación central de `AuthController.ts`, `AuthMiddleware.ts`, `AuthRoutes.ts`, la factoría de dependencias `AuthFactory.ts` y el punto de entrada principal `index.ts`.
+- **Modificaciones manuales del equipo:** Se forzó el uso estricto de tipos e interfaces en las definiciones de la factoría. Se resolvió proactivamente una vulnerabilidad de exposición de información reportada por SonarQube (S5689) integrando el middleware `helmet` y deshabilitando la cabecera `X-Powered-By` en Express.
+- **Validación realizada:** Revisión humana para asegurar la pureza de la Clean Architecture y validación de seguridad mediante análisis estático de código (SonarQube).
+
+### 2026-06-04 — Configuración de Suite de Pruebas y Tests Unitarios (Patrón AAA)
+- **Herramienta:** Gemini
+- **Modelo / versión:** Gemini 3.1 pro
+- **Autor humano responsable:** Santiago Chirinos
+- **Prompt(s) representativo(s):**
+  - "Crear la suite de pruebas unitarias en Jest para los Casos de Uso (RegisterAccount, Login, Logout). Los tests deben probar estrictamente comportamiento observable (caja negra), no detalles de implementación."
+  - "Asegurar el cumplimiento del patrón AAA (Arrange-Act-Assert), el aislamiento de dependencias mediante mocks nativos de Jest, y utilizar la nomenclatura estandarizada `should_[resultado]_when_[condicion]`."
+- **Salida tomada de la IA:** Suite de archivos de prueba `RegisterAccount.spec.ts`, `Login.spec.ts` y `Logout.spec.ts`. Reglas base para integración de Jest con TypeScript.
+- **Modificaciones manuales del equipo:** Se refactorizaron los mocks para evitar aserciones de tipo inseguras (`as Account`), instanciando entidades reales en memoria para solucionar la alerta S4325 de SonarQube. Se ajustó exhaustivamente la configuración de TypeScript (`tsconfig.json` con `moduleResolution: "Bundler"`) y Jest para soportar correctamente módulos ESM bajo la regla `verbatimModuleSyntax`.
+- **Validación realizada:** Ejecución en verde de toda la suite de pruebas en Jest, confirmación de cobertura de casos borde (errores de validación, credenciales inválidas, duplicidad) y resolución de advertencias del compilador de TypeScript.
+
 ---
 
 > ¿Vas a contribuir? Recuerda añadir tu propia entrada a este archivo en el mismo PR donde introduces los cambios asistidos por IA.
