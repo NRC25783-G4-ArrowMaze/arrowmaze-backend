@@ -16,6 +16,7 @@ describe('Logout Use Case', () => {
     mockSessionRepository = {
       revoke: jest.fn(),
       isRevoked: jest.fn(),
+      deleteExpiredTokens: jest.fn(),
     };
 
     useCase = new Logout(mockTokenService, mockSessionRepository);
