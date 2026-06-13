@@ -22,6 +22,7 @@ import { Logout } from '../../application/use-cases/Logout';
 import { AuthController } from '../../presentation/controllers/AuthController';
 import { AuthMiddleware } from '../../presentation/middlewares/AuthMiddleware';
 import { AuthRoutes } from '../../presentation/routes/AuthRoutes';
+import { BlacklistCleanupJob } from '../../infrastructure/jobs/BlacklistCleanup';
 
 export class AuthFactory {
   /**
@@ -32,6 +33,10 @@ export class AuthFactory {
     // 1. Repositorios (Tipados estrictamente con sus interfaces)
     const accountRepository: IAccountRepository = new InMemoryAccountRepository();
     const sessionRepository: ISessionRepository = new InMemorySessionRepository();
+
+    // Arrancamos el Job de limpieza en segundo plano (Se ejecutará a las 3 AM)
+    const cleanupJob = new BlacklistCleanupJob(sessionRepository);
+    cleanupJob.start();
 
     // 2. Servicios (Tipados estrictamente con sus interfaces y tipos nativos)
     const cryptoService: ICryptoService = new BcryptCryptoService();

@@ -1,7 +1,6 @@
 import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
 
 export class InMemorySessionRepository implements ISessionRepository {
-  // Simulamos nuestra lista negra (blacklist) guardando el JTI y su expiración
   private readonly revokedTokens: Map<string, Date> = new Map();
 
   async revoke(jti: string, expiresAt: Date): Promise<void> {
@@ -9,12 +8,18 @@ export class InMemorySessionRepository implements ISessionRepository {
   }
 
   async isRevoked(jti: string): Promise<boolean> {
-    const expiresAt = this.revokedTokens.get(jti);
-    
-    if (!expiresAt) {
-      return false; // No está en la lista negra
-    }
+    return this.revokedTokens.has(jti);
+  }
 
-    return true;
+  // Implementación de la limpieza
+  async deleteExpiredTokens(currentDate: Date): Promise<number> {
+    let deletedCount = 0;
+    for (const [jti, expiresAt] of this.revokedTokens.entries()) {
+      if (expiresAt < currentDate) {
+        this.revokedTokens.delete(jti);
+        deletedCount++;
+      }
+    }
+    return deletedCount;
   }
 }
