@@ -5,7 +5,9 @@ import { type ISessionRepository } from '../../domain/repositories/ISessionRepos
 declare global {
   namespace Express {
     interface Request {
-      accountId?: string;
+      // Usamos accountId para mantener consistencia con nuestras entidades, 
+      // equivalente al "userId" mencionado en el BDD.
+      accountId?: string; 
     }
   }
 }
@@ -20,29 +22,41 @@ export class AuthMiddleware {
     try {
       const authHeader = req.headers.authorization;
       
+      // Escenario: rechazo de petición por falta de token
       if (!authHeader?.startsWith('Bearer ')) {
-        res.status(401).json({ error: 'AuthError: session token is missing' });
+        res.status(401).json({ error: 'Unauthorized: missing token' });
         return;
       }
 
       const token = authHeader.split(' ')[1];
+      let payload;
 
-      // 1. Verificación matemática y de tiempo
-      const payload = await this.tokenService.verify(token);
-
-      // 2. Verificación de revocación (Blacklist)
-      const isRevoked = await this.sessionRepository.isRevoked(payload.jti);
-      if (isRevoked) {
-        res.status(401).json({ error: 'AuthError: session token is invalid or has been revoked' });
+      try {
+        payload = await this.tokenService.verify(token);
+      } catch (error: any) {
+        // Mapeo específico de errores para cumplir con el Bloque 1 y 2
+        if (error.cause?.name === 'TokenExpiredError') {
+          res.status(401).json({ error: 'TokenExpiredError: session has expired' });
+          return;
+        }
+        // Escenario: rechazo por firma inválida o token manipulado
+        res.status(401).json({ error: 'Unauthorized: invalid token signature' });
         return;
       }
 
-      // 3. Inyectar el ID de la cuenta para que el siguiente controlador lo use
+      // Escenario: rechazo de acceso usando un token revocado (Blacklist)
+      const isRevoked = await this.sessionRepository.isRevoked(payload.jti);
+      if (isRevoked) {
+        res.status(403).json({ error: 'Forbidden: token has been revoked' });
+        return;
+      }
+
+      // Inyección del identificador para el controlador
       req.accountId = payload.accountId;
       
       next();
     } catch (error) {
-      res.status(401).json({ error: 'AuthError: session token is invalid or has been revoked', details: error });
+      res.status(500).json({ error: 'Internal server error during authentication', details: error });
     }
   };
 }

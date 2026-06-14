@@ -8,8 +8,8 @@ import { type ICryptoService } from '../../application/ports/ICryptoService';
 import { type ITokenService } from '../../application/ports/ITokenService';
 
 // Infraestructura (Implementaciones reales)
-import { InMemoryAccountRepository } from '../../infrastructure/repositories/InMemoryAccountRepository';
-import { InMemorySessionRepository } from '../../infrastructure/repositories/InMemorySessionRepository';
+import { JsonAccountRepository } from '../../infrastructure/repositories/JsonAccountRepository';
+import { JsonSessionRepository } from '../../infrastructure/repositories/JsonSessionRepository';
 import { BcryptCryptoService } from '../../infrastructure/services/BcryptCryptoService';
 import { JwtTokenService } from '../../infrastructure/services/JwtTokenService';
 
@@ -22,6 +22,7 @@ import { Logout } from '../../application/use-cases/Logout';
 import { AuthController } from '../../presentation/controllers/AuthController';
 import { AuthMiddleware } from '../../presentation/middlewares/AuthMiddleware';
 import { AuthRoutes } from '../../presentation/routes/AuthRoutes';
+import { BlacklistCleanupJob } from '../../infrastructure/jobs/BlacklistCleanup';
 
 export class AuthFactory {
   /**
@@ -30,8 +31,12 @@ export class AuthFactory {
    */
   public static createRouter(): Router {
     // 1. Repositorios (Tipados estrictamente con sus interfaces)
-    const accountRepository: IAccountRepository = new InMemoryAccountRepository();
-    const sessionRepository: ISessionRepository = new InMemorySessionRepository();
+    const accountRepository: IAccountRepository = new JsonAccountRepository();
+    const sessionRepository: ISessionRepository = new JsonSessionRepository();
+
+    // Arrancamos el Job de limpieza en segundo plano (Se ejecutará a las 3 AM)
+    const cleanupJob = new BlacklistCleanupJob(sessionRepository);
+    cleanupJob.start();
 
     // 2. Servicios (Tipados estrictamente con sus interfaces y tipos nativos)
     const cryptoService: ICryptoService = new BcryptCryptoService();
