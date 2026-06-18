@@ -1,8 +1,3 @@
-/**
- * Presentation Layer: REST HTTP Controller for Levels
- * Human Author: @SantiagoChirinos
- */
-
 import { type Request, type Response } from 'express';
 import { type GetLevels } from '../../application/use-cases/GetLevels';
 import { type ManageLevel } from '../../application/use-cases/ManageLevel';
@@ -20,17 +15,25 @@ export class LevelController {
       const catalog = await this.getLevelsUseCase.getCatalog(difficulty);
       res.status(200).json(catalog);
     } catch (error) {
+      console.error('[LevelController.getAll] Error:', error);
       res.status(500).json({ error: 'Internal server error cataloging levels' });
     }
   };
 
-  public getById = async (req: Request, res: Response): Promise<void> => {
+  public getById = async (req: Request<{ id: string }>, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
-      ///////////////////////////////////77777
-      const level = await this.getLevelsUseCase.getById(id as string);
+
+      if (typeof id !== 'string') {
+        res.status(400).json({ error: 'Bad Request: id must be a string' });
+        return;
+      }
+
+      const level = await this.getLevelsUseCase.getById(id);
       res.status(200).json(level);
     } catch (error) {
+      console.error('[LevelController.getById] Error:', error);
+      
       if (error instanceof LevelNotFoundError) {
         res.status(404).json({ error: 'Level not found' });
         return;
@@ -44,6 +47,7 @@ export class LevelController {
       const bulkData = await this.getLevelsUseCase.getBulk();
       res.status(200).json(bulkData);
     } catch (error) {
+      console.error('[LevelController.getBulk] Error:', error);
       res.status(500).json({ error: 'Internal server error synchronizing levels in bulk' });
     }
   };
@@ -71,7 +75,12 @@ export class LevelController {
   public update = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
-      await this.manageLevelUseCase.update(id as string, req.body);
+
+    if (typeof id !== 'string') {
+      res.status(400).json({ error: 'Bad Request: id must be a string' });
+      return;
+    }
+      await this.manageLevelUseCase.update(id, req.body);
       res.status(200).json({ message: 'Level updated successfully' });
     } catch (error) {
       if (error instanceof LevelNotFoundError) {
