@@ -1,5 +1,6 @@
 import express from 'express';
 import { AuthFactory } from './main/factories/AuthFactory';
+import { LevelModuleFactory } from './main/factories/LevelModuleFactory';
 
 async function bootstrap() {
   const app = express();
@@ -14,11 +15,10 @@ async function bootstrap() {
   
   // Delegamos toda la complejidad de inyección a la factoría
   app.use('/api/v1/auth', AuthFactory.createRouter());
-  
-  // En el futuro, añadir nuevos módulos será así de simple:
-  // app.use('/api/v1/users', UserFactory.createRouter());
-  // app.use('/api/v1/projects', ProjectFactory.createRouter());
 
+  //Rutas de niveles
+  app.use('/api/v1/levels', LevelModuleFactory.createRouter())
+  
   // =========================================================
   // ARRANQUE DEL SERVIDOR
   // =========================================================
