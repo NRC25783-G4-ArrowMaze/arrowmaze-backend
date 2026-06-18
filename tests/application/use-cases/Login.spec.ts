@@ -33,6 +33,8 @@ describe('Login Use Case', () => {
   it('should_return_token_when_credentials_are_correct', async () => {
     // Arrange
     const request = { email: 'user@test.com', passwordPlainText: 'Secreta123' };
+    
+    // El constructor de Account ahora asigna 'USER' por defecto
     const fakeAccount = new Account('acc-1', Email.create('user@test.com'), 'hashed_pw');
     
     mockAccountRepository.findByEmail.mockResolvedValue(fakeAccount);
@@ -44,10 +46,17 @@ describe('Login Use Case', () => {
 
     // Assert
     expect(response.token).toBe('valid_jwt_token');
-    expect(mockTokenService.generate).toHaveBeenCalledWith({
-      accountId: 'acc-1',
-      jti: 'jti-1234'
-    });
+    
+    // Usamos expect.objectContaining para ser resilientes al segundo parámetro (expiresIn)
+    // y verificamos que el payload contenga la nueva propiedad obligatoria 'role'
+    expect(mockTokenService.generate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        accountId: 'acc-1',
+        jti: 'jti-1234',
+        role: 'USER' // 🚀 Propiedad requerida por la nueva firma
+      }),
+      expect.any(Number) // Acepta cualquier número de expiración que esté enviando tu Use Case
+    );
   });
 
   it('should_throw_auth_error_when_email_is_invalid', async () => {

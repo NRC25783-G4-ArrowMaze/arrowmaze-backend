@@ -36,9 +36,15 @@ describe('RegisterAccount Use Case', () => {
     // Assert
     expect(mockAccountRepository.save).toHaveBeenCalledTimes(1);
     const savedAccountArg = mockAccountRepository.save.mock.calls[0][0];
+    
     expect(savedAccountArg).toBeInstanceOf(Account);
-    expect(savedAccountArg.email.getValue()).toBe('usuario@test.com');
-    expect(savedAccountArg.passwordHash).toBe('hashed_password');
+    
+    // Usamos los getters obligatorios del dominio blindado
+    expect(savedAccountArg.getEmail().getValue()).toBe('usuario@test.com');
+    expect(savedAccountArg.getPasswordHash()).toBe('hashed_password');
+    
+    // Verificamos que se asigna el rol correcto por defecto
+    expect(savedAccountArg.getRole()).toBe('USER');
   });
 
   it('should_throw_validation_error_when_email_format_is_invalid', async () => {
@@ -67,11 +73,11 @@ describe('RegisterAccount Use Case', () => {
   it('should_throw_registration_error_when_email_already_exists', async () => {
     // Arrange
     const request = { email: 'admin@test.com', passwordPlainText: 'Secreta123' };
-    // Primero, creamos una entidad Account válida (importando Email y Account si no estaban importados en este bloque)
+    
     const fakeEmail = Email.create('admin@test.com');
+    // Instanciamos el mock de Account con la firma completa, dejando que asuma el rol por defecto
     const existingAccount = new Account('mock-id-123', fakeEmail, 'hashed_password');
 
-    // Luego, la pasamos al mock sin usar ningún "as"
     mockAccountRepository.findByEmail.mockResolvedValue(existingAccount);
 
     // Act

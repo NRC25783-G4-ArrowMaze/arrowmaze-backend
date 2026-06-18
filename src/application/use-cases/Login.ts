@@ -18,42 +18,44 @@ export class Login {
     private readonly accountRepository: IAccountRepository,
     private readonly cryptoService: ICryptoService,
     private readonly tokenService: ITokenService,
-    private readonly idGenerator: () => string // Usado para generar el JTI del token
+    private readonly generateId: () => string
   ) {}
 
   async execute(request: LoginRequest): Promise<LoginResponse> {
     let email: Email;
-    
-    // 1. Instanciar Email. Si el formato es inválido, atrapamos el ValidationError 
-    // y lanzamos AuthError para ofuscar el motivo del rechazo.
     try {
       email = Email.create(request.email);
-    } catch {
-      throw new AuthError('invalid credentials');
+    } catch (error) {
+      const authErr = new AuthError('invalid credentials');
+      authErr.cause = error; 
+      throw authErr;
     }
 
-    // 2. Buscar la cuenta (Escenario: rechazo de un usuario inexistente)
     const account = await this.accountRepository.findByEmail(email);
     if (!account) {
       throw new AuthError('invalid credentials');
     }
 
-    // 3. Verificar contraseña contra el hash
     const isPasswordValid = await this.cryptoService.compare(
       request.passwordPlainText,
-      account.passwordHash
+      account.getPasswordHash() // 👈 Usando el getter blindado
     );
 
     if (!isPasswordValid) {
       throw new AuthError('invalid credentials');
     }
 
-    // 4. Generar el JWT con su identificador único (JTI)
-    const jti = this.idGenerator();
+    const jti = this.generateId();
+    
+    // Asignamos un tiempo de expiración por defecto, por ejemplo 24 horas (86400 segundos)
+    const expiresInSeconds = 86400; 
+
+    // 👈 Actualizamos la firma para enviar todos los parámetros y extraer el ID y Rol de los getters
     const token = await this.tokenService.generate({
-      accountId: account.id,
-      jti: jti,
-    });
+      accountId: account.getId(),
+      jti,
+      role: account.getRole()
+    }, expiresInSeconds);
 
     return { token };
   }

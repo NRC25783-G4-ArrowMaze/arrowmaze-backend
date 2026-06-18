@@ -28,7 +28,8 @@ describe('Logout Use Case', () => {
     const mockPayload: TokenPayload = {
       accountId: 'acc-1',
       jti: 'jti-1234',
-      exp: 1672531200 // Timestamp genérico
+      exp: 1672531200, // Timestamp genérico
+      role: 'USER'
     };
     mockTokenService.verify.mockResolvedValue(mockPayload);
 

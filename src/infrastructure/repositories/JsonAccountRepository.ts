@@ -4,18 +4,17 @@ import { type IAccountRepository } from '../../domain/repositories/IAccountRepos
 import { Account } from '../../domain/entities/Account';
 import { Email } from '../../domain/value-objects/Email';
 
-// Interfaz interna para tipar lo que guardamos en el JSON
 interface AccountRaw {
   id: string;
   email: string;
   passwordHash: string;
+  role: string; // Guardado en texto plano dentro del JSON
 }
 
 export class JsonAccountRepository implements IAccountRepository {
   private readonly filePath: string;
 
   constructor(fileName: string = 'accounts.json') {
-    // Guardaremos los datos en una carpeta 'data' en la raíz del proyecto
     this.filePath = path.resolve(process.cwd(), 'data', fileName);
   }
 
@@ -42,16 +41,17 @@ export class JsonAccountRepository implements IAccountRepository {
     const accounts = await this.readData();
     
     const accountRaw: AccountRaw = {
-      id: account.id,
-      email: account.email.getValue(),
-      passwordHash: account.passwordHash,
+      id: account.getId(),
+      email: account.getEmail().getValue(),
+      passwordHash: account.getPasswordHash(),
+      role: account.getRole(),
     };
 
-    const existingIndex = accounts.findIndex(a => a.id === account.id);
+    const existingIndex = accounts.findIndex(a => a.id === account.getId());
     if (existingIndex >= 0) {
-      accounts[existingIndex] = accountRaw; // Actualiza si ya existe
+      accounts[existingIndex] = accountRaw;
     } else {
-      accounts.push(accountRaw); // Inserta si es nuevo
+      accounts.push(accountRaw);
     }
 
     await this.writeData(accounts);
@@ -62,12 +62,12 @@ export class JsonAccountRepository implements IAccountRepository {
     const targetEmail = email.getValue();
     
     const foundRaw = accounts.find(a => a.email === targetEmail);
-    if (!foundRaw) {
-      return null;
-    }
+    if (!foundRaw) return null;
 
-    // Reconstruimos la entidad de dominio a partir de los datos planos
     const reconstructedEmail = Email.create(foundRaw.email);
-    return new Account(foundRaw.id, reconstructedEmail, foundRaw.passwordHash);
+    // Forzamos el casteo seguro del string plano al tipo estricto UserRole
+    const assignedRole = (foundRaw.role === 'ADMIN' ? 'ADMIN' : 'USER');
+
+    return new Account(foundRaw.id, reconstructedEmail, foundRaw.passwordHash, assignedRole);
   }
 }
