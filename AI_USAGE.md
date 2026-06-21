@@ -91,3 +91,37 @@
   2. **Composition Root / Fábricas Autónomas:** Se adoptó un estilo arquitectónico empresarial donde cada módulo (ej. `LevelModuleFactory`) actúa como un contenedor IoC miniatura que resuelve y cablea todas sus dependencias internamente, exportando únicamente un `Router` ciego al `index.ts`.
   3. **Seguridad contra Payload Sucio:** Implementación de guardias de tipos y comprobaciones en `ManageLevel` para evitar que el almacenamiento de niveles se corrompa, lo que indirectamente protege al motor frontend.
 - **Patrones de uso observados:** Alta prioridad en seguridad y principios SOLID. Interés marcado en las justificaciones de bajo nivel (como el uso de descriptores de objetos vs el `readonly` de TypeScript) y obsesión positiva por erradicar cualquier queja de SonarQube o el compilador estricto de TypeScript.
+
+### 2026-06-21 — Backend: API REST de Recepción y Consulta del Progreso del Jugador
+
+- **Herramienta:** Gemini
+- **Modelo / versión:** Gemini
+- **Autor humano responsable:** @SantiagoChirinos
+- **Prompt(s) representativo(s):**
+  - "Feature: API REST de Recepción y Consulta del Progreso del Jugador... Quiero enviar y consultar el progreso del jugador autenticado"
+  - "ahora empecemos a implementar el feature. Empecemos definiendo las interfaces compartidas entre front y back"
+  - "Vamos a separar la validación del payload del caso de uso"
+  - "Ahora vamos a programar los tests correspondientes a este feature"
+- **Salida tomada de la IA:**
+  - `Gherkin: Progreso del Jugador` [MODIFY] — Refinamiento del contrato para exigir códigos de error estrictos (404 y 422).
+  - `shared/contracts/ProgressDTO.ts` [NEW] — Contratos limpios compartidos entre frontend y backend.
+  - `src/domain/exceptions/ProgressExceptions.ts` [NEW] — Excepciones de dominio tipadas (`ProgressValidationError`, `LevelRegistryError`).
+  - `src/domain/repositories/IProgressRepository.ts` [NEW] — Interfaz para la persistencia del progreso garantizando filtros por inquilino.
+  - `src/application/use-cases/progress/SaveProgressCommand.ts` [NEW] — Extracción de la lógica de validación usando el patrón *Command / Value Object*.
+  - `src/application/use-cases/progress/GetProgress.ts` & `SaveProgress.ts` [NEW] — Casos de uso con reglas estrictas de *High Score* y delegación de validación.
+  - `src/infrastructure/repositories/JsonProgressRepository.ts` [NEW] — Implementación de persistencia asíncrona usando `fs/promises` con operaciones de *upsert*.
+  - `src/presentation/controllers/ProgressController.ts` & `ProgressRoutes.ts` [NEW] — Exposición de endpoints garantizando aislamiento (extracción de `userId` vía token).
+  - `src/presentation/factories/ProgressModuleFactory.ts` [NEW] — *Composition Root* autónomo para el módulo de progreso.
+  - Suites de Pruebas (Jest) [NEW] — Pruebas unitarias completas para Casos de Uso, Controlador y Repositorio.
+  - Ajuste de diseño arquitectónico en caliente: transición al patrón *Command* para la validación del payload (SRP) y fijación de respuestas RESTful estrictas en lugar de ambiguas (404 en vez de "404 o vacío").
+- **Validación realizada:** Pruebas unitarias implementadas y en verde. Verificación exhaustiva del aislamiento multitenant (imposibilidad de que un usuario modifique el progreso de otro a través de manipulación del payload).
+
+---
+#### 📋 Resumen de la sesión
+- **Duración estimada de la sesión:** ~15 turnos de usuario / ~75 minutos estimados.
+- **Contexto de la conversación:** Desarrollo e implementación del sistema de sincronización de progreso (puntuaciones y logros) para el motor del juego.
+- **Decisiones clave tomadas:**
+  1. **Aislamiento Multitenant Estricto:** El sistema rechaza cualquier intento del cliente de declarar su propio `userId`. La identidad se extrae invariablemente de forma criptográfica del `AuthMiddleware`, bloqueando intentos de suplantación.
+  2. **Single Responsibility Principle (SRP):** Delegación de la validación estructural y sintáctica de los DTOs de entrada hacia una clase comando (`SaveProgressCommand`), dejando los casos de uso enfocados 100% en las reglas de negocio (*High Score*).
+  3. **Limpieza de Código Fuente:** Aprobación e implementación de la regla de excluir las marcas de autoría en el código compilable.
+- **Patrones de uso observados:** Enfoque robusto en diseño de software de nivel empresarial, con iteraciones rápidas hacia la separación de responsabilidades y la consistencia RESTful.
