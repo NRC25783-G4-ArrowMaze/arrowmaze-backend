@@ -1,7 +1,7 @@
 import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
 import { type ILevelRepository } from '../../domain/repositories/ILevelRepository';
 import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions';
-import type { LevelProgressDTO } from '../../infrastructure/shared/contracts/ProgressDTO';
+import type { LevelProgressDTO } from '../../domain/contracts/ProgressDTO';
 import { SaveProgressCommand } from './SaveProgressCommand';
 
 export interface SaveProgressResult {

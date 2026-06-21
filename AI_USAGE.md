@@ -113,7 +113,6 @@
   - `src/presentation/controllers/ProgressController.ts` & `ProgressRoutes.ts` [NEW] — Exposición de endpoints garantizando aislamiento (extracción de `userId` vía token).
   - `src/presentation/factories/ProgressModuleFactory.ts` [NEW] — *Composition Root* autónomo para el módulo de progreso.
   - Suites de Pruebas (Jest) [NEW] — Pruebas unitarias completas para Casos de Uso, Controlador y Repositorio.
-- **Modificaciones manuales del equipo:** - Adopción de la nueva directiva del grupo de proyecto: se eliminó por completo la inyección de la etiqueta de autoría (`@SantiagoChirinos`) en el código fuente (`.ts`), restringiéndola exclusivamente a archivos de documentación como este bitácora y el Gherkin.
   - Ajuste de diseño arquitectónico en caliente: transición al patrón *Command* para la validación del payload (SRP) y fijación de respuestas RESTful estrictas en lugar de ambiguas (404 en vez de "404 o vacío").
 - **Validación realizada:** Pruebas unitarias implementadas y en verde. Verificación exhaustiva del aislamiento multitenant (imposibilidad de que un usuario modifique el progreso de otro a través de manipulación del payload).
 

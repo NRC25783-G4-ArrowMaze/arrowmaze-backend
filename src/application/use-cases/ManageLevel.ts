@@ -1,6 +1,6 @@
 import { type ILevelRepository } from '../../domain/repositories/ILevelRepository';
 import { LevelValidationError, LevelNotFoundError, LevelAlreadyExistsError } from '../../domain/exceptions/LevelExceptions';
-import type { LevelDataDTO } from '../../infrastructure/shared/contracts/LevelDataDTOs';
+import type { LevelDataDTO } from '../../domain/contracts/LevelDataDTOs';
 
 export class ManageLevel {
   constructor(private readonly levelRepository: ILevelRepository) {}

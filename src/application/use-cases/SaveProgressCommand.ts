@@ -1,5 +1,5 @@
 import { ProgressValidationError } from '../../domain/exceptions/ProgressExceptions';
-import type { SaveProgressPayloadDTO } from '../../infrastructure/shared/contracts/ProgressDTO';
+import type { SaveProgressPayloadDTO } from '../../domain/contracts/ProgressDTO';
 
 export class SaveProgressCommand implements SaveProgressPayloadDTO {
   private constructor(

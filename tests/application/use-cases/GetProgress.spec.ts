@@ -1,6 +1,6 @@
 import { GetProgress } from '../../../src/application/use-cases/GetProgess';
 import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../../src/infrastructure/shared/contracts/ProgressDTO';
+import type { LevelProgressDTO } from '../../../src/domain/contracts/ProgressDTO';
 import { ProgressNotFoundError } from '../../../src/domain/exceptions/ProgressExceptions';
 
 describe('GetProgress Use Case', () => {
