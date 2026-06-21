@@ -40,7 +40,10 @@ export class AuthFactory {
 
     // 2. Servicios (Tipados estrictamente con sus interfaces y tipos nativos)
     const cryptoService: ICryptoService = new BcryptCryptoService();
-    const jwtSecret: string = process.env.JWT_SECRET || 'super_secreta_clave_desarrollo_academico'; 
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      throw new Error('JWT_SECRET no está configurado. Defínelo como variable de entorno.');
+    }
     const tokenService: ITokenService = new JwtTokenService(jwtSecret);
     const idGenerator: () => string = () => crypto.randomUUID();
 
