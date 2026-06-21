@@ -22,7 +22,10 @@ export class LevelModuleFactory {
    */
   public static createRouter(): Router {
     // 1. Dependencias Compartidas (Seguridad)
-    const jwtSecret: string = process.env.JWT_SECRET || 'super_secreta_clave_desarrollo_academico';
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      throw new Error('JWT_SECRET no está configurado. Defínelo como variable de entorno.');
+    }
     const tokenService: ITokenService = new JwtTokenService(jwtSecret);
     const sessionRepository: ISessionRepository = new JsonSessionRepository();
     const authMiddleware: AuthMiddleware = new AuthMiddleware(tokenService, sessionRepository);
