@@ -70,4 +70,13 @@ export class JsonAccountRepository implements IAccountRepository {
 
     return new Account(foundRaw.id, reconstructedEmail, foundRaw.passwordHash, assignedRole);
   }
+
+  async findById(id: string): Promise<Account | null> {
+    const accounts = await this.readData();
+    const rawAccount = accounts.find((acc: any) => acc.id === id);
+    const assignedRole = (rawAccount?.role === 'ADMIN' ? 'ADMIN' : 'USER');
+
+    if (!rawAccount) return null;
+    return new Account(rawAccount.id, Email.create(rawAccount.email), rawAccount.passwordHash, assignedRole);
+  }
 }

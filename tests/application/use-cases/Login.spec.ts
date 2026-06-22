@@ -16,6 +16,7 @@ describe('Login Use Case', () => {
     mockAccountRepository = {
       save: jest.fn(),
       findByEmail: jest.fn(),
+      findById: jest.fn(),
     };
     mockCryptoService = {
       hash: jest.fn(),

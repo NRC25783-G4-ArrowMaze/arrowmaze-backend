@@ -21,6 +21,7 @@ describe('GetProgress Use Case', () => {
       findByUserAndLevel: jest.fn(),
       findAllByUser: jest.fn(),
       save: jest.fn(),
+      findAllByLevel: jest.fn(),
     };
     useCase = new GetProgress(mockProgressRepository);
   });

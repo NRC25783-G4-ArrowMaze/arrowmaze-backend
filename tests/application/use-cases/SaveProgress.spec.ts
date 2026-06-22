@@ -26,7 +26,7 @@ describe('SaveProgress Use Case', () => {
   };
 
   beforeEach(() => {
-    mockProgressRepository = { findByUserAndLevel: jest.fn(), findAllByUser: jest.fn(), save: jest.fn() };
+    mockProgressRepository = { findByUserAndLevel: jest.fn(), findAllByUser: jest.fn(), save: jest.fn(), findAllByLevel: jest.fn() };
     mockLevelRepository = { findById: jest.fn(), findAllMetadata: jest.fn(), findAll: jest.fn(), save: jest.fn(), update: jest.fn() };
     useCase = new SaveProgress(mockProgressRepository, mockLevelRepository);
   });

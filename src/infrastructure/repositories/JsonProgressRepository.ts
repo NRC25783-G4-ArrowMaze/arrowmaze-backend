@@ -45,6 +45,12 @@ export class JsonProgressRepository implements IProgressRepository {
     return allProgress.filter(p => p.userId === userId);
   }
 
+  async findAllByLevel(levelId: string): Promise<LevelProgressDTO[]> {
+    const allProgress = await this.readData();
+    // Retorna todos los intentos exitosos para un nivel específico de todos los usuarios
+    return allProgress.filter(p => p.levelId === levelId);
+  }
+
   // ─────────────────────────────────────────────
   // OPERACIONES DE ESCRITURA (Comandos)
   // ─────────────────────────────────────────────
