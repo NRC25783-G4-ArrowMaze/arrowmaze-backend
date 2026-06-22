@@ -59,3 +59,69 @@
   2. **Arquitectura de Lista Negra (Blacklist):** Revocación de sesiones gestionada mediante el almacenamiento exclusivo del `jti` (JWT ID), complementada con un proceso en segundo plano (Cron Job) que purga automáticamente los registros obsoletos para evitar el crecimiento infinito del archivo JSON.
   3. **Aislamiento de I/O en Pruebas:** Para las pruebas de repositorios, se interceptó el módulo nativo `fs/promises`. Esto garantizó pruebas veloces que verifican la lógica de serialización de archivos sin realizar lecturas o escrituras reales en el disco.
 - **Patrones de uso observados:** Enfoque BDD-first — validando primero que los requerimientos de negocio encajaran con la arquitectura existente, seguido por decisiones de infraestructura pragmáticas y resolución de errores guiada por el tipado estricto de TypeScript.
+
+### 2026-06-17 — Backend: API REST de Niveles (CMS) y Control de Acceso (RBAC)
+
+- **Herramienta:** Gemini
+- **Modelo / versión:** Gemini
+- **Autor humano responsable:** @SantiagoChirinos
+- **Prompt(s) representativo(s):**
+  - "Feature: API REST de Distribución y Actualización Remota de Niveles... Quiero consultar y gestionar las definiciones de los niveles"
+  - "Por mejor diseño de servidor, vamos a agregar los roles de admin y usuario regular."
+  - "Vamos a usar el estilo de factory presente en AuthFactory"
+  - "Arreglemos el siguiente error: Handle this exception or don't catch it at all.sonarqube(typescript:S2486)"
+  - "Vamos a generar pruebas tanto para el repositorio como para el middleware"
+- **Salida tomada de la IA:**
+  - `src/domain/entities/Account.ts` [MODIFY] — Implementación de inmutabilidad en tiempo de ejecución (runtime) y soporte para `UserRole`.
+  - `src/presentation/middlewares/RequireRoleMiddleware.ts` [NEW] — Middleware genérico para autorización basada en claims del JWT.
+  - `src/application/use-cases/levels/GetLevels.ts` & `ManageLevel.ts` [NEW] — Casos de uso de catálogo y administración con validación estricta del JSON de celdas y flechas.
+  - `src/infrastructure/repositories/JsonLevelRepository.ts` [NEW] — Persistencia en archivo con proyección de metadatos para optimizar red.
+  - `src/presentation/controllers/LevelController.ts` [NEW] — Controlador REST tipado.
+  - `src/presentation/factories/LevelModuleFactory.ts` [NEW] — Implementación del patrón *Composition Root* para instanciación autónoma de rutas y dependencias.
+  - Suites de Pruebas (Jest) [NEW/MODIFY] — Adaptación de `Login`/`Register`/`AuthMiddleware` al nuevo payload con roles. Pruebas unitarias para el controlador de niveles, repositorio (con mock de `fs/promises`) y RBAC.
+- **Modificaciones manuales del equipo:** Resolución de advertencias TS2345 y TS2353 en interfaces y aserciones en tests. Tipado explícito de parámetros de ruta (`Request<{ id: string }>`) para evitar type assertions (`as string`) y posibles caídas en runtime. Manejo de excepciones (log) para satisfacer requerimientos de observabilidad de SonarQube (S2486).
+- **Validación realizada:** Pruebas unitarias en verde. Excepciones mapeadas correctamente a códigos HTTP semánticos (400, 403, 404, 409). Linters de TS y SonarQube sin advertencias de *code smells* ni excepciones tragadas.
+
+---
+#### 📋 Resumen de la sesión
+- **Duración estimada de la sesión:** ~25 turnos de usuario / ~120 minutos estimados.
+- **Contexto de la conversación:** Desarrollo del módulo CMS (Backend) para gestionar el ciclo de vida, la distribución remota (OTA) y sincronización masiva de los niveles de Arrow Maze.
+- **Decisiones clave tomadas:**
+  1. **Control de Acceso Basado en Roles (RBAC):** Se modificó la entidad raíz `Account` para incluir roles y blindarla con `Object.defineProperty`, propagando este rol dentro del payload del JWT para autorizaciones rápidas (stateless).
+  2. **Composition Root / Fábricas Autónomas:** Se adoptó un estilo arquitectónico empresarial donde cada módulo (ej. `LevelModuleFactory`) actúa como un contenedor IoC miniatura que resuelve y cablea todas sus dependencias internamente, exportando únicamente un `Router` ciego al `index.ts`.
+  3. **Seguridad contra Payload Sucio:** Implementación de guardias de tipos y comprobaciones en `ManageLevel` para evitar que el almacenamiento de niveles se corrompa, lo que indirectamente protege al motor frontend.
+- **Patrones de uso observados:** Alta prioridad en seguridad y principios SOLID. Interés marcado en las justificaciones de bajo nivel (como el uso de descriptores de objetos vs el `readonly` de TypeScript) y obsesión positiva por erradicar cualquier queja de SonarQube o el compilador estricto de TypeScript.
+
+### 2026-06-21 — Backend: API REST de Recepción y Consulta del Progreso del Jugador
+
+- **Herramienta:** Gemini
+- **Modelo / versión:** Gemini
+- **Autor humano responsable:** @SantiagoChirinos
+- **Prompt(s) representativo(s):**
+  - "Feature: API REST de Recepción y Consulta del Progreso del Jugador... Quiero enviar y consultar el progreso del jugador autenticado"
+  - "ahora empecemos a implementar el feature. Empecemos definiendo las interfaces compartidas entre front y back"
+  - "Vamos a separar la validación del payload del caso de uso"
+  - "Ahora vamos a programar los tests correspondientes a este feature"
+- **Salida tomada de la IA:**
+  - `Gherkin: Progreso del Jugador` [MODIFY] — Refinamiento del contrato para exigir códigos de error estrictos (404 y 422).
+  - `shared/contracts/ProgressDTO.ts` [NEW] — Contratos limpios compartidos entre frontend y backend.
+  - `src/domain/exceptions/ProgressExceptions.ts` [NEW] — Excepciones de dominio tipadas (`ProgressValidationError`, `LevelRegistryError`).
+  - `src/domain/repositories/IProgressRepository.ts` [NEW] — Interfaz para la persistencia del progreso garantizando filtros por inquilino.
+  - `src/application/use-cases/progress/SaveProgressCommand.ts` [NEW] — Extracción de la lógica de validación usando el patrón *Command / Value Object*.
+  - `src/application/use-cases/progress/GetProgress.ts` & `SaveProgress.ts` [NEW] — Casos de uso con reglas estrictas de *High Score* y delegación de validación.
+  - `src/infrastructure/repositories/JsonProgressRepository.ts` [NEW] — Implementación de persistencia asíncrona usando `fs/promises` con operaciones de *upsert*.
+  - `src/presentation/controllers/ProgressController.ts` & `ProgressRoutes.ts` [NEW] — Exposición de endpoints garantizando aislamiento (extracción de `userId` vía token).
+  - `src/presentation/factories/ProgressModuleFactory.ts` [NEW] — *Composition Root* autónomo para el módulo de progreso.
+  - Suites de Pruebas (Jest) [NEW] — Pruebas unitarias completas para Casos de Uso, Controlador y Repositorio.
+  - Ajuste de diseño arquitectónico en caliente: transición al patrón *Command* para la validación del payload (SRP) y fijación de respuestas RESTful estrictas en lugar de ambiguas (404 en vez de "404 o vacío").
+- **Validación realizada:** Pruebas unitarias implementadas y en verde. Verificación exhaustiva del aislamiento multitenant (imposibilidad de que un usuario modifique el progreso de otro a través de manipulación del payload).
+
+---
+#### 📋 Resumen de la sesión
+- **Duración estimada de la sesión:** ~15 turnos de usuario / ~75 minutos estimados.
+- **Contexto de la conversación:** Desarrollo e implementación del sistema de sincronización de progreso (puntuaciones y logros) para el motor del juego.
+- **Decisiones clave tomadas:**
+  1. **Aislamiento Multitenant Estricto:** El sistema rechaza cualquier intento del cliente de declarar su propio `userId`. La identidad se extrae invariablemente de forma criptográfica del `AuthMiddleware`, bloqueando intentos de suplantación.
+  2. **Single Responsibility Principle (SRP):** Delegación de la validación estructural y sintáctica de los DTOs de entrada hacia una clase comando (`SaveProgressCommand`), dejando los casos de uso enfocados 100% en las reglas de negocio (*High Score*).
+  3. **Limpieza de Código Fuente:** Aprobación e implementación de la regla de excluir las marcas de autoría en el código compilable.
+- **Patrones de uso observados:** Enfoque robusto en diseño de software de nivel empresarial, con iteraciones rápidas hacia la separación de responsabilidades y la consistencia RESTful.

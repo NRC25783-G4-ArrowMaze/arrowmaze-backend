@@ -39,10 +39,10 @@ describe('AuthMiddleware', () => {
     mockNext = jest.fn();
   });
 
-  it('should_call_next_and_inject_accountId_when_token_is_valid', async () => {
+  it('should_call_next_and_inject_accountId_and_role_when_token_is_valid', async () => {
     // Arrange
     mockRequest.headers = { authorization: 'Bearer valid_token_123' };
-    const fakePayload: TokenPayload = { accountId: 'user-1', jti: 'jti-123' };
+    const fakePayload: TokenPayload = { accountId: 'user-1', jti: 'jti-123', role: 'USER' };
     
     mockTokenService.verify.mockResolvedValue(fakePayload);
     mockSessionRepository.isRevoked.mockResolvedValue(false);
@@ -57,7 +57,11 @@ describe('AuthMiddleware', () => {
     // Assert
     expect(mockTokenService.verify).toHaveBeenCalledWith('valid_token_123');
     expect(mockSessionRepository.isRevoked).toHaveBeenCalledWith('jti-123');
-    expect(mockRequest.accountId).toBe('user-1'); // Inyección exitosa
+    
+    // Inyección exitosa de ambas propiedades
+    expect(mockRequest.accountId).toBe('user-1'); 
+    expect(mockRequest.userRole).toBe('USER'); 
+    
     expect(mockNext).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).not.toHaveBeenCalled();
   });
@@ -101,14 +105,11 @@ describe('AuthMiddleware', () => {
   it('should_return_401_token_expired_when_token_is_expired', async () => {
     // Arrange
     mockRequest.headers = { authorization: 'Bearer old_token' };
+    
+    // El middleware lee error.message, por lo que el mensaje debe contener la frase clave
     const expiredError = new Error('jwt expired');
-    expiredError.name = 'TokenExpiredError'; // Simulamos el error nativo de jsonwebtoken
     
-    // Nuestro servicio envuelve los errores en 'cause'
-    const authError = new Error('AuthError');
-    authError.cause = expiredError; 
-    
-    mockTokenService.verify.mockRejectedValue(authError);
+    mockTokenService.verify.mockRejectedValue(expiredError);
 
     // Act
     await middleware.execute(
@@ -126,7 +127,7 @@ describe('AuthMiddleware', () => {
   it('should_return_403_forbidden_when_token_is_in_blacklist', async () => {
     // Arrange
     mockRequest.headers = { authorization: 'Bearer revoked_token' };
-    const fakePayload: TokenPayload = { accountId: 'user-1', jti: 'jti-bad' };
+    const fakePayload: TokenPayload = { accountId: 'user-1', jti: 'jti-bad', role: 'USER' };
     
     mockTokenService.verify.mockResolvedValue(fakePayload);
     // Simulamos que el repositorio encuentra el token en la lista negra
