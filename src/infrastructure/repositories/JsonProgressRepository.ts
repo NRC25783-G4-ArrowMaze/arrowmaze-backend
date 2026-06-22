@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../domain/contracts/ProgressDTO';
+import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO';
 
 export class JsonProgressRepository implements IProgressRepository {
   private readonly filePath: string;

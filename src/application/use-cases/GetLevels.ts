@@ -1,6 +1,6 @@
 import { type ILevelRepository, type LevelMetadata } from '../../domain/repositories/ILevelRepository';
 import { LevelNotFoundError } from '../../domain/exceptions/LevelExceptions';
-import type { LevelDataDTO } from '../../domain/contracts/LevelDataDTOs';
+import type { LevelDataDTO } from '../../domain/shared/contracts/LevelDataDTOs';
 
 export class GetLevels {
   constructor(private readonly levelRepository: ILevelRepository) {}

@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { type ILevelRepository, type LevelMetadata } from '../../domain/repositories/ILevelRepository';
-import type { LevelDataDTO } from '../../domain/contracts/LevelDataDTOs';
+import type { LevelDataDTO } from '../../domain/shared/contracts/LevelDataDTOs';
 
 export class JsonLevelRepository implements ILevelRepository {
   private readonly filePath: string;

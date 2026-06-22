@@ -1,4 +1,4 @@
-import type { LevelProgressDTO } from "../contracts/ProgressDTO";
+import type { LevelProgressDTO } from "../shared/contracts/ProgressDTO";
 
 export interface IProgressRepository {
   /**

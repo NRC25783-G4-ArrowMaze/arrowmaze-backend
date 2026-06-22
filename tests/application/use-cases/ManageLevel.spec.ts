@@ -1,7 +1,7 @@
 import { ManageLevel } from '../../../src/application/use-cases/ManageLevel';
 import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRepository';
 import { LevelValidationError, LevelAlreadyExistsError } from '../../../src/domain/exceptions/LevelExceptions';
-import type { LevelDataDTO } from '../../../src/domain/contracts/LevelDataDTOs';
+import type { LevelDataDTO } from '../../../src/domain/shared/contracts/LevelDataDTOs';
 
 describe('ManageLevel Use Case', () => {
   let mockLevelRepository: jest.Mocked<ILevelRepository>;

@@ -1,5 +1,5 @@
 import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../domain/contracts/ProgressDTO';
+import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO';
 import { ProgressNotFoundError } from '../../domain/exceptions/ProgressExceptions';
 
 export class GetProgress {
