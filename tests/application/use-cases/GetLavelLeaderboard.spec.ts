@@ -4,6 +4,7 @@ import { type IProgressRepository } from '../../../src/domain/repositories/IProg
 import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository';
 import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions';
 import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions';
+import { Email } from '../../../src/domain/value-objects/Email';
 
 describe('GetLevelLeaderboard Use Case', () => {
   let mockLevelRepo: jest.Mocked<ILevelRepository>;
@@ -49,10 +50,10 @@ describe('GetLevelLeaderboard Use Case', () => {
       { userId: 'user_2', levelId: 'lvl_1', score: 500, movesUsed: 5, timeElapsedSeconds: 10, achievedAt: '2026-01-01' }
     ]);
 
-    // Mock de las cuentas con getters simulados
+    // Mock de las cuentas usando el Value Object real para ejercitar getPublicAlias()
     mockAccountRepo.findById.mockImplementation(async (id: string) => {
-      if (id === 'user_1') return { getId: () => 'user_1', getEmail: () => ({ getValue: () => 'santiago@test.com' }) } as any;
-      if (id === 'user_2') return { getId: () => 'user_2', getEmail: () => ({ getValue: () => 'pro_gamer@test.com' }) } as any;
+      if (id === 'user_1') return { getId: () => 'user_1', getEmail: () => Email.create('santiago@test.com') } as any;
+      if (id === 'user_2') return { getId: () => 'user_2', getEmail: () => Email.create('pro_gamer@test.com') } as any;
       return null;
     });
 

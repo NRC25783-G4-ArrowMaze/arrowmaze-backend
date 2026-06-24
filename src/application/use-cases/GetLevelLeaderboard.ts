@@ -4,8 +4,12 @@ import { type IAccountRepository } from '../../domain/repositories/IAccountRepos
 import { LeaderboardSortingService } from '../../domain/services/LeaderboardSortingService';
 import { LeaderboardValidationError } from '../../domain/exceptions/LeaderboardExceptions';
 import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions';
-import type { LeaderboardResponseDTO } from '../../domain/shared/contracts/LeaderboardDTO';
+import type { LeaderboardEntryDTO, LeaderboardResponseDTO } from '../../domain/shared/contracts/LeaderboardDTO';
 import { type Account } from '../../domain/entities/Account';
+
+// Entrada interna: igual que la pública pero arrastra el id real del usuario
+// para poder ubicar el registro del jugador actual sin filtrarlo en la respuesta.
+type RankableEntry = Omit<LeaderboardEntryDTO, 'rank'> & { _internalUserId: string };
 
 export class GetLevelLeaderboard {
   constructor(
@@ -40,19 +44,14 @@ export class GetLevelLeaderboard {
     
     accounts.forEach((acc: Account | null) => {
       if (acc) {
-        const id = acc.getId();
-        // Asumiendo que tu Value Object Email tiene un método getValue() o similar que retorna el string
-        const emailString = acc.getEmail().getValue(); 
-        
-        // Extraemos solo la parte antes del '@' para proteger la privacidad
-        const alias = emailString.split('@')[0]; 
-        
-        aliasMap.set(id, alias);
+        // El alias público es responsabilidad del dominio (Value Object Email),
+        // no de este caso de uso.
+        aliasMap.set(acc.getId(), acc.getEmail().getPublicAlias());
       }
     });
 
     // 5. Ensamblar los datos no ordenados (Unranked)
-    const unrankedEntries = allProgress.map(p => ({
+    const unrankedEntries: RankableEntry[] = allProgress.map(p => ({
       username: aliasMap.get(p.userId) || 'Unknown Player', // Usamos el alias seguro
       score: p.score,
       movesUsed: p.movesUsed,
@@ -65,18 +64,18 @@ export class GetLevelLeaderboard {
     const rankedEntries = LeaderboardSortingService.sortAndRank(unrankedEntries);
 
     // 7. Extraer el registro del jugador actual (Bloque 2 del Gherkin)
-    const currentRecordRaw = rankedEntries.find(entry => (entry as any)._internalUserId === currentUserId) || null;
-    
+    const currentRecordRaw = rankedEntries.find(entry => entry._internalUserId === currentUserId) ?? null;
+
     // Limpiamos el ID interno para no filtrarlo a la red
-    let currentRecord = null;
+    let currentRecord: LeaderboardEntryDTO | null = null;
     if (currentRecordRaw) {
-      const { _internalUserId, ...cleanEntry } = currentRecordRaw as any;
+      const { _internalUserId, ...cleanEntry } = currentRecordRaw;
       currentRecord = cleanEntry;
     }
 
     // 8. Aplicar el límite (Paginación) y limpiar IDs del Top Players
-    const topPlayers = rankedEntries.slice(0, limit).map(entry => {
-      const { _internalUserId, ...cleanEntry } = entry as any;
+    const topPlayers: LeaderboardEntryDTO[] = rankedEntries.slice(0, limit).map(entry => {
+      const { _internalUserId, ...cleanEntry } = entry;
       return cleanEntry;
     });
 

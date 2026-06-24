@@ -159,3 +159,29 @@
   2. **Privacidad por Diseño:** Transformación del correo electrónico a un alias público (parte local antes del `@`) en el momento del mapeo de entidades hacia los DTOs, respetando el contrato del frontend sin comprometer PII (Información de Identificación Personal).
   3. **Tipado de Tests:** Rechazo absoluto al uso de variables `any` o *casting* inseguro en los *mocks* de pruebas unitarias, forzando la declaración explícita de todos los métodos de los contratos del dominio.
 - **Patrones de uso observados:** Enfoque maduro en resolución de errores en cadena causados por la evolución de la arquitectura (*Ripple Effect*) y adherencia implacable a las reglas de tipado del ecosistema TypeScript.
+
+### 2026-06-24 — Backend: Revisión del Leaderboard (Primitive Obsession y Zero-Any)
+
+- **Herramienta:** Claude Code
+- **Modelo / versión:** Claude Opus 4.8
+- **Autor humano responsable:** @Jrgil20
+- **Prompt(s) representativo(s):**
+  - "Revisa el PR #11, parece haber un problema de obsesión primitiva: usa muchos strings en aplicación cuando deberían ser Value Objects del dominio."
+  - "¿Es buena idea crear cosas en el dominio así nada más, a lo desquiciado?"
+- **Salida tomada de la IA:**
+  - `src/domain/value-objects/Email.ts` [MODIFY] — Nuevo método `getPublicAlias()` que encapsula la regla de derivar el alias público (parte local del correo). La lógica vivía fugada en el caso de uso.
+  - `src/application/use-cases/GetLevelLeaderboard.ts` [MODIFY] — Eliminados los tres `as any`; se introdujo el tipo interno `RankableEntry` para arrastrar el id del usuario de forma type-safe a través del pipeline de ordenamiento.
+  - `src/domain/services/LeaderboardSortingService.ts` [MODIFY] — `sortAndRank` ahora es genérico (`<T extends UnrankedEntry>`) para preservar el tipo de los campos extra sin perder el tipado.
+  - `tests/application/use-cases/GetLavelLeaderboard.spec.ts` [MODIFY] — El mock ahora usa el `Value Object` real `Email` para ejercitar `getPublicAlias()` de punta a punta.
+- **Modificaciones manuales del equipo:**
+  - **Decisión de alcance (anti-sobreingeniería):** Se rechazó la propuesta inicial de la IA de crear 6 Value Objects (`PlayerId`, `LevelId`, `Score`, `Duration`, etc.). Tras inspeccionar el dominio existente (solo `Email` y `Password` son VOs; los IDs son `string` por convención del equipo), se acotó el cambio a lo que sí protege una invariante real, manteniendo la consistencia con el código previo.
+- **Validación realizada:** `npm run build` (tsc) sin errores y suite completa de Jest en verde (67/67). Se eliminaron las violaciones a la *Zero-Any Policy* sin tocar contratos públicos del DTO.
+
+---
+#### 📋 Resumen de la sesión
+- **Contexto de la conversación:** Revisión de calidad del PR #11 (Leaderboard) enfocada en obsesión primitiva y tipado estricto.
+- **Decisiones clave tomadas:**
+  1. **DTOs cargan primitivos a propósito:** Se distinguió entre primitivos legítimos de transporte (los campos del `LeaderboardEntryDTO`) y lógica de dominio fugada (la extracción del alias), corrigiendo solo lo segundo.
+  2. **Restricción al refactor del dominio:** Crear Value Objects solo donde exista una invariante de negocio que justificarlo, respetando la convención minimalista ya establecida en el repositorio.
+  3. **Type-safety sin `any`:** Sustitución del *casting* inseguro por genéricos y un tipo interno explícito para el id del usuario.
+- **Patrones de uso observados:** Cuestionamiento crítico del alcance propuesto por la IA, priorizando la consistencia arquitectónica del proyecto por encima de la pureza teórica de DDD.

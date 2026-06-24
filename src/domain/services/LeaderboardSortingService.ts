@@ -7,7 +7,7 @@ export class LeaderboardSortingService {
    * Ordena los registros aplicando los criterios de desempate en cascada
    * y asigna la posición absoluta (rank) a cada jugador.
    */
-  public static sortAndRank(entries: UnrankedEntry[]): LeaderboardEntryDTO[] {
+  public static sortAndRank<T extends UnrankedEntry>(entries: T[]): Array<T & { rank: number }> {
     const sorted = [...entries].sort((a, b) => {
       // 1° Criterio: Mayor score (DESC)
       if (b.score !== a.score) {
