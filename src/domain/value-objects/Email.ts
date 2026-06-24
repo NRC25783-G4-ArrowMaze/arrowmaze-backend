@@ -21,4 +21,12 @@ export class Email {
   public getValue(): string {
     return this.value;
   }
+
+  /**
+   * Retorna la parte local del correo (lo que va antes del '@') para usarla
+   * como alias público. Evita exponer el correo completo (PII) hacia afuera.
+   */
+  public getPublicAlias(): string {
+    return this.value.split('@')[0];
+  }
 }

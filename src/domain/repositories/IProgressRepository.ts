@@ -1,4 +1,4 @@
-import type { LevelProgressDTO } from "../contracts/ProgressDTO";
+import type { LevelProgressDTO } from "../shared/contracts/ProgressDTO";
 
 export interface IProgressRepository {
   /**
@@ -17,4 +17,6 @@ export interface IProgressRepository {
    * Guarda un nuevo registro o sobrescribe uno existente.
    */
   save(progress: LevelProgressDTO): Promise<void>;
+
+  findAllByLevel(levelId: string): Promise<LevelProgressDTO[]>;
 }

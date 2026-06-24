@@ -2,6 +2,7 @@ import express from 'express';
 import { AuthFactory } from './main/factories/AuthFactory';
 import { LevelModuleFactory } from './main/factories/LevelModuleFactory';
 import { ProgressModuleFactory } from './main/factories/ProgressModuleFactory';
+import { LeaderboardModuleFactory } from './main/factories/LeaderboardModuleFactory';
 
 async function bootstrap() {
   const app = express();
@@ -21,7 +22,10 @@ async function bootstrap() {
   app.use('/api/v1/levels', LevelModuleFactory.createRouter());
 
   //Rutas de gestión de progreso
-  app.use('/api/progress', ProgressModuleFactory.createRouter());
+  app.use('/api/v1/progress', ProgressModuleFactory.createRouter());
+
+  //Rutas del leaderboard
+  app.use('/api/v1/leaderboards', LeaderboardModuleFactory.createRouter());
   
   // =========================================================
   // ARRANQUE DEL SERVIDOR

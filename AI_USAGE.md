@@ -125,3 +125,63 @@
   2. **Single Responsibility Principle (SRP):** Delegación de la validación estructural y sintáctica de los DTOs de entrada hacia una clase comando (`SaveProgressCommand`), dejando los casos de uso enfocados 100% en las reglas de negocio (*High Score*).
   3. **Limpieza de Código Fuente:** Aprobación e implementación de la regla de excluir las marcas de autoría en el código compilable.
 - **Patrones de uso observados:** Enfoque robusto en diseño de software de nivel empresarial, con iteraciones rápidas hacia la separación de responsabilidades y la consistencia RESTful.
+
+### 2026-06-22 — Backend: API REST de Clasificación por Nivel (Leaderboard)
+
+- **Herramienta:** Gemini
+- **Modelo / versión:** Gemini
+- **Autor humano responsable:** @SantiagoChirinos
+- **Prompt(s) representativo(s):**
+  - "Feature: API REST de Clasificación por Nivel (Leaderboard)... Quiero consultar la tabla de clasificación de un nivel específico..."
+  - "Ahora vamos con el dominio y el caso de uso. Para el dominio vamos a usar un servicio de dominio"
+  - "Vamos a usar como identificador público de la cuenta el correo sin el dominio"
+  - "No tenemos findbyid en el repositorio de cuentas, debemos actualizar la interfaz y la implementación"
+  - "Vamos a actualizar los tests que usaban el repositorio que cambió"
+- **Salida tomada de la IA:**
+  - `Gherkin: Leaderboard` [NEW] — Definición formal con reglas de ordenamiento en cascada y contexto de jugador (*currentRecord*).
+  - `shared/contracts/LeaderboardDTO.ts` [NEW] — Contratos limpios para el intercambio de datos.
+  - `src/domain/services/LeaderboardSortingService.ts` [NEW] — Servicio de dominio puro para cálculo matemático de desempates (Score > Moves > Time > Date).
+  - `src/application/use-cases/leaderboard/GetLevelLeaderboard.ts` [NEW] — Orquestación multicontenidos (Niveles, Progreso, Cuentas) protegiendo el ID interno.
+  - `src/domain/repositories/` e `src/infrastructure/repositories/` [MODIFY] — Adición de `findAllByLevel` en Progreso y `findById` en Cuentas (con reconstrucción de entidad).
+  - `src/presentation/` [NEW] — Controlador, Rutas protegidas por middleware y *Composition Root* (Fábrica) autónomo.
+  - Suites de Pruebas (Jest) [NEW/MODIFY] — Tests unitarios completos y corrección de implementaciones de *mocks* preexistentes.
+- **Modificaciones manuales del equipo:**
+  - **Protección de Privacidad (Cruce de Contextos):** Intervención manual para extraer un alias seguro a partir del `Value Object` de `Email` en lugar de exponer el correo completo en la tabla de clasificación pública.
+  - **Refuerzo de Tipado Estricto (Zero-Any Policy):** Corrección estructural en los *mocks* de Jest para `IAccountRepository` y `IProgressRepository` en todo el proyecto, solucionando errores `TS2322` tras la actualización de contratos, garantizando una base de código estrictamente tipada.
+  - **Cumplimiento de Directivas:** Aplicación estricta de la regla de autoría, manteniendo las etiquetas fuera del código fuente TypeScript.
+- **Validación realizada:** Pruebas unitarias del servicio de dominio, caso de uso y controlador en verde. Reparación exitosa de las suites de `Login`, `RegisterAccount`, `GetProgress` y `SaveProgress` afectadas por la evolución de las interfaces.
+
+---
+#### 📋 Resumen de la sesión
+- **Contexto de la conversación:** Implementación del *Leaderboard* para fomentar la competitividad de los jugadores, requiriendo cruce de información entre dominios aislados.
+- **Decisiones clave tomadas:**
+  1. **Servicio de Dominio Aislado:** Extracción del algoritmo de *Cascade Sorting* a un servicio estático y puro para facilitar pruebas matemáticas rápidas e independientes de la base de datos.
+  2. **Privacidad por Diseño:** Transformación del correo electrónico a un alias público (parte local antes del `@`) en el momento del mapeo de entidades hacia los DTOs, respetando el contrato del frontend sin comprometer PII (Información de Identificación Personal).
+  3. **Tipado de Tests:** Rechazo absoluto al uso de variables `any` o *casting* inseguro en los *mocks* de pruebas unitarias, forzando la declaración explícita de todos los métodos de los contratos del dominio.
+- **Patrones de uso observados:** Enfoque maduro en resolución de errores en cadena causados por la evolución de la arquitectura (*Ripple Effect*) y adherencia implacable a las reglas de tipado del ecosistema TypeScript.
+
+### 2026-06-24 — Backend: Revisión del Leaderboard (Primitive Obsession y Zero-Any)
+
+- **Herramienta:** Claude Code
+- **Modelo / versión:** Claude Opus 4.8
+- **Autor humano responsable:** @Jrgil20
+- **Prompt(s) representativo(s):**
+  - "Revisa el PR #11, parece haber un problema de obsesión primitiva: usa muchos strings en aplicación cuando deberían ser Value Objects del dominio."
+  - "¿Es buena idea crear cosas en el dominio así nada más, a lo desquiciado?"
+- **Salida tomada de la IA:**
+  - `src/domain/value-objects/Email.ts` [MODIFY] — Nuevo método `getPublicAlias()` que encapsula la regla de derivar el alias público (parte local del correo). La lógica vivía fugada en el caso de uso.
+  - `src/application/use-cases/GetLevelLeaderboard.ts` [MODIFY] — Eliminados los tres `as any`; se introdujo el tipo interno `RankableEntry` para arrastrar el id del usuario de forma type-safe a través del pipeline de ordenamiento.
+  - `src/domain/services/LeaderboardSortingService.ts` [MODIFY] — `sortAndRank` ahora es genérico (`<T extends UnrankedEntry>`) para preservar el tipo de los campos extra sin perder el tipado.
+  - `tests/application/use-cases/GetLavelLeaderboard.spec.ts` [MODIFY] — El mock ahora usa el `Value Object` real `Email` para ejercitar `getPublicAlias()` de punta a punta.
+- **Modificaciones manuales del equipo:**
+  - **Decisión de alcance (anti-sobreingeniería):** Se rechazó la propuesta inicial de la IA de crear 6 Value Objects (`PlayerId`, `LevelId`, `Score`, `Duration`, etc.). Tras inspeccionar el dominio existente (solo `Email` y `Password` son VOs; los IDs son `string` por convención del equipo), se acotó el cambio a lo que sí protege una invariante real, manteniendo la consistencia con el código previo.
+- **Validación realizada:** `npm run build` (tsc) sin errores y suite completa de Jest en verde (67/67). Se eliminaron las violaciones a la *Zero-Any Policy* sin tocar contratos públicos del DTO.
+
+---
+#### 📋 Resumen de la sesión
+- **Contexto de la conversación:** Revisión de calidad del PR #11 (Leaderboard) enfocada en obsesión primitiva y tipado estricto.
+- **Decisiones clave tomadas:**
+  1. **DTOs cargan primitivos a propósito:** Se distinguió entre primitivos legítimos de transporte (los campos del `LeaderboardEntryDTO`) y lógica de dominio fugada (la extracción del alias), corrigiendo solo lo segundo.
+  2. **Restricción al refactor del dominio:** Crear Value Objects solo donde exista una invariante de negocio que justificarlo, respetando la convención minimalista ya establecida en el repositorio.
+  3. **Type-safety sin `any`:** Sustitución del *casting* inseguro por genéricos y un tipo interno explícito para el id del usuario.
+- **Patrones de uso observados:** Cuestionamiento crítico del alcance propuesto por la IA, priorizando la consistencia arquitectónica del proyecto por encima de la pureza teórica de DDD.

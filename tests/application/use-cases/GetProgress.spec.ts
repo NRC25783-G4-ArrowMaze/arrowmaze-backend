@@ -1,6 +1,6 @@
 import { GetProgress } from '../../../src/application/use-cases/GetProgess';
 import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../../src/domain/contracts/ProgressDTO';
+import type { LevelProgressDTO } from '../../../src/domain/shared/contracts/ProgressDTO';
 import { ProgressNotFoundError } from '../../../src/domain/exceptions/ProgressExceptions';
 
 describe('GetProgress Use Case', () => {
@@ -21,6 +21,7 @@ describe('GetProgress Use Case', () => {
       findByUserAndLevel: jest.fn(),
       findAllByUser: jest.fn(),
       save: jest.fn(),
+      findAllByLevel: jest.fn(),
     };
     useCase = new GetProgress(mockProgressRepository);
   });

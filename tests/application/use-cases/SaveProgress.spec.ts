@@ -2,7 +2,7 @@ import { SaveProgress } from '../../../src/application/use-cases/SaveProgress';
 import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository';
 import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRepository';
 import { ProgressValidationError, LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions';
-import type { LevelProgressDTO, SaveProgressPayloadDTO } from '../../../src/domain/contracts/ProgressDTO';
+import type { LevelProgressDTO, SaveProgressPayloadDTO } from '../../../src/domain/shared/contracts/ProgressDTO';
 
 describe('SaveProgress Use Case', () => {
   let mockProgressRepository: jest.Mocked<IProgressRepository>;
@@ -26,7 +26,7 @@ describe('SaveProgress Use Case', () => {
   };
 
   beforeEach(() => {
-    mockProgressRepository = { findByUserAndLevel: jest.fn(), findAllByUser: jest.fn(), save: jest.fn() };
+    mockProgressRepository = { findByUserAndLevel: jest.fn(), findAllByUser: jest.fn(), save: jest.fn(), findAllByLevel: jest.fn() };
     mockLevelRepository = { findById: jest.fn(), findAllMetadata: jest.fn(), findAll: jest.fn(), save: jest.fn(), update: jest.fn() };
     useCase = new SaveProgress(mockProgressRepository, mockLevelRepository);
   });

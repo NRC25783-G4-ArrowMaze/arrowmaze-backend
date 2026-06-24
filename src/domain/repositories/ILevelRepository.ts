@@ -1,4 +1,4 @@
-import type { LevelDataDTO } from "../contracts/LevelDataDTOs";
+import type { LevelDataDTO } from "../shared/contracts/LevelDataDTOs";
 
 export type LevelMetadata = Omit<LevelDataDTO, 'cells' | 'connections' | 'arrows'>;
 

@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import { JsonProgressRepository } from '../../../src/infrastructure/repositories/JsonProgressRepository';
-import type { LevelProgressDTO } from '../../../src/domain/contracts/ProgressDTO';
+import type { LevelProgressDTO } from '../../../src/domain/shared/contracts/ProgressDTO';
 
 jest.mock('fs/promises');
 

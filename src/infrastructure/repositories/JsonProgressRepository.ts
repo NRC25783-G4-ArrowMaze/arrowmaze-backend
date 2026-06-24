@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../domain/contracts/ProgressDTO';
+import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO';
 
 export class JsonProgressRepository implements IProgressRepository {
   private readonly filePath: string;
@@ -43,6 +43,12 @@ export class JsonProgressRepository implements IProgressRepository {
     const allProgress = await this.readData();
     // Filtro estricto para garantizar el aislamiento multitenant
     return allProgress.filter(p => p.userId === userId);
+  }
+
+  async findAllByLevel(levelId: string): Promise<LevelProgressDTO[]> {
+    const allProgress = await this.readData();
+    // Retorna todos los intentos exitosos para un nivel específico de todos los usuarios
+    return allProgress.filter(p => p.levelId === levelId);
   }
 
   // ─────────────────────────────────────────────

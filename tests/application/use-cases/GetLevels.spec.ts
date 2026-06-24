@@ -1,7 +1,7 @@
 import { GetLevels } from '../../../src/application/use-cases/GetLevels';
 import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRepository';
 import { LevelNotFoundError } from '../../../src/domain/exceptions/LevelExceptions';
-import type { LevelDataDTO } from '../../../src/domain/contracts/LevelDataDTOs';
+import type { LevelDataDTO } from '../../../src/domain/shared/contracts/LevelDataDTOs';
 
 describe('GetLevels Use Case', () => {
   let mockLevelRepository: jest.Mocked<ILevelRepository>;
