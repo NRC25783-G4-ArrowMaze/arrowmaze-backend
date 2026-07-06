@@ -1,0 +1,249 @@
+{
+  "project": "arrow-maze-backend",
+  "aiUsageRegistry": {
+    "version": "1.0",
+    "lastUpdated": "2026-07-06T00:00:00Z",
+    "entries": [
+      {
+        "id": "2026-05-07-001",
+        "date": "2026-05-07",
+        "title": "Bootstrap de las reglas del repositorio",
+        "file": "2026-05-07-bootstrap-reglas-repositorio.md",
+        "tool": "Cursor (Cloud Agent)",
+        "model": "Claude Opus 4.7",
+        "author": "Equipo Arrow Maze",
+        "phase": "governance",
+        "feature": "repo-rules-bootstrap",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 9,
+          "files_modified": 0
+        },
+        "areas": [
+          "governance",
+          "cursor-rules",
+          "clean-architecture",
+          "ddd",
+          "testing-standards",
+          "documentation"
+        ],
+        "validation": {
+          "cross_review": "passed — reglas contrastadas contra el enunciado original del proyecto",
+          "lint_tests": "n/a — el repositorio aún no contenía código fuente"
+        },
+        "decisions": [
+          "Estructura normativa en .cursor/rules/ (00–60) con CONTRIBUTING.md como versión legible",
+          "Registro obligatorio de uso de IA en el repositorio"
+        ],
+        "notes": "Entrada recuperada del historial git (commit 6bf868a). Había sido eliminada de AI_USAGE.md en el commit 71e99d8 (2026-06-06) al reformatear el archivo; restaurada en la migración al registro modular (2026-07-06)."
+      },
+      {
+        "id": "2026-06-04-001",
+        "date": "2026-06-04",
+        "title": "Diseño de Arquitectura Base e Implementación del Módulo de Autenticación",
+        "file": "2026-06-04-arquitectura-base-modulo-autenticacion.md",
+        "tool": "Gemini",
+        "model": "Gemini 3.1 pro",
+        "author": "@SantiagoChirinos",
+        "phase": "implementation",
+        "feature": "E1/F1 — auth module",
+        "linked_session": "2026-06-06-001",
+        "status": "superseded",
+        "deliverables": {
+          "files_created": 5,
+          "files_modified": 0
+        },
+        "areas": [
+          "presentation",
+          "composition-root",
+          "factory-pattern",
+          "dependency-injection",
+          "security"
+        ],
+        "validation": {
+          "human_review": "passed — pureza de Clean Architecture",
+          "static_analysis": "passed — SonarQube (S5689 resuelto con helmet)"
+        },
+        "decisions": [
+          "Factory Pattern en capa main para DI manual escalable",
+          "Tipado estricto con import type para interfaces y contratos"
+        ],
+        "notes": "Entrada recuperada del historial git (commit 393e18a). Superseded: su contenido fue consolidado y reformateado en la entrada 2026-06-06-001, perdiendo fecha y modelo originales. Se restaura por trazabilidad; NO contar sus deliverables en agregados (duplican los de 2026-06-06-001)."
+      },
+      {
+        "id": "2026-06-04-002",
+        "date": "2026-06-04",
+        "title": "Configuración de Suite de Pruebas y Tests Unitarios (Patrón AAA)",
+        "file": "2026-06-04-suite-pruebas-unitarias-aaa.md",
+        "tool": "Gemini",
+        "model": "Gemini 3.1 pro",
+        "author": "@SantiagoChirinos",
+        "phase": "testing",
+        "feature": "E1/F1 — auth tests",
+        "linked_session": "2026-06-06-001",
+        "status": "superseded",
+        "deliverables": {
+          "files_created": 3,
+          "files_modified": 0
+        },
+        "areas": [
+          "testing",
+          "jest",
+          "aaa-pattern",
+          "mocking",
+          "typescript-config"
+        ],
+        "validation": {
+          "tests": "passed — suite completa en verde",
+          "static_analysis": "passed — S4325 resuelto con entidades reales en mocks"
+        },
+        "decisions": [
+          "Tests de caja negra sobre comportamiento observable, no implementación",
+          "Nomenclatura should_[resultado]_when_[condicion]",
+          "moduleResolution Bundler + ajustes ESM/verbatimModuleSyntax"
+        ],
+        "notes": "Entrada recuperada del historial git (commit 393e18a). Superseded: consolidada en 2026-06-06-001. Se restaura por trazabilidad; NO contar sus deliverables en agregados."
+      },
+      {
+        "id": "2026-06-06-001",
+        "date": "2026-06-06",
+        "title": "Implementación de Capa de Presentación (Auth) y Suite de Pruebas (Jest)",
+        "file": "2026-06-06-consolidado-presentacion-auth-tests.md",
+        "tool": "Gemini",
+        "model": "Gemini (versión no especificada; originalmente Gemini 3.1 pro según entradas 2026-06-04)",
+        "author": "@SantiagoChirinos",
+        "phase": "implementation",
+        "feature": "E1/F1 — auth module + tests",
+        "linked_session": ["2026-06-04-001", "2026-06-04-002"],
+        "status": "completed",
+        "deliverables": {
+          "files_created": 7,
+          "files_modified": 1
+        },
+        "areas": [
+          "presentation",
+          "composition-root",
+          "factory-pattern",
+          "testing",
+          "jest",
+          "security"
+        ],
+        "validation": {
+          "tests": "passed — suite completa en Jest",
+          "static_analysis": "passed — sin advertencias en linter ni SonarQube (S5689, S4325 resueltos)"
+        },
+        "decisions": [
+          "Inyección Modular (Factory Pattern) en main/factories",
+          "Detroit TDD: probar impacto real sobre entidades in-memory",
+          "Manejo de errores con cause en vez de I/O en capa de Aplicación"
+        ],
+        "notes": "Versión canónica del trabajo del 2026-06-04 (commits 393e18a + 71e99d8): consolidación reformateada al formato del front de las entradas 2026-06-04-001 y 2026-06-04-002. El trabajo real se hizo el 2026-06-04."
+      },
+      {
+        "id": "2026-06-13-001",
+        "date": "2026-06-13",
+        "title": "Gestión de Sesión Activa, Blacklist y Persistencia basada en JSON",
+        "file": "2026-06-13-sesion-activa-blacklist-persistencia-json.md",
+        "tool": "Gemini",
+        "model": "Gemini (versión no especificada)",
+        "author": "@SantiagoChirinos",
+        "phase": "implementation",
+        "feature": "E2 — active session management",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 5,
+          "files_modified": 2
+        },
+        "areas": [
+          "infrastructure",
+          "persistence-json",
+          "jwt-blacklist",
+          "cron-jobs",
+          "testing",
+          "middleware"
+        ],
+        "validation": {
+          "tests": "passed — suite completa en Jest con fs/promises mockeado",
+          "bdd_alignment": "passed — códigos 401/403 exactos según el Gherkin E2"
+        },
+        "decisions": [
+          "Persistencia pragmática en JSON en lugar de base de datos pesada",
+          "Blacklist por jti (JWT ID) con Cron Job de purga automática",
+          "Aislamiento de I/O en pruebas interceptando fs/promises"
+        ],
+        "notes": "Implementación de E2 (PR #8, feature16-manejo-sesion-activa). Token único JWT de 7 días sin fingerprinting."
+      },
+      {
+        "id": "2026-07-06-001",
+        "date": "2026-07-06",
+        "title": "Reestructuración documental: docs/, registro modular de IA y README",
+        "file": "2026-07-06-reestructuracion-documental-registro-modular.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Opus 4.8 + Claude Fable 5",
+        "author": "@Jrgil20",
+        "phase": "documentation",
+        "feature": "docs-restructure + ai-usage-registry",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 14,
+          "files_modified": 5,
+          "files_deleted": 1,
+          "files_renamed": 2,
+          "feature_files_synchronized": 5,
+          "sessions_recovered_from_git": 3,
+          "commits": 7
+        },
+        "areas": [
+          "documentation",
+          "specification-sync",
+          "ai-usage-registry",
+          "governance",
+          "readme",
+          "tooling"
+        ],
+        "validation": {
+          "tests": "passed — 19/19 en 5 suites con pnpm test",
+          "spec_sync": "passed — diff byte a byte contra project-core",
+          "manifest_json": "passed — JSON válido",
+          "orphan_references": "passed — cero referencias a AI_USAGE.md o enlaces rotos"
+        },
+        "decisions": [
+          "Recuperar del historial git las 3 sesiones borradas y marcarlas superseded con linked_session",
+          "Codificar la inmutabilidad de reportes en la normativa (.cursor/rules + CONTRIBUTING)",
+          "Centralizar documentación en docs/ (specs, CONTRIBUTING, diagramas UML)",
+          "pnpm como gestor de paquetes obligatorio (corrección tras uso indebido de npm)"
+        ],
+        "notes": "Primera sesión del registro modular. Rama docs/documentacion-modular con 7 commits modulares. project-core establecido como fuente única de specs para el backend."
+      }
+    ],
+    "statistics": {
+      "totalReports": 6,
+      "distinctWorkSessions": 5,
+      "lastUpdated": "2026-07-06T00:00:00Z",
+      "toolsUsed": [
+        "Cursor (Cloud Agent)",
+        "Gemini",
+        "Claude Code (claude.ai/code)"
+      ],
+      "modelsUsed": [
+        "Claude Opus 4.7",
+        "Claude Opus 4.8",
+        "Claude Fable 5",
+        "Gemini 3.1 pro",
+        "Gemini (versión no especificada)"
+      ],
+      "totalFilesCreated": 35,
+      "totalFilesModified": 8,
+      "totalTestsPassing": 19,
+      "totalTestSuites": 5,
+      "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
+    },
+    "lastEntry": {
+      "id": "2026-07-06-001",
+      "summary": "Reestructuración documental: docs/, registro modular de IA y README"
+    }
+  }
+}
