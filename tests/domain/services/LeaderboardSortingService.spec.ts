@@ -1,4 +1,4 @@
-import { LeaderboardSortingService } from '../../../src/domain/services/LeaderboardSortingService';
+import { LeaderboardSortingService } from '../../../src/domain/services/LeaderboardSortingService.js';
 
 describe('LeaderboardSortingService', () => {
   it('should_sort_by_score_descending', () => {

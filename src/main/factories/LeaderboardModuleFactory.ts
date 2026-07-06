@@ -1,35 +1,31 @@
 import { Router } from 'express';
 
 // Interfaces
-import { type ILevelRepository } from '../../domain/repositories/ILevelRepository';
-import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import { type IAccountRepository } from '../../domain/repositories/IAccountRepository';
-import { type ITokenService } from '../../application/ports/ITokenService';
-import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
+import { type ILevelRepository } from '../../domain/repositories/ILevelRepository.js';
+import { type IProgressRepository } from '../../domain/repositories/IProgressRepository.js';
+import { type IAccountRepository } from '../../domain/repositories/IAccountRepository.js';
 
 // Infraestructura
-import { JsonLevelRepository } from '../../infrastructure/repositories/JsonLevelRepository';
-import { JsonProgressRepository } from '../../infrastructure/repositories/JsonProgressRepository';
-import { JsonAccountRepository } from '../../infrastructure/repositories/JsonAccountRepository';
-import { JwtTokenService } from '../../infrastructure/services/JwtTokenService';
-import { JsonSessionRepository } from '../../infrastructure/repositories/JsonSessionRepository';
+import { JsonLevelRepository } from '../../infrastructure/repositories/JsonLevelRepository.js';
+import { JsonProgressRepository } from '../../infrastructure/repositories/JsonProgressRepository.js';
+import { JsonAccountRepository } from '../../infrastructure/repositories/JsonAccountRepository.js';
 
 // Aplicación y Presentación
-import { GetLevelLeaderboard } from '../../application/use-cases/GetLevelLeaderboard';
-import { LeaderboardController } from '../../presentation/controllers/LeaderboardController';
-import { LeaderboardRoutes } from '../../presentation/routes/LeaderboardRoutes';
-import { AuthMiddleware } from '../../presentation/middlewares/AuthMiddleware';
+import { GetLevelLeaderboard } from '../../application/use-cases/GetLevelLeaderboard.js';
+import { LeaderboardController } from '../../presentation/controllers/LeaderboardController.js';
+import { LeaderboardRoutes } from '../../presentation/routes/LeaderboardRoutes.js';
+
+// Seguridad compartida
+import { SharedSecurityFactory } from './SharedSecurityFactory.js';
 
 export class LeaderboardModuleFactory {
   /**
    * Construye y devuelve el Router de Express completamente ensamblado.
    */
   public static createRouter(): Router {
-    // 1. Dependencias de Seguridad Compartidas
-    const jwtSecret: string = process.env.JWT_SECRET || 'super_secreta_clave_desarrollo_academico';
-    const tokenService: ITokenService = new JwtTokenService(jwtSecret);
-    const sessionRepository: ISessionRepository = new JsonSessionRepository();
-    const authMiddleware: AuthMiddleware = new AuthMiddleware(tokenService, sessionRepository);
+    // 1. Dependencias de Seguridad Compartidas (sin secretos hardcodeados:
+    // JWT_SECRET es obligatorio y se valida en SharedSecurityFactory)
+    const authMiddleware = SharedSecurityFactory.getAuthMiddleware();
 
     // 2. Repositorios de Infraestructura
     const levelRepository: ILevelRepository = new JsonLevelRepository();

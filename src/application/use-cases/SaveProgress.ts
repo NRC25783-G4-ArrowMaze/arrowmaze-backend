@@ -1,8 +1,8 @@
-import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import { type ILevelRepository } from '../../domain/repositories/ILevelRepository';
-import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions';
-import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO';
-import { SaveProgressCommand } from './SaveProgressCommand';
+import { type IProgressRepository } from '../../domain/repositories/IProgressRepository.js';
+import { type ILevelRepository } from '../../domain/repositories/ILevelRepository.js';
+import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions.js';
+import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO.js';
+import { SaveProgressCommand } from './SaveProgressCommand.js';
 
 export interface SaveProgressResult {
   message: string;

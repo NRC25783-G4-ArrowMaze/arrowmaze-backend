@@ -1,5 +1,5 @@
-import { Account } from '../entities/Account';
-import { Email } from '../value-objects/Email';
+import { Account } from '../entities/Account.js';
+import { Email } from '../value-objects/Email.js';
 
 export interface IAccountRepository {
   save(account: Account): Promise<void>;

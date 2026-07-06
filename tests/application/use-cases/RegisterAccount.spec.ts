@@ -1,9 +1,9 @@
-import { RegisterAccount } from '../../../src/application/use-cases/RegisterAccount';
-import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository';
-import { type ICryptoService } from '../../../src/application/ports/ICryptoService';
-import { Account } from '../../../src/domain/entities/Account';
-import { RegistrationError, ValidationError } from '../../../src/domain/exceptions/AuthExceptions';
-import { Email } from '../../../src/domain/value-objects/Email';
+import { RegisterAccount } from '../../../src/application/use-cases/RegisterAccount.js';
+import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository.js';
+import { type ICryptoService } from '../../../src/application/ports/ICryptoService.js';
+import { Account } from '../../../src/domain/entities/Account.js';
+import { RegistrationError, ValidationError } from '../../../src/domain/exceptions/AuthExceptions.js';
+import { Email } from '../../../src/domain/value-objects/Email.js';
 
 describe('RegisterAccount Use Case', () => {
   let mockAccountRepository: jest.Mocked<IAccountRepository>;

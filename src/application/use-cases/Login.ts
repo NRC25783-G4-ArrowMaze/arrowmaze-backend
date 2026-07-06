@@ -1,8 +1,8 @@
-import { type IAccountRepository } from '../../domain/repositories/IAccountRepository';
-import { type ICryptoService } from '../ports/ICryptoService';
-import { type ITokenService } from '../ports/ITokenService';
-import { Email } from '../../domain/value-objects/Email';
-import { AuthError } from '../../domain/exceptions/AuthExceptions';
+import { type IAccountRepository } from '../../domain/repositories/IAccountRepository.js';
+import { type ICryptoService } from '../ports/ICryptoService.js';
+import { type ITokenService } from '../ports/ITokenService.js';
+import { Email } from '../../domain/value-objects/Email.js';
+import { AuthError } from '../../domain/exceptions/AuthExceptions.js';
 
 export interface LoginRequest {
   email: string;
@@ -46,11 +46,10 @@ export class Login {
     }
 
     const jti = this.generateId();
-    
-    // Asignamos un tiempo de expiración por defecto, por ejemplo 24 horas (86400 segundos)
-    const expiresInSeconds = 86400; 
 
-    // 👈 Actualizamos la firma para enviar todos los parámetros y extraer el ID y Rol de los getters
+    // Sesión de 7 días, según la spec E2 de gestión de sesión activa
+    const expiresInSeconds = 604800;
+
     const token = await this.tokenService.generate({
       accountId: account.getId(),
       jti,

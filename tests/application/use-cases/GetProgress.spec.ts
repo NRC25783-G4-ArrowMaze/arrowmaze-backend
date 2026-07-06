@@ -1,7 +1,7 @@
-import { GetProgress } from '../../../src/application/use-cases/GetProgess';
-import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../../src/domain/shared/contracts/ProgressDTO';
-import { ProgressNotFoundError } from '../../../src/domain/exceptions/ProgressExceptions';
+import { GetProgress } from '../../../src/application/use-cases/GetProgress.js';
+import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository.js';
+import type { LevelProgressDTO } from '../../../src/domain/shared/contracts/ProgressDTO.js';
+import { ProgressNotFoundError } from '../../../src/domain/exceptions/ProgressExceptions.js';
 
 describe('GetProgress Use Case', () => {
   let mockProgressRepository: jest.Mocked<IProgressRepository>;

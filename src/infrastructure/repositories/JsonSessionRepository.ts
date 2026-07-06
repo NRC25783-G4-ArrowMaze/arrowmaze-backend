@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
+import { type ISessionRepository } from '../../domain/repositories/ISessionRepository.js';
+import { serialize } from '../persistence/FileWriteQueue.js';
 
 interface SessionRaw {
   jti: string;
@@ -34,12 +35,16 @@ export class JsonSessionRepository implements ISessionRepository {
   }
 
   async revoke(jti: string, expiresAt: Date): Promise<void> {
-    const sessions = await this.readData();
-    sessions.push({
-      jti,
-      expiresAt: expiresAt.toISOString(),
+    // Serializamos el ciclo read-modify-write completo para no perder
+    // escrituras cuando dos peticiones concurrentes tocan el mismo archivo
+    await serialize(this.filePath, async () => {
+      const sessions = await this.readData();
+      sessions.push({
+        jti,
+        expiresAt: expiresAt.toISOString(),
+      });
+      await this.writeData(sessions);
     });
-    await this.writeData(sessions);
   }
 
   async isRevoked(jti: string): Promise<boolean> {
@@ -48,18 +53,20 @@ export class JsonSessionRepository implements ISessionRepository {
   }
 
   async deleteExpiredTokens(currentDate: Date): Promise<number> {
-    const sessions = await this.readData();
-    const initialLength = sessions.length;
+    return serialize(this.filePath, async () => {
+      const sessions = await this.readData();
+      const initialLength = sessions.length;
 
-    // Filtramos para conservar SOLO los que expiran en el futuro
-    const validSessions = sessions.filter(s => new Date(s.expiresAt) > currentDate);
-    
-    const deletedCount = initialLength - validSessions.length;
-    
-    if (deletedCount > 0) {
-      await this.writeData(validSessions);
-    }
-    
-    return deletedCount;
+      // Filtramos para conservar SOLO los que expiran en el futuro
+      const validSessions = sessions.filter(s => new Date(s.expiresAt) > currentDate);
+
+      const deletedCount = initialLength - validSessions.length;
+
+      if (deletedCount > 0) {
+        await this.writeData(validSessions);
+      }
+
+      return deletedCount;
+    });
   }
 }

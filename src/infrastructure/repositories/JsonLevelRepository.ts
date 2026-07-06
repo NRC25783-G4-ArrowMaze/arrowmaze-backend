@@ -1,7 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { type ILevelRepository, type LevelMetadata } from '../../domain/repositories/ILevelRepository';
-import type { LevelDataDTO } from '../../domain/shared/contracts/LevelDataDTOs';
+import { type ILevelRepository, type LevelMetadata } from '../../domain/repositories/ILevelRepository.js';
+import type { LevelDataDTO } from '../../domain/shared/contracts/LevelDataDTOs.js';
+import { serialize } from '../persistence/FileWriteQueue.js';
 
 export class JsonLevelRepository implements ILevelRepository {
   private readonly filePath: string;
@@ -65,18 +66,24 @@ export class JsonLevelRepository implements ILevelRepository {
   // ─────────────────────────────────────────────
 
   async save(level: LevelDataDTO): Promise<void> {
-    const allLevels = await this.readData();
-    allLevels.push(level);
-    await this.writeData(allLevels);
+    // Serializamos el ciclo read-modify-write completo para no perder
+    // escrituras cuando dos peticiones concurrentes tocan el mismo archivo
+    await serialize(this.filePath, async () => {
+      const allLevels = await this.readData();
+      allLevels.push(level);
+      await this.writeData(allLevels);
+    });
   }
 
   async update(id: string, level: LevelDataDTO): Promise<void> {
-    const allLevels = await this.readData();
-    const index = allLevels.findIndex(l => l.id === id);
-    
-    if (index >= 0) {
-      allLevels[index] = level;
-      await this.writeData(allLevels);
-    }
+    await serialize(this.filePath, async () => {
+      const allLevels = await this.readData();
+      const index = allLevels.findIndex(l => l.id === id);
+
+      if (index >= 0) {
+        allLevels[index] = level;
+        await this.writeData(allLevels);
+      }
+    });
   }
 }

@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
+import { type ISessionRepository } from '../../domain/repositories/ISessionRepository.js';
 
 export class BlacklistCleanupJob {
   constructor(private readonly sessionRepository: ISessionRepository) {}

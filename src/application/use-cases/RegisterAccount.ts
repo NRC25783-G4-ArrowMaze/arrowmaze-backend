@@ -1,9 +1,9 @@
-import { type IAccountRepository } from '../../domain/repositories/IAccountRepository';
-import { type ICryptoService } from '../ports/ICryptoService';
-import { Account } from '../../domain/entities/Account';
-import { Email } from '../../domain/value-objects/Email';
-import { Password } from '../../domain/value-objects/Password';
-import { RegistrationError } from '../../domain/exceptions/AuthExceptions';
+import { type IAccountRepository } from '../../domain/repositories/IAccountRepository.js';
+import { type ICryptoService } from '../ports/ICryptoService.js';
+import { Account } from '../../domain/entities/Account.js';
+import { Email } from '../../domain/value-objects/Email.js';
+import { Password } from '../../domain/value-objects/Password.js';
+import { RegistrationError } from '../../domain/exceptions/AuthExceptions.js';
 
 // Data Transfer Object para la entrada de datos
 export interface RegisterAccountRequest {

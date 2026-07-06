@@ -1,6 +1,6 @@
-import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO';
-import { ProgressNotFoundError } from '../../domain/exceptions/ProgressExceptions';
+import { type IProgressRepository } from '../../domain/repositories/IProgressRepository.js';
+import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO.js';
+import { ProgressNotFoundError } from '../../domain/exceptions/ProgressExceptions.js';
 
 export class GetProgress {
   constructor(private readonly progressRepository: IProgressRepository) {}

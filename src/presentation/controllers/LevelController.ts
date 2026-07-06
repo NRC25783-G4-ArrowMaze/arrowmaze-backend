@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express';
-import { type GetLevels } from '../../application/use-cases/GetLevels';
-import { type ManageLevel } from '../../application/use-cases/ManageLevel';
-import { LevelNotFoundError, LevelValidationError, LevelAlreadyExistsError } from '../../domain/exceptions/LevelExceptions';
+import { type GetLevels } from '../../application/use-cases/GetLevels.js';
+import { type ManageLevel } from '../../application/use-cases/ManageLevel.js';
+import { LevelNotFoundError, LevelValidationError, LevelAlreadyExistsError } from '../../domain/exceptions/LevelExceptions.js';
 
 export class LevelController {
   constructor(

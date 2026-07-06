@@ -1,4 +1,4 @@
-import type { LeaderboardEntryDTO } from "../shared/contracts/LeaderboardDTO";
+import type { LeaderboardEntryDTO } from "../shared/contracts/LeaderboardDTO.js";
 
 type UnrankedEntry = Omit<LeaderboardEntryDTO, 'rank'>;
 

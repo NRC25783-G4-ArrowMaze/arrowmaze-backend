@@ -1,6 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
-import { type ITokenService } from '../../application/ports/ITokenService';
-import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
+import { type ITokenService } from '../../application/ports/ITokenService.js';
+import { type ISessionRepository } from '../../domain/repositories/ISessionRepository.js';
 
 export class AuthMiddleware {
   constructor(

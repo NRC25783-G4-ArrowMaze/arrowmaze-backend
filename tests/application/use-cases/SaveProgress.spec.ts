@@ -1,8 +1,8 @@
-import { SaveProgress } from '../../../src/application/use-cases/SaveProgress';
-import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository';
-import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRepository';
-import { ProgressValidationError, LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions';
-import type { LevelProgressDTO, SaveProgressPayloadDTO } from '../../../src/domain/shared/contracts/ProgressDTO';
+import { SaveProgress } from '../../../src/application/use-cases/SaveProgress.js';
+import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository.js';
+import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRepository.js';
+import { ProgressValidationError, LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions.js';
+import type { LevelProgressDTO, SaveProgressPayloadDTO } from '../../../src/domain/shared/contracts/ProgressDTO.js';
 
 describe('SaveProgress Use Case', () => {
   let mockProgressRepository: jest.Mocked<IProgressRepository>;

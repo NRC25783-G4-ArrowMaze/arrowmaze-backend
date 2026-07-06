@@ -1,7 +1,7 @@
-import { Logout } from '../../../src/application/use-cases/Logout';
-import { type ITokenService, type TokenPayload } from '../../../src/application/ports/ITokenService';
-import { type ISessionRepository } from '../../../src/domain/repositories/ISessionRepository';
-import { AuthError } from '../../../src/domain/exceptions/AuthExceptions';
+import { Logout } from '../../../src/application/use-cases/Logout.js';
+import { type ITokenService, type TokenPayload } from '../../../src/application/ports/ITokenService.js';
+import { type ISessionRepository } from '../../../src/domain/repositories/ISessionRepository.js';
+import { AuthError } from '../../../src/domain/exceptions/AuthExceptions.js';
 
 describe('Logout Use Case', () => {
   let mockTokenService: jest.Mocked<ITokenService>;

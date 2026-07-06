@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express';
-import { type GetProgress } from '../../application/use-cases/GetProgess';
-import { type SaveProgress } from '../../application/use-cases/SaveProgress';
-import { ProgressValidationError, LevelRegistryError, ProgressNotFoundError } from '../../domain/exceptions/ProgressExceptions';
+import { type GetProgress } from '../../application/use-cases/GetProgress.js';
+import { type SaveProgress } from '../../application/use-cases/SaveProgress.js';
+import { ProgressValidationError, LevelRegistryError, ProgressNotFoundError } from '../../domain/exceptions/ProgressExceptions.js';
 
 export class ProgressController {
   constructor(

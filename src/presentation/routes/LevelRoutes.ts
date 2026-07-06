@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { type LevelController } from '../controllers/LevelController';
-import { type AuthMiddleware } from '../middlewares/AuthMiddleware';
-import { RequireRoleMiddleware } from '../middlewares/RequireRoleMiddleware';
+import { type LevelController } from '../controllers/LevelController.js';
+import { type AuthMiddleware } from '../middlewares/AuthMiddleware.js';
+import { RequireRoleMiddleware } from '../middlewares/RequireRoleMiddleware.js';
 
 export class LevelRoutes {
   /**

@@ -1,7 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO';
+import { type IProgressRepository } from '../../domain/repositories/IProgressRepository.js';
+import type { LevelProgressDTO } from '../../domain/shared/contracts/ProgressDTO.js';
+import { serialize } from '../persistence/FileWriteQueue.js';
 
 export class JsonProgressRepository implements IProgressRepository {
   private readonly filePath: string;
@@ -56,21 +57,25 @@ export class JsonProgressRepository implements IProgressRepository {
   // ─────────────────────────────────────────────
 
   async save(progress: LevelProgressDTO): Promise<void> {
-    const allProgress = await this.readData();
-    
-    // Buscamos si ya existe un registro para ese usuario y ese nivel específico
-    const index = allProgress.findIndex(
-      p => p.userId === progress.userId && p.levelId === progress.levelId
-    );
+    // Serializamos el ciclo read-modify-write completo para no perder
+    // escrituras cuando dos peticiones concurrentes tocan el mismo archivo
+    await serialize(this.filePath, async () => {
+      const allProgress = await this.readData();
 
-    if (index >= 0) {
-      // Sobrescribimos el récord anterior
-      allProgress[index] = progress;
-    } else {
-      // Es la primera vez que el jugador completa este nivel
-      allProgress.push(progress);
-    }
+      // Buscamos si ya existe un registro para ese usuario y ese nivel específico
+      const index = allProgress.findIndex(
+        p => p.userId === progress.userId && p.levelId === progress.levelId
+      );
 
-    await this.writeData(allProgress);
+      if (index >= 0) {
+        // Sobrescribimos el récord anterior
+        allProgress[index] = progress;
+      } else {
+        // Es la primera vez que el jugador completa este nivel
+        allProgress.push(progress);
+      }
+
+      await this.writeData(allProgress);
+    });
   }
 }

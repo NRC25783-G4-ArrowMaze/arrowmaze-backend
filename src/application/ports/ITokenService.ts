@@ -1,4 +1,4 @@
-import { type UserRole } from '../../domain/entities/Account';
+import { type UserRole } from '../../domain/entities/Account.js';
 
 export interface TokenPayload {
   accountId: string;

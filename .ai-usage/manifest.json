@@ -217,11 +217,54 @@
           "pnpm como gestor de paquetes obligatorio (corrección tras uso indebido de npm)"
         ],
         "notes": "Primera sesión del registro modular. Rama docs/documentacion-modular con 7 commits modulares. project-core establecido como fuente única de specs para el backend."
+      },
+      {
+        "id": "2026-07-06-002",
+        "date": "2026-07-06",
+        "title": "Corrección de bugs críticos hallados en inspección (logout, build, JWT, email)",
+        "file": "2026-07-06-correccion-bugs-logout-build-jwt-email.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Fable 5",
+        "author": "@Jrgil20",
+        "phase": "bugfix",
+        "feature": "cross-cutting — auth (E1/E2), build, persistencia JSON",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 7,
+          "files_modified": 55,
+          "files_renamed": 5,
+          "commits": 8
+        },
+        "areas": [
+          "auth",
+          "jwt",
+          "build-tooling",
+          "esm",
+          "persistence-json",
+          "concurrency",
+          "composition-root",
+          "testing",
+          "repo-config"
+        ],
+        "validation": {
+          "tests": "passed — 75/75 en 20 suites (subió de 67/67 al añadir tests de regresión)",
+          "typecheck": "passed — tsc --noEmit limpio",
+          "build": "passed — pnpm build && node dist/index.js arranca sin ERR_MODULE_NOT_FOUND",
+          "e2e_smoke_test": "passed — logout revoca el token (200, antes 401), token revocado rechazado en /progress (403, antes 200), login case-insensitive (200, antes 401), JWT exp-iat = 604800s"
+        },
+        "decisions": [
+          "Build de producción migrado a ESM nodenext + extensiones .js en vez de bundler o CommonJS",
+          "Token de sesión fijado en 7 días (604800s), alineado con README y spec E2",
+          "Mutex de escritura JSON y renombres de typos incluidos; CORS y actualización de READMEs diferidos explícitamente",
+          "8 commits modulares (uno por problema) en rama fix/correcciones-inspeccion; fix: preferido sobre build:/chore: cuando el cambio repara algo roto"
+        ],
+        "notes": "Continuación de una inspección previa del mismo día que verificó 4 bugs en runtime (logout roto por bind perdido, build de producción doblemente roto, TTL de JWT inconsistente con el contrato del puerto, email case-sensitive) más riesgos de configuración (lockfile no versionado, data/ no ignorado, secreto JWT hardcodeado en LeaderboardModuleFactory, carrera read-modify-write en repos JSON). Ejecutado en modo plan con aprobación explícita del usuario antes de implementar."
       }
     ],
     "statistics": {
-      "totalReports": 6,
-      "distinctWorkSessions": 5,
+      "totalReports": 7,
+      "distinctWorkSessions": 6,
       "lastUpdated": "2026-07-06T00:00:00Z",
       "toolsUsed": [
         "Cursor (Cloud Agent)",
@@ -235,15 +278,15 @@
         "Gemini 3.1 pro",
         "Gemini (versión no especificada)"
       ],
-      "totalFilesCreated": 35,
-      "totalFilesModified": 8,
-      "totalTestsPassing": 19,
-      "totalTestSuites": 5,
+      "totalFilesCreated": 42,
+      "totalFilesModified": 63,
+      "totalTestsPassing": 75,
+      "totalTestSuites": 20,
       "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
     },
     "lastEntry": {
-      "id": "2026-07-06-001",
-      "summary": "Reestructuración documental: docs/, registro modular de IA y README"
+      "id": "2026-07-06-002",
+      "summary": "Corrección de bugs críticos hallados en inspección (logout, build, JWT, email)"
     }
   }
 }

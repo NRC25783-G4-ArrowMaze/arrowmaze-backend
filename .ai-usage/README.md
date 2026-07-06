@@ -16,6 +16,7 @@ Registro centralizado de uso de herramientas de IA en el desarrollo del backend 
 | 2026-06-06 | Capa de Presentación (Auth) + Suite de Pruebas — **consolidación de las 2 anteriores** | [`2026-06-06-consolidado-presentacion-auth-tests.md`](./2026-06-06-consolidado-presentacion-auth-tests.md) | Gemini | ✅ Canónica |
 | 2026-06-13 | Gestión de Sesión Activa, Blacklist JWT y persistencia JSON (E2) | [`2026-06-13-sesion-activa-blacklist-persistencia-json.md`](./2026-06-13-sesion-activa-blacklist-persistencia-json.md) | Gemini | ✅ Completa |
 | 2026-07-06 | Reestructuración documental: docs/, registro modular de IA y README | [`2026-07-06-reestructuracion-documental-registro-modular.md`](./2026-07-06-reestructuracion-documental-registro-modular.md) | Claude Code / Opus 4.8 + Fable 5 | ✅ Completa |
+| 2026-07-06 | Corrección de bugs críticos hallados en inspección (logout, build, JWT, email) | [`2026-07-06-correccion-bugs-logout-build-jwt-email.md`](./2026-07-06-correccion-bugs-logout-build-jwt-email.md) | Claude Code / Fable 5 | ✅ Completa |
 
 > ⚠️ **Inconsistencia heredada (documentada):** el antiguo `AI_USAGE.md` fue reescrito
 > completo en el commit `71e99d8` (2026-06-06) en lugar de añadir entradas de forma
@@ -50,9 +51,9 @@ Opcionalmente, cerrar con un bloque `#### 📋 Resumen de la sesión` (duración
 
 ## Estadísticas
 
-- **Total de reportes:** 6 (5 sesiones de trabajo distintas; ver nota de consolidación)
+- **Total de reportes:** 7 (6 sesiones de trabajo distintas; ver nota de consolidación)
 - **Última actualización:** 2026-07-06
-- **Suite de tests (actual):** 19/19 ✅ en 5 suites
+- **Suite de tests (actual):** 75/75 ✅ en 20 suites
 - **Detalle por herramienta/modelo:** ver `manifest.json` (`aiUsageRegistry.statistics`) como fuente estructurada de verdad.
 
 ---

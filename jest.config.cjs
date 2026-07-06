@@ -2,7 +2,11 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  modulePathIgnorePatterns: ['<rootDir>/dist/'],  
+  modulePathIgnorePatterns: ['<rootDir>/dist/'],
+  // Los imports ESM llevan extensión .js; en los tests deben resolver al .ts fuente
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1'
+  },
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
