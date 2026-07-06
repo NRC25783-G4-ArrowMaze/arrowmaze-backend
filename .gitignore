@@ -1,6 +1,5 @@
 # Dependencies
 node_modules/
-pnpm-lock.yaml
 package-lock.json
 npm-debug.log*
 yarn-debug.log*
@@ -54,6 +53,9 @@ android/
 
 # Local storage
 .pnpm-store/
+
+# Persistencia JSON en runtime (contiene hashes de contraseñas)
+data/
 
 # Logs
 logs
