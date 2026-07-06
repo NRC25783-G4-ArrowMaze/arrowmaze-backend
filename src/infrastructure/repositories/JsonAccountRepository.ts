@@ -1,8 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { type IAccountRepository } from '../../domain/repositories/IAccountRepository';
-import { Account } from '../../domain/entities/Account';
-import { Email } from '../../domain/value-objects/Email';
+import { type IAccountRepository } from '../../domain/repositories/IAccountRepository.js';
+import { Account } from '../../domain/entities/Account.js';
+import { Email } from '../../domain/value-objects/Email.js';
+import { serialize } from '../persistence/FileWriteQueue.js';
 
 interface AccountRaw {
   id: string;
@@ -38,23 +39,27 @@ export class JsonAccountRepository implements IAccountRepository {
   }
 
   async save(account: Account): Promise<void> {
-    const accounts = await this.readData();
-    
-    const accountRaw: AccountRaw = {
-      id: account.getId(),
-      email: account.getEmail().getValue(),
-      passwordHash: account.getPasswordHash(),
-      role: account.getRole(),
-    };
+    // Serializamos el ciclo read-modify-write completo para no perder
+    // escrituras cuando dos peticiones concurrentes tocan el mismo archivo
+    await serialize(this.filePath, async () => {
+      const accounts = await this.readData();
 
-    const existingIndex = accounts.findIndex(a => a.id === account.getId());
-    if (existingIndex >= 0) {
-      accounts[existingIndex] = accountRaw;
-    } else {
-      accounts.push(accountRaw);
-    }
+      const accountRaw: AccountRaw = {
+        id: account.getId(),
+        email: account.getEmail().getValue(),
+        passwordHash: account.getPasswordHash(),
+        role: account.getRole(),
+      };
 
-    await this.writeData(accounts);
+      const existingIndex = accounts.findIndex(a => a.id === account.getId());
+      if (existingIndex >= 0) {
+        accounts[existingIndex] = accountRaw;
+      } else {
+        accounts.push(accountRaw);
+      }
+
+      await this.writeData(accounts);
+    });
   }
 
   async findByEmail(email: Email): Promise<Account | null> {
