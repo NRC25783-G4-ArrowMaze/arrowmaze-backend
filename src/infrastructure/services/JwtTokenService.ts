@@ -1,16 +1,13 @@
 import jwt, { type SignOptions } from 'jsonwebtoken';
-import { type ITokenService, type TokenPayload } from '../../application/ports/ITokenService';
-import { AuthError } from '../../domain/exceptions/AuthExceptions';
+import { type ITokenService, type TokenPayload } from '../../application/ports/ITokenService.js';
+import { AuthError } from '../../domain/exceptions/AuthExceptions.js';
 
 export class JwtTokenService implements ITokenService {
-  constructor(
-    private readonly secretKey: string,
-    private readonly expiresIn: string = '7d' 
-  ) {}
+  constructor(private readonly secretKey: string) {}
 
-  async generate(payload: Omit<TokenPayload, 'exp' | 'iat'>): Promise<string> {
+  async generate(payload: Omit<TokenPayload, 'exp' | 'iat'>, expiresInSeconds: number): Promise<string> {
     const options: SignOptions = {
-      expiresIn: this.expiresIn as SignOptions['expiresIn']
+      expiresIn: expiresInSeconds
     };
 
     return jwt.sign(payload, this.secretKey, options);

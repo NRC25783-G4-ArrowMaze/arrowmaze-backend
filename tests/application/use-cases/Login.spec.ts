@@ -1,10 +1,10 @@
-import { Login } from '../../../src/application/use-cases/Login';
-import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository';
-import { type ICryptoService } from '../../../src/application/ports/ICryptoService';
-import { type ITokenService } from '../../../src/application/ports/ITokenService';
-import { Account } from '../../../src/domain/entities/Account';
-import { Email } from '../../../src/domain/value-objects/Email';
-import { AuthError } from '../../../src/domain/exceptions/AuthExceptions';
+import { Login } from '../../../src/application/use-cases/Login.js';
+import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository.js';
+import { type ICryptoService } from '../../../src/application/ports/ICryptoService.js';
+import { type ITokenService } from '../../../src/application/ports/ITokenService.js';
+import { Account } from '../../../src/domain/entities/Account.js';
+import { Email } from '../../../src/domain/value-objects/Email.js';
+import { AuthError } from '../../../src/domain/exceptions/AuthExceptions.js';
 
 describe('Login Use Case', () => {
   let mockAccountRepository: jest.Mocked<IAccountRepository>;
@@ -48,15 +48,15 @@ describe('Login Use Case', () => {
     // Assert
     expect(response.token).toBe('valid_jwt_token');
     
-    // Usamos expect.objectContaining para ser resilientes al segundo parámetro (expiresIn)
-    // y verificamos que el payload contenga la nueva propiedad obligatoria 'role'
+    // Verificamos que el payload contenga la propiedad obligatoria 'role'
+    // y que la sesión dure 7 días (604800 s), según la spec E2
     expect(mockTokenService.generate).toHaveBeenCalledWith(
       expect.objectContaining({
         accountId: 'acc-1',
         jti: 'jti-1234',
-        role: 'USER' // 🚀 Propiedad requerida por la nueva firma
+        role: 'USER'
       }),
-      expect.any(Number) // Acepta cualquier número de expiración que esté enviando tu Use Case
+      604800
     );
   });
 
