@@ -24,6 +24,6 @@
     "lint": "eslint .",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "gen-uml": "tplant --input \"src/**/*.ts\" --output classes.puml && node postprocess-uml.js"
+    "gen-uml": "tplant --input \"src/**/*.ts\" --output docs/classes.puml && node postprocess-uml.js"
   }
 }
