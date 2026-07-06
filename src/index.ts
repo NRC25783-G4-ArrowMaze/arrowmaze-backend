@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { AuthFactory } from './main/factories/AuthFactory.js';
 import { LevelModuleFactory } from './main/factories/LevelModuleFactory.js';
 import { ProgressModuleFactory } from './main/factories/ProgressModuleFactory.js';
@@ -11,6 +12,9 @@ async function bootstrap() {
 
   app.disable('x-powered-by');
   // Middlewares globales
+  // CORS antes de los routers para que el preflight OPTIONS no llegue a las rutas.
+  // Permisivo a propósito (dev en :5173 y Capacitor); TODO: restringir origin vía env CORS_ORIGIN en producción.
+  app.use(cors());
   app.use(express.json());
 
   // Job en segundo plano: purga diaria de la blacklist de tokens (03:00 AM)
