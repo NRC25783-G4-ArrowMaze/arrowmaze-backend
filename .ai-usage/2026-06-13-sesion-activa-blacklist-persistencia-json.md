@@ -154,5 +154,3 @@
   2. **Restricción al refactor del dominio:** Crear Value Objects solo donde exista una invariante de negocio que justificarlo, respetando la convención minimalista ya establecida en el repositorio.
   3. **Type-safety sin `any`:** Sustitución del *casting* inseguro por genéricos y un tipo interno explícito para el id del usuario.
 - **Patrones de uso observados:** Cuestionamiento crítico del alcance propuesto por la IA, priorizando la consistencia arquitectónica del proyecto por encima de la pureza teórica de DDD.
-=======
->>>>>>> e02a668 (docs: migrar AI_USAGE.md al registro modular .ai-usage/ y recuperar sesiones perdidas):.ai-usage/2026-06-13-sesion-activa-blacklist-persistencia-json.md
