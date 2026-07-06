@@ -17,9 +17,9 @@
 | [E1](features/E1-register_and_login.feature) | Registro e inicio de sesión de usuario | — | 📝 Lista | ✅ Implementado (`RegisterAccount`, `Login`) |
 | [E2](features/E2-active_session_management.feature) | Gestión de sesión activa y renovación de credenciales JWT | E1 | 📝 Lista | ✅ Implementado (`Logout`, blacklist JWT, `JsonSessionRepository`) |
 | [F1](features/F1-api_users_auth.feature) | API de autenticación de usuarios (registro, login, logout con JWT) | — | 📝 Lista | ✅ Implementado (`AuthController`, `AuthRoutes`, `AuthMiddleware`) |
-| [F2](features/F2-level-api-distribution.feature) | API de distribución y actualización remota de definiciones de niveles | Contrato C2 | 📝 Lista | ❌ Pendiente |
-| [F3](features/F3-recepcion-consulta-progreso.feature) | API de recepción y consulta del progreso del jugador | F1 | 📝 Lista | ❌ Pendiente |
-| F4 | Sistema de clasificación por nivel (leaderboard) | F1, F3 | ❌ Sin spec | ❌ Pendiente |
+| [F2](features/F2-level-api-distribution.feature) | API de distribución y actualización remota de definiciones de niveles | Contrato C2 | 📝 Lista | ✅ Implementado (`LevelController`, `LevelRoutes`, `JsonLevelRepository`) + seed de contenido (`pnpm seed`, `LevelSeeder`) |
+| [F3](features/F3-recepcion-consulta-progreso.feature) | API de recepción y consulta del progreso del jugador | F1 | 📝 Lista | ✅ Implementado (`ProgressController`, `ProgressRoutes`, `JsonProgressRepository`) |
+| F4 | Sistema de clasificación por nivel (leaderboard) | F1, F3 | ❌ Sin spec | ✅ Implementado (`LeaderboardController`, `GetLevelLeaderboard`) |
 
 **Orden de sprints (según `project-core/docs/FEATURES.md`):**
 - Sprint 5 — E1 → E2 → F1 → F2 (auth + distribución de niveles)
