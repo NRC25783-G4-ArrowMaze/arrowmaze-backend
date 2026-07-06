@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import { JsonSessionRepository } from '../../../src/infrastructure/repositories/JsonSessionRepository';
+import { JsonSessionRepository } from '../../../src/infrastructure/repositories/JsonSessionRepository.js';
 
 // Le decimos a Jest que intercepte todas las llamadas al módulo real 'fs/promises'
 jest.mock('fs/promises');

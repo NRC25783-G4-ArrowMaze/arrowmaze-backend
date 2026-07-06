@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
-import { JsonLevelRepository } from '../../../src/infrastructure/repositories/JsonLevelRepository';
-import type { LevelDataDTO } from '../../../src/domain/shared/contracts/LevelDataDTOs';
+import { JsonLevelRepository } from '../../../src/infrastructure/repositories/JsonLevelRepository.js';
+import type { LevelDataDTO } from '../../../src/domain/shared/contracts/LevelDataDTOs.js';
 
 // Mock de la librería nativa del sistema de archivos
 jest.mock('fs/promises');

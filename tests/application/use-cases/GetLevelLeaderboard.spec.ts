@@ -1,10 +1,10 @@
-import { GetLevelLeaderboard } from '../../../src/application/use-cases/GetLevelLeaderboard';
-import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRepository';
-import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository';
-import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository';
-import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions';
-import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions';
-import { Email } from '../../../src/domain/value-objects/Email';
+import { GetLevelLeaderboard } from '../../../src/application/use-cases/GetLevelLeaderboard.js';
+import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRepository.js';
+import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository.js';
+import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository.js';
+import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions.js';
+import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions.js';
+import { Email } from '../../../src/domain/value-objects/Email.js';
 
 describe('GetLevelLeaderboard Use Case', () => {
   let mockLevelRepo: jest.Mocked<ILevelRepository>;

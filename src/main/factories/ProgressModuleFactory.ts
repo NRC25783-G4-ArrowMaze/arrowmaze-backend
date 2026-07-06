@@ -13,7 +13,7 @@ import { JwtTokenService } from '../../infrastructure/services/JwtTokenService';
 import { JsonSessionRepository } from '../../infrastructure/repositories/JsonSessionRepository';
 
 // Casos de Uso
-import { GetProgress } from '../../application/use-cases/GetProgess';
+import { GetProgress } from '../../application/use-cases/GetProgress';
 import { SaveProgress } from '../../application/use-cases/SaveProgress';
 
 // Presentación
@@ -38,7 +38,7 @@ export class ProgressModuleFactory {
     // 2. Repositorios
     const progressRepository: IProgressRepository = new JsonProgressRepository();
     // Reutilizamos el repositorio de niveles para la validación de integridad
-    const levelRepository: ILevelRepository = new JsonLevelRepository(); 
+    const levelRepository: ILevelRepository = new JsonLevelRepository();
 
     // 3. Casos de Uso
     const getProgress: GetProgress = new GetProgress(progressRepository);
