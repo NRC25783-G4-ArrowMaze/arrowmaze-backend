@@ -23,6 +23,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "seed": "tsx scripts/seed-levels.ts",
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/index.js",
     "test": "jest",
