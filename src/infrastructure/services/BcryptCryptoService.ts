@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { type ICryptoService } from '../../application/ports/ICryptoService';
+import { type ICryptoService } from '../../application/ports/ICryptoService.js';
 
 export class BcryptCryptoService implements ICryptoService {
   // El "saltRounds" define el costo computacional del algoritmo. 

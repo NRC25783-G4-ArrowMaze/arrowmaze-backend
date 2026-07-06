@@ -1,6 +1,6 @@
-import { ProgressController } from '../../../src/presentation/controllers/ProgressController';
+import { ProgressController } from '../../../src/presentation/controllers/ProgressController.js';
 import { type Request, type Response } from 'express';
-import { ProgressNotFoundError, ProgressValidationError, LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions';
+import { ProgressNotFoundError, ProgressValidationError, LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions.js';
 
 describe('ProgressController', () => {
   let mockGetProgress: any;

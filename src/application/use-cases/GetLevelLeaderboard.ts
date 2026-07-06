@@ -1,11 +1,11 @@
-import { type ILevelRepository } from '../../domain/repositories/ILevelRepository';
-import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import { type IAccountRepository } from '../../domain/repositories/IAccountRepository';
-import { LeaderboardSortingService } from '../../domain/services/LeaderboardSortingService';
-import { LeaderboardValidationError } from '../../domain/exceptions/LeaderboardExceptions';
-import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions';
-import type { LeaderboardEntryDTO, LeaderboardResponseDTO } from '../../domain/shared/contracts/LeaderboardDTO';
-import { type Account } from '../../domain/entities/Account';
+import { type ILevelRepository } from '../../domain/repositories/ILevelRepository.js';
+import { type IProgressRepository } from '../../domain/repositories/IProgressRepository.js';
+import { type IAccountRepository } from '../../domain/repositories/IAccountRepository.js';
+import { LeaderboardSortingService } from '../../domain/services/LeaderboardSortingService.js';
+import { LeaderboardValidationError } from '../../domain/exceptions/LeaderboardExceptions.js';
+import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions.js';
+import type { LeaderboardEntryDTO, LeaderboardResponseDTO } from '../../domain/shared/contracts/LeaderboardDTO.js';
+import { type Account } from '../../domain/entities/Account.js';
 
 // Entrada interna: igual que la pública pero arrastra el id real del usuario
 // para poder ubicar el registro del jugador actual sin filtrarlo en la respuesta.

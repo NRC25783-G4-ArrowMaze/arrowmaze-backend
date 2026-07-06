@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express';
-import { LeaderboardController } from '../../../src/presentation/controllers/LeaderboardController';
-import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions';
-import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions';
+import { LeaderboardController } from '../../../src/presentation/controllers/LeaderboardController.js';
+import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions.js';
+import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions.js';
 
 describe('LeaderboardController', () => {
   let mockGetLevelLeaderboard: any;

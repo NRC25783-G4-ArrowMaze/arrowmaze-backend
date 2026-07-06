@@ -1,6 +1,6 @@
-import { AuthMiddleware } from '../../../src/presentation/middlewares/AuthMiddleware';
-import { type ITokenService, type TokenPayload } from '../../../src/application/ports/ITokenService';
-import { type ISessionRepository } from '../../../src/domain/repositories/ISessionRepository';
+import { AuthMiddleware } from '../../../src/presentation/middlewares/AuthMiddleware.js';
+import { type ITokenService, type TokenPayload } from '../../../src/application/ports/ITokenService.js';
+import { type ISessionRepository } from '../../../src/domain/repositories/ISessionRepository.js';
 import { type Request, type Response, type NextFunction } from 'express';
 
 describe('AuthMiddleware', () => {

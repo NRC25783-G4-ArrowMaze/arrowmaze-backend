@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express';
-import { type GetLevelLeaderboard } from '../../application/use-cases/GetLevelLeaderboard';
-import { LeaderboardValidationError } from '../../domain/exceptions/LeaderboardExceptions';
-import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions';
+import { type GetLevelLeaderboard } from '../../application/use-cases/GetLevelLeaderboard.js';
+import { LeaderboardValidationError } from '../../domain/exceptions/LeaderboardExceptions.js';
+import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions.js';
 
 export class LeaderboardController {
   constructor(private readonly getLevelLeaderboard: GetLevelLeaderboard) {}

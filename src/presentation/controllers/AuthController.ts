@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express';
-import { RegisterAccount } from '../../application/use-cases/RegisterAccount';
-import { Login } from '../../application/use-cases/Login';
-import { Logout } from '../../application/use-cases/Logout';
-import { AuthError, RegistrationError, ValidationError } from '../../domain/exceptions/AuthExceptions';
+import { RegisterAccount } from '../../application/use-cases/RegisterAccount.js';
+import { Login } from '../../application/use-cases/Login.js';
+import { Logout } from '../../application/use-cases/Logout.js';
+import { AuthError, RegistrationError, ValidationError } from '../../domain/exceptions/AuthExceptions.js';
 
 export class AuthController {
   constructor(

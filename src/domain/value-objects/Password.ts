@@ -1,4 +1,4 @@
-import { ValidationError } from '../exceptions/AuthExceptions';
+import { ValidationError } from '../exceptions/AuthExceptions.js';
 
 export class Password {
   private readonly value: string;

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { type ProgressController } from '../controllers/ProgressController';
-import { type AuthMiddleware } from '../middlewares/AuthMiddleware';
+import { type ProgressController } from '../controllers/ProgressController.js';
+import { type AuthMiddleware } from '../middlewares/AuthMiddleware.js';
 
 export class ProgressRoutes {
   public static create(controller: ProgressController, authMiddleware: AuthMiddleware): Router {

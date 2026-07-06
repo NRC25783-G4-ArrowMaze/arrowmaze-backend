@@ -1,7 +1,7 @@
-import { LevelController } from '../../../src/presentation/controllers/LevelController';
-import { GetLevels } from '../../../src/application/use-cases/GetLevels';
-import { ManageLevel } from '../../../src/application/use-cases/ManageLevel';
-import { LevelNotFoundError, LevelValidationError, LevelAlreadyExistsError } from '../../../src/domain/exceptions/LevelExceptions';
+import { LevelController } from '../../../src/presentation/controllers/LevelController.js';
+import { GetLevels } from '../../../src/application/use-cases/GetLevels.js';
+import { ManageLevel } from '../../../src/application/use-cases/ManageLevel.js';
+import { LevelNotFoundError, LevelValidationError, LevelAlreadyExistsError } from '../../../src/domain/exceptions/LevelExceptions.js';
 import { type Request, type Response } from 'express';
 
 describe('LevelController', () => {

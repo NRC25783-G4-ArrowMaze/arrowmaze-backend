@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from 'express';
-import { type UserRole } from '../../domain/entities/Account';
+import { type UserRole } from '../../domain/entities/Account.js';
 
 export class RequireRoleMiddleware {
   /**

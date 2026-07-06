@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { type LeaderboardController } from '../controllers/LeaderboardController';
-import { type AuthMiddleware } from '../middlewares/AuthMiddleware';
+import { type LeaderboardController } from '../controllers/LeaderboardController.js';
+import { type AuthMiddleware } from '../middlewares/AuthMiddleware.js';
 
 export class LeaderboardRoutes {
   public static create(controller: LeaderboardController, authMiddleware: AuthMiddleware): Router {

@@ -1,4 +1,4 @@
-import { RequireRoleMiddleware } from '../../../src/presentation/middlewares/RequireRoleMiddleware';
+import { RequireRoleMiddleware } from '../../../src/presentation/middlewares/RequireRoleMiddleware.js';
 import { type Request, type Response, type NextFunction } from 'express';
 
 describe('RequireRoleMiddleware', () => {

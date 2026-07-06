@@ -1,6 +1,6 @@
-import { type ITokenService } from '../ports/ITokenService';
-import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
-import { AuthError } from '../../domain/exceptions/AuthExceptions';
+import { type ITokenService } from '../ports/ITokenService.js';
+import { type ISessionRepository } from '../../domain/repositories/ISessionRepository.js';
+import { AuthError } from '../../domain/exceptions/AuthExceptions.js';
 
 export interface LogoutRequest {
   token: string;

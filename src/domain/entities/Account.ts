@@ -1,4 +1,4 @@
-import { type Email } from '../value-objects/Email';
+import { type Email } from '../value-objects/Email.js';
 
 export type UserRole = 'USER' | 'ADMIN';
 
