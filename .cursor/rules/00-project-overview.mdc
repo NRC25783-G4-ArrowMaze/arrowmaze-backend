@@ -67,11 +67,12 @@ Reglas adicionales:
 ## Uso de IA (obligatorio documentar)
 
 - Está permitido usar herramientas de IA (Cursor, ChatGPT, Copilot, Claude, etc.).
-- Es **obligatorio** mantener actualizado el archivo `AI_USAGE.md` en la **raíz** de este repositorio, registrando:
+- Es **obligatorio** mantener actualizado el registro modular `.ai-usage/` de este repositorio (un archivo por sesión + `manifest.json` + índice `README.md`), registrando:
   - Herramienta utilizada.
   - Prompts representativos.
   - Modificaciones manuales realizadas por el equipo sobre la salida de la IA.
   - Fecha y autor.
+- Los reportes son **inmutables**: cada sesión añade un archivo nuevo (`YYYY-MM-DD-descripcion.md`); no se editan reportes anteriores ni se reescribe el registro.
 
 ## README
 
