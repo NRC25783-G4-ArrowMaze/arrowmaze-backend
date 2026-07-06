@@ -174,30 +174,76 @@
           "Aislamiento de I/O en pruebas interceptando fs/promises"
         ],
         "notes": "Implementación de E2 (PR #8, feature16-manejo-sesion-activa). Token único JWT de 7 días sin fingerprinting."
+      },
+      {
+        "id": "2026-07-06-001",
+        "date": "2026-07-06",
+        "title": "Reestructuración documental: docs/, registro modular de IA y README",
+        "file": "2026-07-06-reestructuracion-documental-registro-modular.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Opus 4.8 + Claude Fable 5",
+        "author": "@Jrgil20",
+        "phase": "documentation",
+        "feature": "docs-restructure + ai-usage-registry",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 14,
+          "files_modified": 5,
+          "files_deleted": 1,
+          "files_renamed": 2,
+          "feature_files_synchronized": 5,
+          "sessions_recovered_from_git": 3,
+          "commits": 7
+        },
+        "areas": [
+          "documentation",
+          "specification-sync",
+          "ai-usage-registry",
+          "governance",
+          "readme",
+          "tooling"
+        ],
+        "validation": {
+          "tests": "passed — 19/19 en 5 suites con pnpm test",
+          "spec_sync": "passed — diff byte a byte contra project-core",
+          "manifest_json": "passed — JSON válido",
+          "orphan_references": "passed — cero referencias a AI_USAGE.md o enlaces rotos"
+        },
+        "decisions": [
+          "Recuperar del historial git las 3 sesiones borradas y marcarlas superseded con linked_session",
+          "Codificar la inmutabilidad de reportes en la normativa (.cursor/rules + CONTRIBUTING)",
+          "Centralizar documentación en docs/ (specs, CONTRIBUTING, diagramas UML)",
+          "pnpm como gestor de paquetes obligatorio (corrección tras uso indebido de npm)"
+        ],
+        "notes": "Primera sesión del registro modular. Rama docs/documentacion-modular con 7 commits modulares. project-core establecido como fuente única de specs para el backend."
       }
     ],
     "statistics": {
-      "totalReports": 5,
-      "distinctWorkSessions": 4,
+      "totalReports": 6,
+      "distinctWorkSessions": 5,
       "lastUpdated": "2026-07-06T00:00:00Z",
       "toolsUsed": [
         "Cursor (Cloud Agent)",
-        "Gemini"
+        "Gemini",
+        "Claude Code (claude.ai/code)"
       ],
       "modelsUsed": [
         "Claude Opus 4.7",
+        "Claude Opus 4.8",
+        "Claude Fable 5",
         "Gemini 3.1 pro",
         "Gemini (versión no especificada)"
       ],
-      "totalFilesCreated": 21,
-      "totalFilesModified": 3,
+      "totalFilesCreated": 35,
+      "totalFilesModified": 8,
       "totalTestsPassing": 19,
       "totalTestSuites": 5,
       "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
     },
     "lastEntry": {
-      "id": "2026-06-13-001",
-      "summary": "Gestión de Sesión Activa, Blacklist y Persistencia basada en JSON"
+      "id": "2026-07-06-001",
+      "summary": "Reestructuración documental: docs/, registro modular de IA y README"
     }
   }
 }
