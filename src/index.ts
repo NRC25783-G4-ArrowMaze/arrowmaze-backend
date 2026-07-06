@@ -1,15 +1,21 @@
 import express from 'express';
-import { AuthFactory } from './main/factories/AuthFactory';
-import { LevelModuleFactory } from './main/factories/LevelModuleFactory';
-import { ProgressModuleFactory } from './main/factories/ProgressModuleFactory';
-import { LeaderboardModuleFactory } from './main/factories/LeaderboardModuleFactory';
+import { AuthFactory } from './main/factories/AuthFactory.js';
+import { LevelModuleFactory } from './main/factories/LevelModuleFactory.js';
+import { ProgressModuleFactory } from './main/factories/ProgressModuleFactory.js';
+import { LeaderboardModuleFactory } from './main/factories/LeaderboardModuleFactory.js';
+import { SharedSecurityFactory } from './main/factories/SharedSecurityFactory.js';
+import { BlacklistCleanupJob } from './infrastructure/jobs/BlacklistCleanup.js';
 
 async function bootstrap() {
   const app = express();
-  
+
   app.disable('x-powered-by');
   // Middlewares globales
   app.use(express.json());
+
+  // Job en segundo plano: purga diaria de la blacklist de tokens (03:00 AM)
+  const cleanupJob = new BlacklistCleanupJob(SharedSecurityFactory.getSessionRepository());
+  cleanupJob.start();
 
   // =========================================================
   // MONTAJE DE MÓDULOS (FEATURES)

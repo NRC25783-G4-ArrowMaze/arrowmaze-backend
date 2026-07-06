@@ -1,19 +1,15 @@
 import { Router } from 'express';
 
 // Interfaces y Dependencias de Nivel
-import { type ILevelRepository } from '../../domain/repositories/ILevelRepository';
-import { JsonLevelRepository } from '../../infrastructure/repositories/JsonLevelRepository';
-import { GetLevels } from '../../application/use-cases/GetLevels';
-import { ManageLevel } from '../../application/use-cases/ManageLevel';
-import { LevelController } from '../../presentation/controllers/LevelController';
-import { LevelRoutes } from '../../presentation/routes/LevelRoutes';
+import { type ILevelRepository } from '../../domain/repositories/ILevelRepository.js';
+import { JsonLevelRepository } from '../../infrastructure/repositories/JsonLevelRepository.js';
+import { GetLevels } from '../../application/use-cases/GetLevels.js';
+import { ManageLevel } from '../../application/use-cases/ManageLevel.js';
+import { LevelController } from '../../presentation/controllers/LevelController.js';
+import { LevelRoutes } from '../../presentation/routes/LevelRoutes.js';
 
-// Interfaces y Dependencias de Seguridad (Importadas para proteger las rutas)
-import { type ITokenService } from '../../application/ports/ITokenService';
-import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
-import { JwtTokenService } from '../../infrastructure/services/JwtTokenService';
-import { JsonSessionRepository } from '../../infrastructure/repositories/JsonSessionRepository';
-import { AuthMiddleware } from '../../presentation/middlewares/AuthMiddleware';
+// Seguridad compartida
+import { SharedSecurityFactory } from './SharedSecurityFactory.js';
 
 
 export class LevelModuleFactory {
@@ -22,13 +18,7 @@ export class LevelModuleFactory {
    */
   public static createRouter(): Router {
     // 1. Dependencias Compartidas (Seguridad)
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!jwtSecret) {
-      throw new Error('JWT_SECRET no está configurado. Defínelo como variable de entorno.');
-    }
-    const tokenService: ITokenService = new JwtTokenService(jwtSecret);
-    const sessionRepository: ISessionRepository = new JsonSessionRepository();
-    const authMiddleware: AuthMiddleware = new AuthMiddleware(tokenService, sessionRepository);
+    const authMiddleware = SharedSecurityFactory.getAuthMiddleware();
 
     // 2. Repositorios del Dominio (Niveles)
     const levelRepository: ILevelRepository = new JsonLevelRepository();

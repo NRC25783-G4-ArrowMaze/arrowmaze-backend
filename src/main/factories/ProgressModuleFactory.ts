@@ -1,25 +1,23 @@
 import { Router } from 'express';
 
 // Interfaces
-import { type IProgressRepository } from '../../domain/repositories/IProgressRepository';
-import { type ILevelRepository } from '../../domain/repositories/ILevelRepository';
-import { type ITokenService } from '../../application/ports/ITokenService';
-import { type ISessionRepository } from '../../domain/repositories/ISessionRepository';
+import { type IProgressRepository } from '../../domain/repositories/IProgressRepository.js';
+import { type ILevelRepository } from '../../domain/repositories/ILevelRepository.js';
 
 // Infraestructura
-import { JsonProgressRepository } from '../../infrastructure/repositories/JsonProgressRepository';
-import { JsonLevelRepository } from '../../infrastructure/repositories/JsonLevelRepository';
-import { JwtTokenService } from '../../infrastructure/services/JwtTokenService';
-import { JsonSessionRepository } from '../../infrastructure/repositories/JsonSessionRepository';
+import { JsonProgressRepository } from '../../infrastructure/repositories/JsonProgressRepository.js';
+import { JsonLevelRepository } from '../../infrastructure/repositories/JsonLevelRepository.js';
 
 // Casos de Uso
-import { GetProgress } from '../../application/use-cases/GetProgress';
-import { SaveProgress } from '../../application/use-cases/SaveProgress';
+import { GetProgress } from '../../application/use-cases/GetProgress.js';
+import { SaveProgress } from '../../application/use-cases/SaveProgress.js';
 
 // Presentación
-import { ProgressController } from '../../presentation/controllers/ProgressController';
-import { ProgressRoutes } from '../../presentation/routes/ProgressRoutes';
-import { AuthMiddleware } from '../../presentation/middlewares/AuthMiddleware';
+import { ProgressController } from '../../presentation/controllers/ProgressController.js';
+import { ProgressRoutes } from '../../presentation/routes/ProgressRoutes.js';
+
+// Seguridad compartida
+import { SharedSecurityFactory } from './SharedSecurityFactory.js';
 
 export class ProgressModuleFactory {
   /**
@@ -27,18 +25,12 @@ export class ProgressModuleFactory {
    */
   public static createRouter(): Router {
     // 1. Dependencias de Seguridad Compartidas
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!jwtSecret) {
-      throw new Error('JWT_SECRET no está configurado. Defínelo como variable de entorno.');
-    }
-    const tokenService: ITokenService = new JwtTokenService(jwtSecret);
-    const sessionRepository: ISessionRepository = new JsonSessionRepository();
-    const authMiddleware: AuthMiddleware = new AuthMiddleware(tokenService, sessionRepository);
+    const authMiddleware = SharedSecurityFactory.getAuthMiddleware();
 
     // 2. Repositorios
     const progressRepository: IProgressRepository = new JsonProgressRepository();
     // Reutilizamos el repositorio de niveles para la validación de integridad
-    const levelRepository: ILevelRepository = new JsonLevelRepository();
+    const levelRepository: ILevelRepository = new JsonLevelRepository(); 
 
     // 3. Casos de Uso
     const getProgress: GetProgress = new GetProgress(progressRepository);
