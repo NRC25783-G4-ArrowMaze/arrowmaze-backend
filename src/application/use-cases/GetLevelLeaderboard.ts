@@ -1,7 +1,7 @@
 import { type ILevelRepository } from '../../domain/repositories/ILevelRepository.js';
 import { type IProgressRepository } from '../../domain/repositories/IProgressRepository.js';
 import { type IAccountRepository } from '../../domain/repositories/IAccountRepository.js';
-import { LeaderboardSortingService } from '../../domain/services/LeaderboardSortingService.js';
+import { type IRankingStrategy } from '../../domain/services/IRankingStrategy.js';
 import { LeaderboardValidationError } from '../../domain/exceptions/LeaderboardExceptions.js';
 import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions.js';
 import type { LeaderboardEntryDTO, LeaderboardResponseDTO } from '../../domain/shared/contracts/LeaderboardDTO.js';
@@ -15,7 +15,8 @@ export class GetLevelLeaderboard {
   constructor(
     private readonly levelRepository: ILevelRepository,
     private readonly progressRepository: IProgressRepository,
-    private readonly accountRepository: IAccountRepository
+    private readonly accountRepository: IAccountRepository,
+    private readonly rankingStrategy: IRankingStrategy
   ) {}
 
   async execute(levelId: string, currentUserId: string, limitParam: unknown): Promise<LeaderboardResponseDTO> {
@@ -60,8 +61,8 @@ export class GetLevelLeaderboard {
       _internalUserId: p.userId
     }));
 
-    // 6. Delegar el ordenamiento en cascada al Servicio de Dominio
-    const rankedEntries = LeaderboardSortingService.sortAndRank(unrankedEntries);
+    // 6. Delegar el ordenamiento a la estrategia de ranking inyectada (Strategy)
+    const rankedEntries = this.rankingStrategy.sortAndRank(unrankedEntries);
 
     // 7. Extraer el registro del jugador actual (Bloque 2 del Gherkin)
     const currentRecordRaw = rankedEntries.find(entry => entry._internalUserId === currentUserId) ?? null;

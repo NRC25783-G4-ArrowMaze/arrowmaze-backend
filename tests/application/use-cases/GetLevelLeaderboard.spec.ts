@@ -4,19 +4,23 @@ import { type IProgressRepository } from '../../../src/domain/repositories/IProg
 import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository.js';
 import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions.js';
 import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions.js';
+import { CompetitiveRankingStrategy } from '../../../src/domain/services/CompetitiveRankingStrategy.js';
+import { type IRankingStrategy } from '../../../src/domain/services/IRankingStrategy.js';
 import { Email } from '../../../src/domain/value-objects/Email.js';
 
 describe('GetLevelLeaderboard Use Case', () => {
   let mockLevelRepo: jest.Mocked<ILevelRepository>;
   let mockProgressRepo: jest.Mocked<IProgressRepository>;
   let mockAccountRepo: jest.Mocked<IAccountRepository>;
+  let rankingStrategy: IRankingStrategy;
   let useCase: GetLevelLeaderboard;
 
   beforeEach(() => {
     mockLevelRepo = { findById: jest.fn() } as any;
     mockProgressRepo = { findAllByLevel: jest.fn() } as any;
     mockAccountRepo = { findById: jest.fn() } as any;
-    useCase = new GetLevelLeaderboard(mockLevelRepo, mockProgressRepo, mockAccountRepo);
+    rankingStrategy = new CompetitiveRankingStrategy();
+    useCase = new GetLevelLeaderboard(mockLevelRepo, mockProgressRepo, mockAccountRepo, rankingStrategy);
   });
 
   it('should_throw_LevelRegistryError_if_level_does_not_exist', async () => {
@@ -74,5 +78,26 @@ describe('GetLevelLeaderboard Use Case', () => {
     expect(result.currentRecord).not.toBeNull();
     expect(result.currentRecord?.username).toBe('santiago');
     expect(result.currentRecord?.rank).toBe(2);
+  });
+
+  it('should_delegate_ranking_to_injected_strategy', async () => {
+    // Arrange: estrategia falsa que asigna rank fijo sin ordenar (Strategy intercambiable)
+    const fakeStrategy: IRankingStrategy = {
+      sortAndRank: jest.fn((entries: any[]) => entries.map(e => ({ ...e, rank: 99 })))
+    };
+    const customUseCase = new GetLevelLeaderboard(mockLevelRepo, mockProgressRepo, mockAccountRepo, fakeStrategy);
+
+    mockLevelRepo.findById.mockResolvedValue({ id: 'lvl_1' } as any);
+    mockProgressRepo.findAllByLevel.mockResolvedValue([
+      { userId: 'user_1', levelId: 'lvl_1', score: 100, movesUsed: 5, timeElapsedSeconds: 10, achievedAt: '2026-01-01' }
+    ]);
+    mockAccountRepo.findById.mockResolvedValue({ getId: () => 'user_1', getEmail: () => Email.create('santiago@test.com') } as any);
+
+    // Act
+    const result = await customUseCase.execute('lvl_1', 'user_1', 10);
+
+    // Assert
+    expect(fakeStrategy.sortAndRank).toHaveBeenCalledTimes(1);
+    expect(result.topPlayers[0].rank).toBe(99);
   });
 });

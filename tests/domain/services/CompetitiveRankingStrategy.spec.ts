@@ -1,6 +1,8 @@
-import { LeaderboardSortingService } from '../../../src/domain/services/LeaderboardSortingService.js';
+import { CompetitiveRankingStrategy } from '../../../src/domain/services/CompetitiveRankingStrategy.js';
 
-describe('LeaderboardSortingService', () => {
+describe('CompetitiveRankingStrategy', () => {
+  const strategy = new CompetitiveRankingStrategy();
+
   it('should_sort_by_score_descending', () => {
     // Arrange
     const entries: any[] = [
@@ -9,7 +11,7 @@ describe('LeaderboardSortingService', () => {
     ];
 
     // Act
-    const result = LeaderboardSortingService.sortAndRank(entries);
+    const result = strategy.sortAndRank(entries);
 
     // Assert
     expect(result[0].username).toBe('A');
@@ -26,7 +28,7 @@ describe('LeaderboardSortingService', () => {
     ];
 
     // Act
-    const result = LeaderboardSortingService.sortAndRank(entries);
+    const result = strategy.sortAndRank(entries);
 
     // Assert
     expect(result[0].username).toBe('A'); // Menos movimientos gana
@@ -40,7 +42,7 @@ describe('LeaderboardSortingService', () => {
     ];
 
     // Act
-    const result = LeaderboardSortingService.sortAndRank(entries);
+    const result = strategy.sortAndRank(entries);
 
     // Assert
     expect(result[0].username).toBe('A'); // Menos tiempo gana
@@ -54,7 +56,7 @@ describe('LeaderboardSortingService', () => {
     ];
 
     // Act
-    const result = LeaderboardSortingService.sortAndRank(entries);
+    const result = strategy.sortAndRank(entries);
 
     // Assert
     expect(result[0].username).toBe('Older'); // El primero en lograrlo gana

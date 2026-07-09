@@ -12,6 +12,7 @@ import { JsonAccountRepository } from '../../infrastructure/repositories/JsonAcc
 
 // Aplicación y Presentación
 import { GetLevelLeaderboard } from '../../application/use-cases/GetLevelLeaderboard.js';
+import { CompetitiveRankingStrategy } from '../../domain/services/CompetitiveRankingStrategy.js';
 import { LeaderboardController } from '../../presentation/controllers/LeaderboardController.js';
 import { LeaderboardRoutes } from '../../presentation/routes/LeaderboardRoutes.js';
 
@@ -36,7 +37,8 @@ export class LeaderboardModuleFactory {
     const getLevelLeaderboard = new GetLevelLeaderboard(
       levelRepository,
       progressRepository,
-      accountRepository
+      accountRepository,
+      new CompetitiveRankingStrategy()
     );
 
     // 4. Controlador
