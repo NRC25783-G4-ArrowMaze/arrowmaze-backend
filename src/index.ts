@@ -17,8 +17,26 @@ async function bootstrap() {
   app.disable('x-powered-by');
   // Middlewares globales
   // CORS antes de los routers para que el preflight OPTIONS no llegue a las rutas.
-  // Permisivo a propósito (dev en :5173 y Capacitor); TODO: restringir origin vía env CORS_ORIGIN en producción.
-  app.use(cors());
+  // Si no existe la variable, usamos un array con los entornos locales
+  const allowedOrigins = process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',') 
+    : [
+        'http://localhost:5173',     // Tu frontend web en desarrollo (Vite)
+        'http://localhost',          // Capacitor en Android
+        'capacitor://localhost'      // Capacitor en iOS
+      ];
+
+  // 2. Configuración del middleware
+  app.use(cors({
+    origin: (origin, callback) => {
+      // Permitir peticiones sin origen (ej: Postman) o que estén en la lista
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Bloqueado por políticas de CORS (Origen no válido)'));
+      }
+    }
+  }));
   app.use(express.json());
 
   // Aspecto AOP: logging de peticiones HTTP (método, ruta, status, duración)
