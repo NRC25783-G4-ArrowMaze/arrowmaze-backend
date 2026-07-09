@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express';
 import { LeaderboardController } from '../../../src/presentation/controllers/LeaderboardController.js';
 import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions.js';
-import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions.js';
+import { LevelNotFoundError } from '../../../src/domain/exceptions/LevelExceptions.js';
 
 describe('LeaderboardController', () => {
   let mockGetLevelLeaderboard: any;
@@ -32,21 +32,23 @@ describe('LeaderboardController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith(fakeData);
   });
 
-  it('should_return_400_when_validation_fails', async () => {
+  it('should_propagate_LeaderboardValidationError_when_validation_fails', async () => {
+    // El ErrorHandlerAspect traduce la excepción a 400 (ver su spec)
     mockGetLevelLeaderboard.execute.mockRejectedValue(new LeaderboardValidationError('Invalid limit'));
 
-    await controller.getByLevel(mockRequest as Request<{ levelId: string }>, mockResponse as Response);
-
-    expect(mockResponse.status).toHaveBeenCalledWith(400);
-    expect(mockResponse.json).toHaveBeenCalledWith({ error: 'Invalid limit' });
+    await expect(
+      controller.getByLevel(mockRequest as Request<{ levelId: string }>, mockResponse as Response)
+    ).rejects.toThrow(LeaderboardValidationError);
+    expect(mockResponse.status).not.toHaveBeenCalled();
   });
 
-  it('should_return_404_when_level_does_not_exist', async () => {
-    mockGetLevelLeaderboard.execute.mockRejectedValue(new LevelRegistryError('Not found'));
+  it('should_propagate_LevelNotFoundError_when_level_does_not_exist', async () => {
+    // El ErrorHandlerAspect traduce la excepción a 404 (ver su spec)
+    mockGetLevelLeaderboard.execute.mockRejectedValue(new LevelNotFoundError('Not found'));
 
-    await controller.getByLevel(mockRequest as Request<{ levelId: string }>, mockResponse as Response);
-
-    expect(mockResponse.status).toHaveBeenCalledWith(404);
-    expect(mockResponse.json).toHaveBeenCalledWith({ error: 'Not found' });
+    await expect(
+      controller.getByLevel(mockRequest as Request<{ levelId: string }>, mockResponse as Response)
+    ).rejects.toThrow(LevelNotFoundError);
+    expect(mockResponse.status).not.toHaveBeenCalled();
   });
 });

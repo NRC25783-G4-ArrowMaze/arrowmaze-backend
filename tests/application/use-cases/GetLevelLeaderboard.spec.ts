@@ -3,7 +3,7 @@ import { type ILevelRepository } from '../../../src/domain/repositories/ILevelRe
 import { type IProgressRepository } from '../../../src/domain/repositories/IProgressRepository.js';
 import { type IAccountRepository } from '../../../src/domain/repositories/IAccountRepository.js';
 import { LeaderboardValidationError } from '../../../src/domain/exceptions/LeaderboardExceptions.js';
-import { LevelRegistryError } from '../../../src/domain/exceptions/ProgressExceptions.js';
+import { LevelNotFoundError } from '../../../src/domain/exceptions/LevelExceptions.js';
 import { CompetitiveRankingStrategy } from '../../../src/domain/services/CompetitiveRankingStrategy.js';
 import { type IRankingStrategy } from '../../../src/domain/services/IRankingStrategy.js';
 import { Email } from '../../../src/domain/value-objects/Email.js';
@@ -23,11 +23,11 @@ describe('GetLevelLeaderboard Use Case', () => {
     useCase = new GetLevelLeaderboard(mockLevelRepo, mockProgressRepo, mockAccountRepo, rankingStrategy);
   });
 
-  it('should_throw_LevelRegistryError_if_level_does_not_exist', async () => {
+  it('should_throw_LevelNotFoundError_if_level_does_not_exist', async () => {
     mockLevelRepo.findById.mockResolvedValue(null);
 
     await expect(useCase.execute('ghost_lvl', 'user_1', 10))
-      .rejects.toThrow(LevelRegistryError);
+      .rejects.toThrow(LevelNotFoundError);
   });
 
   it('should_throw_LeaderboardValidationError_if_limit_is_invalid', async () => {

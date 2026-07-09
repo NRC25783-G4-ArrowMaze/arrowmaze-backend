@@ -3,7 +3,7 @@ import { type IProgressRepository } from '../../domain/repositories/IProgressRep
 import { type IAccountRepository } from '../../domain/repositories/IAccountRepository.js';
 import { type IRankingStrategy } from '../../domain/services/IRankingStrategy.js';
 import { LeaderboardValidationError } from '../../domain/exceptions/LeaderboardExceptions.js';
-import { LevelRegistryError } from '../../domain/exceptions/ProgressExceptions.js';
+import { LevelNotFoundError } from '../../domain/exceptions/LevelExceptions.js';
 import type { LeaderboardEntryDTO, LeaderboardResponseDTO } from '../../domain/shared/contracts/LeaderboardDTO.js';
 import { type Account } from '../../domain/entities/Account.js';
 
@@ -22,10 +22,11 @@ export class GetLevelLeaderboard {
   async execute(levelId: string, currentUserId: string, limitParam: unknown): Promise<LeaderboardResponseDTO> {
     const limit = this.validateLimit(limitParam);
 
-    // 1. Validar existencia del nivel (Bloque 3 del Gherkin)
+    // 1. Validar existencia del nivel (Bloque 3 del Gherkin).
+    // Nivel inexistente = recurso no encontrado (404), no un error de registro (422).
     const levelExists = await this.levelRepository.findById(levelId);
     if (!levelExists) {
-      throw new LevelRegistryError('LevelRegistryError: el nivel especificado no existe');
+      throw new LevelNotFoundError('el nivel especificado no existe');
     }
 
     // 2. Obtener todos los progresos de ese nivel

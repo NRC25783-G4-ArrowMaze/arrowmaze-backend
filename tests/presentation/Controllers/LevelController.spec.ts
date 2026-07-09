@@ -36,20 +36,16 @@ describe('LevelController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith(fakeCatalog);
   });
 
-  it('should_return_404_on_getById_when_not_found', async () => {
-    // Arrange
+  it('should_propagate_LevelNotFoundError_on_getById_when_not_found', async () => {
+    // Arrange: el ErrorHandlerAspect traduce la excepción a 404 (ver su spec)
     mockGetLevels.getById.mockRejectedValue(new LevelNotFoundError());
     mockRequest.params = { id: 'ghost' };
 
-    // Act - Casteo explícito a Request<{ id: string }>
-    await controller.getById(
-      mockRequest as unknown as Request<{ id: string }>, 
-      mockResponse as Response
-    );
-
-    // Assert
-    expect(mockResponse.status).toHaveBeenCalledWith(404);
-    expect(mockResponse.json).toHaveBeenCalledWith({ error: 'Level not found' });
+    // Act & Assert - Casteo explícito a Request<{ id: string }>
+    await expect(
+      controller.getById(mockRequest as unknown as Request<{ id: string }>, mockResponse as Response)
+    ).rejects.toThrow(LevelNotFoundError);
+    expect(mockResponse.status).not.toHaveBeenCalled();
   });
 
   it('should_return_201_on_create_success', async () => {
@@ -65,31 +61,26 @@ describe('LevelController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Level created successfully', id: 'lvl_new' });
   });
 
-  it('should_return_409_on_create_when_level_already_exists', async () => {
-    // Arrange
+  it('should_propagate_LevelAlreadyExistsError_on_create_when_level_already_exists', async () => {
+    // Arrange: el ErrorHandlerAspect traduce la excepción a 409 (ver su spec)
     mockManageLevel.create.mockRejectedValue(new LevelAlreadyExistsError('Already exists'));
 
-    // Act
-    await controller.create(mockRequest as Request, mockResponse as Response);
-
-    // Assert
-    expect(mockResponse.status).toHaveBeenCalledWith(409);
-    expect(mockResponse.json).toHaveBeenCalledWith({ error: 'Already exists' });
+    // Act & Assert
+    await expect(
+      controller.create(mockRequest as Request, mockResponse as Response)
+    ).rejects.toThrow(LevelAlreadyExistsError);
+    expect(mockResponse.status).not.toHaveBeenCalled();
   });
 
-  it('should_return_400_on_update_when_validation_fails', async () => {
-    // Arrange
+  it('should_propagate_LevelValidationError_on_update_when_validation_fails', async () => {
+    // Arrange: el ErrorHandlerAspect traduce la excepción a 400 (ver su spec)
     mockManageLevel.update.mockRejectedValue(new LevelValidationError('Invalid data'));
     mockRequest.params = { id: 'lvl_1' };
 
-    // Act - Casteo explícito a Request<{ id: string }>
-    await controller.update(
-      mockRequest as unknown as Request<{ id: string }>, 
-      mockResponse as Response
-    );
-
-    // Assert
-    expect(mockResponse.status).toHaveBeenCalledWith(400);
-    expect(mockResponse.json).toHaveBeenCalledWith({ error: 'Invalid data' });
+    // Act & Assert - Casteo explícito a Request<{ id: string }>
+    await expect(
+      controller.update(mockRequest as unknown as Request<{ id: string }>, mockResponse as Response)
+    ).rejects.toThrow(LevelValidationError);
+    expect(mockResponse.status).not.toHaveBeenCalled();
   });
 });

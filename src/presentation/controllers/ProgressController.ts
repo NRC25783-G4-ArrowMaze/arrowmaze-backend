@@ -1,8 +1,9 @@
 import { type Request, type Response } from 'express';
 import { type GetProgress } from '../../application/use-cases/GetProgress.js';
 import { type SaveProgress } from '../../application/use-cases/SaveProgress.js';
-import { ProgressValidationError, LevelRegistryError, ProgressNotFoundError } from '../../domain/exceptions/ProgressExceptions.js';
 
+// Los errores de dominio se traducen a HTTP en el ErrorHandlerAspect;
+// en Express 5 las promesas rechazadas llegan solas al error handler.
 export class ProgressController {
   constructor(
     private readonly getProgress: GetProgress,
@@ -10,58 +11,29 @@ export class ProgressController {
   ) {}
 
   public save = async (req: Request, res: Response): Promise<void> => {
-    try {
-      // Inyección segura del inquilino gracias al middleware de autenticación
-      const userId = req.accountId as string;
-      
-      const result = await this.saveProgress.execute(userId, req.body);
-      res.status(200).json(result);
-    } catch (error) {
-      console.error('[ProgressController.save] Error:', error);
-      
-      if (error instanceof ProgressValidationError) {
-        res.status(400).json({ error: error.message });
-        return;
-      }
-      if (error instanceof LevelRegistryError) {
-        res.status(422).json({ error: error.message });
-        return;
-      }
-      res.status(500).json({ error: 'Internal server error saving progress' });
-    }
+    // Inyección segura del inquilino gracias al middleware de autenticación
+    const userId = req.accountId as string;
+
+    const result = await this.saveProgress.execute(userId, req.body);
+    res.status(200).json(result);
   };
 
   public getAll = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const userId = req.accountId as string;
-      const progressList = await this.getProgress.getAllByUser(userId);
-      res.status(200).json(progressList);
-    } catch (error) {
-      console.error('[ProgressController.getAll] Error:', error);
-      res.status(500).json({ error: 'Internal server error fetching progress' });
-    }
+    const userId = req.accountId as string;
+    const progressList = await this.getProgress.getAllByUser(userId);
+    res.status(200).json(progressList);
   };
 
   public getByLevel = async (req: Request<{ levelId: string }>, res: Response): Promise<void> => {
-    try {
-      const userId = req.accountId as string;
-      const { levelId } = req.params;
+    const userId = req.accountId as string;
+    const { levelId } = req.params;
 
-      if (typeof levelId !== 'string') {
-        res.status(400).json({ error: 'Bad Request: levelId must be a string' });
-        return;
-      }
-
-      const progress = await this.getProgress.getByLevel(userId, levelId);
-      res.status(200).json(progress);
-    } catch (error) {
-      console.error('[ProgressController.getByLevel] Error:', error);
-      
-      if (error instanceof ProgressNotFoundError) {
-        res.status(404).json({ error: 'Progress not found for this level' });
-        return;
-      }
-      res.status(500).json({ error: 'Internal server error fetching level progress' });
+    if (typeof levelId !== 'string') {
+      res.status(400).json({ error: 'Bad Request: levelId must be a string' });
+      return;
     }
+
+    const progress = await this.getProgress.getByLevel(userId, levelId);
+    res.status(200).json(progress);
   };
 }

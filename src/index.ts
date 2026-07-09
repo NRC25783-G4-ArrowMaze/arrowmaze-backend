@@ -6,6 +6,7 @@ import { ProgressModuleFactory } from './main/factories/ProgressModuleFactory.js
 import { LeaderboardModuleFactory } from './main/factories/LeaderboardModuleFactory.js';
 import { SharedSecurityFactory } from './main/factories/SharedSecurityFactory.js';
 import { BlacklistCleanupJob } from './infrastructure/jobs/BlacklistCleanup.js';
+import { errorHandlerAspect } from './infrastructure/aspects/ErrorHandlerAspect.js';
 
 async function bootstrap() {
   const app = express();
@@ -36,7 +37,11 @@ async function bootstrap() {
 
   //Rutas del leaderboard
   app.use('/api/v1/leaderboards', LeaderboardModuleFactory.createRouter());
-  
+
+  // Aspecto AOP: manejo centralizado de excepciones (siempre después de los routers)
+  app.use(errorHandlerAspect);
+
+
   // =========================================================
   // ARRANQUE DEL SERVIDOR
   // =========================================================
