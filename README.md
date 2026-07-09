@@ -2,7 +2,7 @@
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5.x-000000?logo=express&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-80%2F80%20passing-brightgreen?logo=jest)
+![Tests](https://img.shields.io/badge/tests-109%2F109%20passing-brightgreen?logo=jest)
 ![pnpm](https://img.shields.io/badge/pnpm-10.x-F69220?logo=pnpm&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/architecture-Clean%20%2B%20DDD-blueviolet)
 
@@ -91,7 +91,7 @@ CORS habilitado (permisivo en desarrollo; restringir `origin` en producción).
 | GET | `/progress/:levelId` | Bearer | Progreso del usuario en un nivel |
 | GET | `/leaderboards/:levelId` | Bearer | Clasificación de un nivel |
 
-> 📄 Documentación OpenAPI/Swagger: **pendiente**.
+> 📄 Documentación OpenAPI/Swagger: **Swagger UI** en [`http://localhost:3000/api/docs`](http://localhost:3000/api/docs) y spec crudo en [`/api/docs/json`](http://localhost:3000/api/docs/json). Se genera desde las anotaciones `@openapi` de [`src/presentation/routes/`](src/presentation/routes/) ([`src/main/config/swagger.ts`](src/main/config/swagger.ts)).
 
 ---
 
@@ -134,13 +134,16 @@ Responsabilidades transversales separadas de la lógica de negocio, según la [n
 
 ## 🧪 Testing
 
-Jest + ts-jest, patrón **AAA** con nomenclatura `should_[resultado]_when_[condicion]`. Estado actual: **80/80 tests en 21 suites** ✅.
+Jest + ts-jest, patrón **AAA** con nomenclatura `should_[resultado]_when_[condicion]`. Estado actual: **109/109 tests en 27 suites** ✅.
 
 ```
 tests/
+├── domain/services/             # Estrategias de ranking (CompetitiveRankingStrategy)
 ├── application/use-cases/       # Auth, niveles (GetLevels, ManageLevel), progreso, leaderboard
 ├── presentation/                # Controladores, rutas y middlewares (escenarios Gherkin)
-└── infrastructure/              # Repositorios JSON (fs mockeado), FileWriteQueue, LevelSeeder
+├── infrastructure/              # Repositorios JSON (fs mockeado), FileWriteQueue, LevelSeeder,
+│                                # adapters (Bcrypt, Jwt) y aspectos AOP
+└── main/                        # Singleton de seguridad y spec OpenAPI (swagger)
 ```
 
 ---

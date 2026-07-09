@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import { buildSwaggerSpec } from './main/config/swagger.js';
 import { AuthFactory } from './main/factories/AuthFactory.js';
 import { LevelModuleFactory } from './main/factories/LevelModuleFactory.js';
 import { ProgressModuleFactory } from './main/factories/ProgressModuleFactory.js';
@@ -41,6 +43,14 @@ async function bootstrap() {
 
   //Rutas del leaderboard
   app.use('/api/v1/leaderboards', LeaderboardModuleFactory.createRouter());
+
+  // Documentación OpenAPI: spec crudo en /api/docs/json y Swagger UI en /api/docs.
+  // El GET del spec va ANTES del app.use del UI para que este no lo capture.
+  const swaggerSpec = buildSwaggerSpec();
+  app.get('/api/docs/json', (_req, res) => {
+    res.json(swaggerSpec);
+  });
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // Aspecto AOP: manejo centralizado de excepciones (siempre después de los routers)
   app.use(errorHandlerAspect);
