@@ -7,6 +7,7 @@ import { LeaderboardModuleFactory } from './main/factories/LeaderboardModuleFact
 import { SharedSecurityFactory } from './main/factories/SharedSecurityFactory.js';
 import { BlacklistCleanupJob } from './infrastructure/jobs/BlacklistCleanup.js';
 import { errorHandlerAspect } from './infrastructure/aspects/ErrorHandlerAspect.js';
+import { requestLoggingAspect } from './infrastructure/aspects/RequestLoggingAspect.js';
 
 async function bootstrap() {
   const app = express();
@@ -17,6 +18,9 @@ async function bootstrap() {
   // Permisivo a propósito (dev en :5173 y Capacitor); TODO: restringir origin vía env CORS_ORIGIN en producción.
   app.use(cors());
   app.use(express.json());
+
+  // Aspecto AOP: logging de peticiones HTTP (método, ruta, status, duración)
+  app.use(requestLoggingAspect);
 
   // Job en segundo plano: purga diaria de la blacklist de tokens (03:00 AM)
   const cleanupJob = new BlacklistCleanupJob(SharedSecurityFactory.getSessionRepository());
