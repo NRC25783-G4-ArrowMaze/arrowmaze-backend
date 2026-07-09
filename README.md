@@ -120,6 +120,18 @@ Al menos un patrón por categoría, como exige la [normativa del repo](.cursor/r
 
 ---
 
+## 🔀 Aspectos (AOP) activos
+
+Responsabilidades transversales separadas de la lógica de negocio, según la [normativa del repo](.cursor/rules/20-design-patterns-aop.mdc). Los aspectos viven en [`src/infrastructure/aspects/`](src/infrastructure/aspects/) y cada uno tiene su test unitario.
+
+| Aspecto | Responsabilidad | Implementación |
+|---------|-----------------|----------------|
+| **Manejo centralizado de excepciones** | Traduce las excepciones de dominio a códigos HTTP (400/401/404/409/422, fallback 500 sin filtrar detalles) en un único punto; los controladores no llevan try/catch | [`ErrorHandlerAspect.ts`](src/infrastructure/aspects/ErrorHandlerAspect.ts) — error middleware de Express 5, montado tras los routers |
+| **Logging de peticiones** | Registra `método ruta → status (ms)` de cada petición al finalizar la respuesta | [`RequestLoggingAspect.ts`](src/infrastructure/aspects/RequestLoggingAspect.ts) — middleware global antes de los routers |
+| **Seguridad / Autorización** | Verificación JWT + blacklist por `jti` e inyección de `accountId`/`userRole`; RBAC por rol en endpoints de administración | [`AuthMiddleware.ts`](src/presentation/middlewares/AuthMiddleware.ts) y [`RequireRoleMiddleware.ts`](src/presentation/middlewares/RequireRoleMiddleware.ts), montados por ruta |
+
+---
+
 ## 🧪 Testing
 
 Jest + ts-jest, patrón **AAA** con nomenclatura `should_[resultado]_when_[condicion]`. Estado actual: **80/80 tests en 21 suites** ✅.
