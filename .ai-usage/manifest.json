@@ -2,7 +2,7 @@
   "project": "arrow-maze-backend",
   "aiUsageRegistry": {
     "version": "1.0",
-    "lastUpdated": "2026-07-06T00:00:00Z",
+    "lastUpdated": "2026-07-09T00:00:00Z",
     "entries": [
       {
         "id": "2026-05-07-001",
@@ -260,12 +260,55 @@
           "8 commits modulares (uno por problema) en rama fix/correcciones-inspeccion; fix: preferido sobre build:/chore: cuando el cambio repara algo roto"
         ],
         "notes": "Continuación de una inspección previa del mismo día que verificó 4 bugs en runtime (logout roto por bind perdido, build de producción doblemente roto, TTL de JWT inconsistente con el contrato del puerto, email case-sensitive) más riesgos de configuración (lockfile no versionado, data/ no ignorado, secreto JWT hardcodeado en LeaderboardModuleFactory, carrera read-modify-write en repos JSON). Ejecutado en modo plan con aprobación explícita del usuario antes de implementar."
+      },
+      {
+        "id": "2026-07-09-001",
+        "date": "2026-07-09",
+        "title": "Cierre del backend: patrones GoF, AOP y Swagger/OpenAPI",
+        "file": "2026-07-09-patrones-gof-aop-swagger.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Fable 5",
+        "author": "@Jrgil20",
+        "phase": "implementation",
+        "feature": "rúbrica — patrones GoF + AOP + OpenAPI",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 11,
+          "files_modified": 18,
+          "files_renamed": 2,
+          "commits": 7,
+          "pull_request": 17
+        },
+        "areas": [
+          "design-patterns",
+          "strategy",
+          "adapter",
+          "aop",
+          "error-handling",
+          "logging",
+          "openapi-swagger",
+          "documentation",
+          "testing"
+        ],
+        "validation": {
+          "tests": "passed — 109/109 en 27 suites con pnpm test (subió de 80/80)",
+          "build": "passed — pnpm build limpio",
+          "e2e_smoke_test": "passed — servidor desde dist/: /api/docs/json sirve OpenAPI 3.0.3 con 12 paths, Swagger UI 200, nivel inexistente 404 vía ErrorHandlerAspect, logout sin token 401, RequestLoggingAspect emite líneas [HTTP] en stdout"
+        },
+        "decisions": [
+          "Strategy (ranking del leaderboard) como patrón de comportamiento en lugar de forzar Command sobre un DTO con static factory",
+          "Adapter (Bcrypt/Jwt) documentado como patrón estructural explícito con tests unitarios",
+          "ErrorHandlerAspect centralizado aprovechando la propagación de promesas rechazadas de Express 5, eliminando el try/catch de los 4 controllers",
+          "Corrección de contrato: leaderboard de nivel inexistente responde 404 (LevelNotFoundError), reservando LevelRegistryError al 422 de progreso; verificado que el cliente no matchea strings de error"
+        ],
+        "notes": "Rama feature/patrones-aop-swagger con 7 commits modulares, PR #17 hacia develop. Ejecutado en modo plan (agentes Explore + Plan) con aprobación explícita antes de implementar. Dos correcciones en la propia sesión al fallar la verificación: glob de swagger con process.cwd() en vez de import.meta (ts-jest), y orden de /api/docs/json antes del app.use de Swagger UI."
       }
     ],
     "statistics": {
-      "totalReports": 7,
-      "distinctWorkSessions": 6,
-      "lastUpdated": "2026-07-06T00:00:00Z",
+      "totalReports": 8,
+      "distinctWorkSessions": 7,
+      "lastUpdated": "2026-07-09T00:00:00Z",
       "toolsUsed": [
         "Cursor (Cloud Agent)",
         "Gemini",
@@ -278,15 +321,15 @@
         "Gemini 3.1 pro",
         "Gemini (versión no especificada)"
       ],
-      "totalFilesCreated": 42,
-      "totalFilesModified": 63,
-      "totalTestsPassing": 75,
-      "totalTestSuites": 20,
+      "totalFilesCreated": 53,
+      "totalFilesModified": 81,
+      "totalTestsPassing": 109,
+      "totalTestSuites": 27,
       "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
     },
     "lastEntry": {
-      "id": "2026-07-06-002",
-      "summary": "Corrección de bugs críticos hallados en inspección (logout, build, JWT, email)"
+      "id": "2026-07-09-001",
+      "summary": "Cierre del backend: patrones GoF, AOP y Swagger/OpenAPI"
     }
   }
 }

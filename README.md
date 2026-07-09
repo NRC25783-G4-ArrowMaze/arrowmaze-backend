@@ -105,6 +105,40 @@ Un ejemplo real por principio, como exige la [normativa del repo](.cursor/rules/
 - **I — Interface Segregation:** puertos pequeños y específicos — [`ICryptoService`](src/application/ports/ICryptoService.ts) (hash/compare) e [`ITokenService`](src/application/ports/ITokenService.ts) (generate/verify) en vez de un "SecurityService" monolítico.
 - **D — Dependency Inversion:** [`Login`](src/application/use-cases/Login.ts) depende solo de abstracciones (`IAccountRepository`, `ICryptoService`, `ITokenService`) que [`AuthFactory`](src/main/factories/AuthFactory.ts) — el Composition Root — inyecta con implementaciones concretas.
 
+**I — Interface Segregation** — puertos pequeños en vez de un servicio monolítico:
+
+```ts
+// src/application/ports/ICryptoService.ts
+export interface ICryptoService {
+  hash(plainText: string): Promise<string>;
+  compare(plainText: string, hash: string): Promise<boolean>;
+}
+// src/application/ports/ITokenService.ts
+export interface ITokenService {
+  generate(payload: TokenPayload, expiresInSeconds: number): Promise<string>;
+  verify(token: string): Promise<TokenPayload>;
+}
+```
+
+**D — Dependency Inversion** — el caso de uso recibe abstracciones; la factory decide las implementaciones concretas:
+
+```ts
+// src/application/use-cases/Login.ts (extracto): depende solo de puertos
+const isPasswordValid = await this.cryptoService.compare(
+  request.passwordPlainText,
+  account.getPasswordHash()
+);
+const token = await this.tokenService.generate(
+  { accountId: account.getId(), jti, role: account.getRole() },
+  604800   // 7 días (spec E2)
+);
+
+// src/main/factories/AuthFactory.ts (extracto): el Composition Root inyecta las concretas
+const accountRepository: IAccountRepository = new JsonAccountRepository();
+const cryptoService: ICryptoService = new BcryptCryptoService();
+const login = new Login(accountRepository, cryptoService, tokenService, idGenerator);
+```
+
 ---
 
 ## 🧩 Patrones de Diseño (GoF)
@@ -118,6 +152,54 @@ Al menos un patrón por categoría, como exige la [normativa del repo](.cursor/r
 | **Adapter** | Estructural | [`BcryptCryptoService.ts`](src/infrastructure/services/BcryptCryptoService.ts), [`JwtTokenService.ts`](src/infrastructure/services/JwtTokenService.ts) | Traducen bcrypt/jsonwebtoken a los puertos `ICryptoService`/`ITokenService`; cambiar de librería solo toca infraestructura |
 | **Strategy** | Comportamiento | [`IRankingStrategy.ts`](src/domain/services/IRankingStrategy.ts) → [`CompetitiveRankingStrategy.ts`](src/domain/services/CompetitiveRankingStrategy.ts) | Algoritmo de ranking del leaderboard intercambiable sin modificar el caso de uso `GetLevelLeaderboard` |
 
+**Factory Method** — cada factory ensambla el grafo de dependencias de su módulo y devuelve solo el `Router`:
+
+```ts
+// src/main/factories/LeaderboardModuleFactory.ts
+public static createRouter(): Router {
+  const authMiddleware = SharedSecurityFactory.getAuthMiddleware();
+  const getLevelLeaderboard = new GetLevelLeaderboard(
+    new JsonLevelRepository(),
+    new JsonProgressRepository(),
+    new JsonAccountRepository(),
+    new CompetitiveRankingStrategy()   // ← estrategia inyectada
+  );
+  const controller = new LeaderboardController(getLevelLeaderboard);
+  return LeaderboardRoutes.create(controller, authMiddleware);
+}
+```
+
+**Adapter** — envuelve una librería externa tras un puerto del dominio:
+
+```ts
+// src/infrastructure/services/BcryptCryptoService.ts
+export class BcryptCryptoService implements ICryptoService {
+  private readonly saltRounds = 10;
+  async hash(plainText: string): Promise<string> {
+    return bcrypt.hash(plainText, this.saltRounds);   // API de bcrypt → contrato ICryptoService
+  }
+  async compare(plainText: string, hash: string): Promise<boolean> {
+    return bcrypt.compare(plainText, hash);
+  }
+}
+```
+
+**Strategy** — el algoritmo de ranking es intercambiable; el caso de uso solo depende de la interfaz:
+
+```ts
+// src/domain/services/IRankingStrategy.ts
+export interface IRankingStrategy {
+  sortAndRank<T extends UnrankedEntry>(entries: T[]): Array<T & { rank: number }>;
+}
+
+// src/application/use-cases/GetLevelLeaderboard.ts (extracto)
+const rankedEntries = this.rankingStrategy.sortAndRank(unrankedEntries);
+```
+
+> Nota: la rúbrica pedía un patrón de comportamiento. Se eligió **Strategy** en lugar de Command porque
+> `SaveProgressCommand` es en realidad un DTO con *static factory* (sin `execute()`), y el ranking del
+> leaderboard sí es una política intercambiable real.
+
 ---
 
 ## 🔀 Aspectos (AOP) activos
@@ -129,6 +211,41 @@ Responsabilidades transversales separadas de la lógica de negocio, según la [n
 | **Manejo centralizado de excepciones** | Traduce las excepciones de dominio a códigos HTTP (400/401/404/409/422, fallback 500 sin filtrar detalles) en un único punto; los controladores no llevan try/catch | [`ErrorHandlerAspect.ts`](src/infrastructure/aspects/ErrorHandlerAspect.ts) — error middleware de Express 5, montado tras los routers |
 | **Logging de peticiones** | Registra `método ruta → status (ms)` de cada petición al finalizar la respuesta | [`RequestLoggingAspect.ts`](src/infrastructure/aspects/RequestLoggingAspect.ts) — middleware global antes de los routers |
 | **Seguridad / Autorización** | Verificación JWT + blacklist por `jti` e inyección de `accountId`/`userRole`; RBAC por rol en endpoints de administración | [`AuthMiddleware.ts`](src/presentation/middlewares/AuthMiddleware.ts) y [`RequireRoleMiddleware.ts`](src/presentation/middlewares/RequireRoleMiddleware.ts), montados por ruta |
+
+**ErrorHandlerAspect** — traduce las excepciones de dominio a HTTP en un único punto (los controllers no llevan try/catch):
+
+```ts
+// src/infrastructure/aspects/ErrorHandlerAspect.ts (extracto)
+const STATUS_BY_ERROR: Array<[ErrorClass, number]> = [
+  [ValidationError, 400], [AuthError, 401],
+  [LevelNotFoundError, 404], [LevelAlreadyExistsError, 409],
+  [LevelRegistryError, 422]   // …
+];
+
+// La firma de 4 parámetros es obligatoria para que Express lo reconozca como error handler
+export function errorHandlerAspect(error: unknown, _req: Request, res: Response, _next: NextFunction): void {
+  for (const [ErrorClass, status] of STATUS_BY_ERROR) {
+    if (error instanceof ErrorClass) { res.status(status).json({ error: error.message }); return; }
+  }
+  res.status(500).json({ error: 'Internal server error' });   // fallback sin filtrar detalles
+}
+```
+
+**RequestLoggingAspect** — observabilidad transversal, sin tocar controllers ni casos de uso:
+
+```ts
+// src/infrastructure/aspects/RequestLoggingAspect.ts
+export function requestLoggingAspect(req: Request, res: Response, next: NextFunction): void {
+  const startedAt = Date.now();
+  res.on('finish', () => {
+    const elapsedMs = Date.now() - startedAt;
+    console.log(`[HTTP] ${req.method} ${req.originalUrl} → ${res.statusCode} (${elapsedMs}ms)`);
+  });
+  next();
+}
+```
+
+Montaje en [`src/index.ts`](src/index.ts): `requestLoggingAspect` antes de los routers, `errorHandlerAspect` después.
 
 ---
 
