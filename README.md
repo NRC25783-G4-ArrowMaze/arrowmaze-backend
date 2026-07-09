@@ -107,6 +107,19 @@ Un ejemplo real por principio, como exige la [normativa del repo](.cursor/rules/
 
 ---
 
+## 🧩 Patrones de Diseño (GoF)
+
+Al menos un patrón por categoría, como exige la [normativa del repo](.cursor/rules/20-design-patterns-aop.mdc). Justificación completa (problema, alternativas consideradas, tests) en [`docs/design-patterns.md`](docs/design-patterns.md).
+
+| Patrón | Categoría | Ubicación | Problema que resuelve |
+|--------|-----------|-----------|----------------------|
+| **Factory Method** | Creacional | [`src/main/factories/*Factory.ts`](src/main/factories/) | Cada `createRouter()` encapsula el ensamblaje del grafo de dependencias de su módulo; `index.ts` no conoce implementaciones concretas |
+| **Singleton** | Creacional | [`SharedSecurityFactory.ts`](src/main/factories/SharedSecurityFactory.ts), [`FileWriteQueue.ts`](src/infrastructure/persistence/FileWriteQueue.ts) | Instancia única de las dependencias de seguridad compartidas (JWT, blacklist) y una sola cola de escritura por archivo |
+| **Adapter** | Estructural | [`BcryptCryptoService.ts`](src/infrastructure/services/BcryptCryptoService.ts), [`JwtTokenService.ts`](src/infrastructure/services/JwtTokenService.ts) | Traducen bcrypt/jsonwebtoken a los puertos `ICryptoService`/`ITokenService`; cambiar de librería solo toca infraestructura |
+| **Strategy** | Comportamiento | [`IRankingStrategy.ts`](src/domain/services/IRankingStrategy.ts) → [`CompetitiveRankingStrategy.ts`](src/domain/services/CompetitiveRankingStrategy.ts) | Algoritmo de ranking del leaderboard intercambiable sin modificar el caso de uso `GetLevelLeaderboard` |
+
+---
+
 ## 🧪 Testing
 
 Jest + ts-jest, patrón **AAA** con nomenclatura `should_[resultado]_when_[condicion]`. Estado actual: **80/80 tests en 21 suites** ✅.
