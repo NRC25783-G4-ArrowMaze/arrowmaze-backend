@@ -19,7 +19,7 @@ export function buildSwaggerSpec(): object {
       openapi: '3.0.3',
       info: {
         title: 'Arrow Maze — Backend API',
-        version: '0.1.0',
+        version: '1.0.0',
         description:
           'API REST del juego de puzzles Arrow Maze: autenticación (JWT), distribución de niveles, progreso del jugador y leaderboards por nivel.'
       },
