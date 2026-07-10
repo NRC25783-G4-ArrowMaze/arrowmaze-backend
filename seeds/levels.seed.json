@@ -994,5 +994,3246 @@
     ],
     "name": "Corazón",
     "difficulty": "easy"
+  },
+  {
+    "id": "level-initial",
+    "allowedMoves": 30,
+    "cells": [
+      {
+        "id": "0,0",
+        "portCount": 4
+      },
+      {
+        "id": "1,0",
+        "portCount": 4
+      },
+      {
+        "id": "2,0",
+        "portCount": 4
+      },
+      {
+        "id": "3,0",
+        "portCount": 4
+      },
+      {
+        "id": "4,0",
+        "portCount": 4
+      },
+      {
+        "id": "5,0",
+        "portCount": 4
+      },
+      {
+        "id": "0,1",
+        "portCount": 4
+      },
+      {
+        "id": "1,1",
+        "portCount": 4
+      },
+      {
+        "id": "2,1",
+        "portCount": 4
+      },
+      {
+        "id": "3,1",
+        "portCount": 4
+      },
+      {
+        "id": "4,1",
+        "portCount": 4
+      },
+      {
+        "id": "5,1",
+        "portCount": 4
+      },
+      {
+        "id": "0,2",
+        "portCount": 4
+      },
+      {
+        "id": "1,2",
+        "portCount": 4
+      },
+      {
+        "id": "2,2",
+        "portCount": 4
+      },
+      {
+        "id": "3,2",
+        "portCount": 4
+      },
+      {
+        "id": "4,2",
+        "portCount": 4
+      },
+      {
+        "id": "5,2",
+        "portCount": 4
+      },
+      {
+        "id": "0,3",
+        "portCount": 4
+      },
+      {
+        "id": "1,3",
+        "portCount": 4
+      },
+      {
+        "id": "2,3",
+        "portCount": 4
+      },
+      {
+        "id": "3,3",
+        "portCount": 4
+      },
+      {
+        "id": "4,3",
+        "portCount": 4
+      },
+      {
+        "id": "5,3",
+        "portCount": 4
+      },
+      {
+        "id": "0,4",
+        "portCount": 4
+      },
+      {
+        "id": "1,4",
+        "portCount": 4
+      },
+      {
+        "id": "2,4",
+        "portCount": 4
+      },
+      {
+        "id": "3,4",
+        "portCount": 4
+      },
+      {
+        "id": "4,4",
+        "portCount": 4
+      },
+      {
+        "id": "5,4",
+        "portCount": 4
+      },
+      {
+        "id": "0,5",
+        "portCount": 4
+      },
+      {
+        "id": "1,5",
+        "portCount": 4
+      },
+      {
+        "id": "2,5",
+        "portCount": 4
+      },
+      {
+        "id": "3,5",
+        "portCount": 4
+      },
+      {
+        "id": "4,5",
+        "portCount": 4
+      },
+      {
+        "id": "5,5",
+        "portCount": 4
+      }
+    ],
+    "connections": [
+      {
+        "fromCell": "0,0",
+        "fromPort": 1,
+        "toCell": "1,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,0",
+        "fromPort": 2,
+        "toCell": "0,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 1,
+        "toCell": "2,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 2,
+        "toCell": "1,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 1,
+        "toCell": "3,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 2,
+        "toCell": "2,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 1,
+        "toCell": "4,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 2,
+        "toCell": "3,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 1,
+        "toCell": "5,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 2,
+        "toCell": "4,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,0",
+        "fromPort": 2,
+        "toCell": "5,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 1,
+        "toCell": "1,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 2,
+        "toCell": "0,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 1,
+        "toCell": "2,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 2,
+        "toCell": "1,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 1,
+        "toCell": "3,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 2,
+        "toCell": "2,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 1,
+        "toCell": "4,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 2,
+        "toCell": "3,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 1,
+        "toCell": "5,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 2,
+        "toCell": "4,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,1",
+        "fromPort": 2,
+        "toCell": "5,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 1,
+        "toCell": "1,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 2,
+        "toCell": "0,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 1,
+        "toCell": "2,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 2,
+        "toCell": "1,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 1,
+        "toCell": "3,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 2,
+        "toCell": "2,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 1,
+        "toCell": "4,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 2,
+        "toCell": "3,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 1,
+        "toCell": "5,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 2,
+        "toCell": "4,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,2",
+        "fromPort": 2,
+        "toCell": "5,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 1,
+        "toCell": "1,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 2,
+        "toCell": "0,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 1,
+        "toCell": "2,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 2,
+        "toCell": "1,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 1,
+        "toCell": "3,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 2,
+        "toCell": "2,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 1,
+        "toCell": "4,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 2,
+        "toCell": "3,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 1,
+        "toCell": "5,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 2,
+        "toCell": "4,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,3",
+        "fromPort": 2,
+        "toCell": "5,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 1,
+        "toCell": "1,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 2,
+        "toCell": "0,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 1,
+        "toCell": "2,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 2,
+        "toCell": "1,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 1,
+        "toCell": "3,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 2,
+        "toCell": "2,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 1,
+        "toCell": "4,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 2,
+        "toCell": "3,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 1,
+        "toCell": "5,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 2,
+        "toCell": "4,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,4",
+        "fromPort": 2,
+        "toCell": "5,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,5",
+        "fromPort": 1,
+        "toCell": "1,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,5",
+        "fromPort": 1,
+        "toCell": "2,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,5",
+        "fromPort": 1,
+        "toCell": "3,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,5",
+        "fromPort": 1,
+        "toCell": "4,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,5",
+        "fromPort": 1,
+        "toCell": "5,5",
+        "toPort": 3
+      }
+    ],
+    "arrows": [
+      {
+        "id": "blue",
+        "head": {
+          "cellId": "4,2",
+          "exitPort": 0
+        },
+        "body": [
+          "4,1"
+        ]
+      },
+      {
+        "id": "green",
+        "head": {
+          "cellId": "1,2",
+          "exitPort": 1
+        },
+        "body": []
+      },
+      {
+        "id": "orange",
+        "head": {
+          "cellId": "2,2",
+          "exitPort": 2
+        },
+        "body": [
+          "2,3"
+        ]
+      }
+    ],
+    "name": "Nivel Inicial",
+    "difficulty": "easy"
+  },
+  {
+    "id": "level-intermediate-a",
+    "allowedMoves": 13,
+    "cells": [
+      {
+        "id": "0,0",
+        "portCount": 4
+      },
+      {
+        "id": "1,0",
+        "portCount": 4
+      },
+      {
+        "id": "2,0",
+        "portCount": 4
+      },
+      {
+        "id": "3,0",
+        "portCount": 4
+      },
+      {
+        "id": "4,0",
+        "portCount": 4
+      },
+      {
+        "id": "5,0",
+        "portCount": 4
+      },
+      {
+        "id": "0,1",
+        "portCount": 4
+      },
+      {
+        "id": "1,1",
+        "portCount": 4
+      },
+      {
+        "id": "2,1",
+        "portCount": 4
+      },
+      {
+        "id": "3,1",
+        "portCount": 4
+      },
+      {
+        "id": "4,1",
+        "portCount": 4
+      },
+      {
+        "id": "5,1",
+        "portCount": 4
+      },
+      {
+        "id": "0,2",
+        "portCount": 4
+      },
+      {
+        "id": "1,2",
+        "portCount": 4
+      },
+      {
+        "id": "2,2",
+        "portCount": 4
+      },
+      {
+        "id": "3,2",
+        "portCount": 4
+      },
+      {
+        "id": "4,2",
+        "portCount": 4
+      },
+      {
+        "id": "5,2",
+        "portCount": 4
+      },
+      {
+        "id": "0,3",
+        "portCount": 4
+      },
+      {
+        "id": "1,3",
+        "portCount": 4
+      },
+      {
+        "id": "2,3",
+        "portCount": 4
+      },
+      {
+        "id": "3,3",
+        "portCount": 4
+      },
+      {
+        "id": "4,3",
+        "portCount": 4
+      },
+      {
+        "id": "5,3",
+        "portCount": 4
+      },
+      {
+        "id": "0,4",
+        "portCount": 4
+      },
+      {
+        "id": "1,4",
+        "portCount": 4
+      },
+      {
+        "id": "2,4",
+        "portCount": 4
+      },
+      {
+        "id": "3,4",
+        "portCount": 4
+      },
+      {
+        "id": "4,4",
+        "portCount": 4
+      },
+      {
+        "id": "5,4",
+        "portCount": 4
+      },
+      {
+        "id": "0,5",
+        "portCount": 4
+      },
+      {
+        "id": "1,5",
+        "portCount": 4
+      },
+      {
+        "id": "2,5",
+        "portCount": 4
+      },
+      {
+        "id": "3,5",
+        "portCount": 4
+      },
+      {
+        "id": "4,5",
+        "portCount": 4
+      },
+      {
+        "id": "5,5",
+        "portCount": 4
+      }
+    ],
+    "connections": [
+      {
+        "fromCell": "0,0",
+        "fromPort": 1,
+        "toCell": "1,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,0",
+        "fromPort": 2,
+        "toCell": "0,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 1,
+        "toCell": "2,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 2,
+        "toCell": "1,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 1,
+        "toCell": "3,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 2,
+        "toCell": "2,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 1,
+        "toCell": "4,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 2,
+        "toCell": "3,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 1,
+        "toCell": "5,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 2,
+        "toCell": "4,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,0",
+        "fromPort": 2,
+        "toCell": "5,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 1,
+        "toCell": "1,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 2,
+        "toCell": "0,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 1,
+        "toCell": "2,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 2,
+        "toCell": "1,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 1,
+        "toCell": "3,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 2,
+        "toCell": "2,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 1,
+        "toCell": "4,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 2,
+        "toCell": "3,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 1,
+        "toCell": "5,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 2,
+        "toCell": "4,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,1",
+        "fromPort": 2,
+        "toCell": "5,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 1,
+        "toCell": "1,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 2,
+        "toCell": "0,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 1,
+        "toCell": "2,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 2,
+        "toCell": "1,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 1,
+        "toCell": "3,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 2,
+        "toCell": "2,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 1,
+        "toCell": "4,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 2,
+        "toCell": "3,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 1,
+        "toCell": "5,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 2,
+        "toCell": "4,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,2",
+        "fromPort": 2,
+        "toCell": "5,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 1,
+        "toCell": "1,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 2,
+        "toCell": "0,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 1,
+        "toCell": "2,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 2,
+        "toCell": "1,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 1,
+        "toCell": "3,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 2,
+        "toCell": "2,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 1,
+        "toCell": "4,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 2,
+        "toCell": "3,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 1,
+        "toCell": "5,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 2,
+        "toCell": "4,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,3",
+        "fromPort": 2,
+        "toCell": "5,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 1,
+        "toCell": "1,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 2,
+        "toCell": "0,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 1,
+        "toCell": "2,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 2,
+        "toCell": "1,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 1,
+        "toCell": "3,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 2,
+        "toCell": "2,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 1,
+        "toCell": "4,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 2,
+        "toCell": "3,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 1,
+        "toCell": "5,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 2,
+        "toCell": "4,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,4",
+        "fromPort": 2,
+        "toCell": "5,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,5",
+        "fromPort": 1,
+        "toCell": "1,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,5",
+        "fromPort": 1,
+        "toCell": "2,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,5",
+        "fromPort": 1,
+        "toCell": "3,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,5",
+        "fromPort": 1,
+        "toCell": "4,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,5",
+        "fromPort": 1,
+        "toCell": "5,5",
+        "toPort": 3
+      }
+    ],
+    "arrows": [
+      {
+        "id": "blue",
+        "head": {
+          "cellId": "0,0",
+          "exitPort": 1
+        },
+        "body": [
+          "1,0",
+          "1,1",
+          "0,1",
+          "0,2",
+          "0,3"
+        ]
+      },
+      {
+        "id": "green",
+        "head": {
+          "cellId": "2,0",
+          "exitPort": 1
+        },
+        "body": [
+          "3,0",
+          "3,1",
+          "2,1",
+          "2,2"
+        ]
+      },
+      {
+        "id": "orange",
+        "head": {
+          "cellId": "4,0",
+          "exitPort": 1
+        },
+        "body": [
+          "5,0",
+          "5,1",
+          "5,2"
+        ]
+      },
+      {
+        "id": "magenta",
+        "head": {
+          "cellId": "4,1",
+          "exitPort": 2
+        },
+        "body": [
+          "4,2",
+          "3,2",
+          "3,3"
+        ]
+      },
+      {
+        "id": "violet",
+        "head": {
+          "cellId": "1,2",
+          "exitPort": 2
+        },
+        "body": [
+          "1,3",
+          "2,3",
+          "2,4"
+        ]
+      },
+      {
+        "id": "cyan",
+        "head": {
+          "cellId": "4,3",
+          "exitPort": 1
+        },
+        "body": [
+          "5,3",
+          "5,4",
+          "5,5"
+        ]
+      },
+      {
+        "id": "amber",
+        "head": {
+          "cellId": "1,5",
+          "exitPort": 3
+        },
+        "body": [
+          "0,5",
+          "0,4",
+          "1,4"
+        ]
+      },
+      {
+        "id": "rose",
+        "head": {
+          "cellId": "2,5",
+          "exitPort": 1
+        },
+        "body": [
+          "3,5",
+          "3,4",
+          "4,4",
+          "4,5"
+        ]
+      }
+    ],
+    "name": "Desafío A",
+    "difficulty": "medium"
+  },
+  {
+    "id": "level-intermediate-b",
+    "allowedMoves": 12,
+    "cells": [
+      {
+        "id": "0,0",
+        "portCount": 4
+      },
+      {
+        "id": "1,0",
+        "portCount": 4
+      },
+      {
+        "id": "2,0",
+        "portCount": 4
+      },
+      {
+        "id": "3,0",
+        "portCount": 4
+      },
+      {
+        "id": "4,0",
+        "portCount": 4
+      },
+      {
+        "id": "5,0",
+        "portCount": 4
+      },
+      {
+        "id": "0,1",
+        "portCount": 4
+      },
+      {
+        "id": "1,1",
+        "portCount": 4
+      },
+      {
+        "id": "2,1",
+        "portCount": 4
+      },
+      {
+        "id": "3,1",
+        "portCount": 4
+      },
+      {
+        "id": "4,1",
+        "portCount": 4
+      },
+      {
+        "id": "5,1",
+        "portCount": 4
+      },
+      {
+        "id": "0,2",
+        "portCount": 4
+      },
+      {
+        "id": "1,2",
+        "portCount": 4
+      },
+      {
+        "id": "2,2",
+        "portCount": 4
+      },
+      {
+        "id": "3,2",
+        "portCount": 4
+      },
+      {
+        "id": "4,2",
+        "portCount": 4
+      },
+      {
+        "id": "5,2",
+        "portCount": 4
+      },
+      {
+        "id": "0,3",
+        "portCount": 4
+      },
+      {
+        "id": "1,3",
+        "portCount": 4
+      },
+      {
+        "id": "2,3",
+        "portCount": 4
+      },
+      {
+        "id": "3,3",
+        "portCount": 4
+      },
+      {
+        "id": "4,3",
+        "portCount": 4
+      },
+      {
+        "id": "5,3",
+        "portCount": 4
+      },
+      {
+        "id": "0,4",
+        "portCount": 4
+      },
+      {
+        "id": "1,4",
+        "portCount": 4
+      },
+      {
+        "id": "2,4",
+        "portCount": 4
+      },
+      {
+        "id": "3,4",
+        "portCount": 4
+      },
+      {
+        "id": "4,4",
+        "portCount": 4
+      },
+      {
+        "id": "5,4",
+        "portCount": 4
+      },
+      {
+        "id": "0,5",
+        "portCount": 4
+      },
+      {
+        "id": "1,5",
+        "portCount": 4
+      },
+      {
+        "id": "2,5",
+        "portCount": 4
+      },
+      {
+        "id": "3,5",
+        "portCount": 4
+      },
+      {
+        "id": "4,5",
+        "portCount": 4
+      },
+      {
+        "id": "5,5",
+        "portCount": 4
+      }
+    ],
+    "connections": [
+      {
+        "fromCell": "0,0",
+        "fromPort": 1,
+        "toCell": "1,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,0",
+        "fromPort": 2,
+        "toCell": "0,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 1,
+        "toCell": "2,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 2,
+        "toCell": "1,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 1,
+        "toCell": "3,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 2,
+        "toCell": "2,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 1,
+        "toCell": "4,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 2,
+        "toCell": "3,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 1,
+        "toCell": "5,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 2,
+        "toCell": "4,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,0",
+        "fromPort": 2,
+        "toCell": "5,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 1,
+        "toCell": "1,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 2,
+        "toCell": "0,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 1,
+        "toCell": "2,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 2,
+        "toCell": "1,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 1,
+        "toCell": "3,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 2,
+        "toCell": "2,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 1,
+        "toCell": "4,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 2,
+        "toCell": "3,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 1,
+        "toCell": "5,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 2,
+        "toCell": "4,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,1",
+        "fromPort": 2,
+        "toCell": "5,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 1,
+        "toCell": "1,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 2,
+        "toCell": "0,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 1,
+        "toCell": "2,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 2,
+        "toCell": "1,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 1,
+        "toCell": "3,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 2,
+        "toCell": "2,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 1,
+        "toCell": "4,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 2,
+        "toCell": "3,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 1,
+        "toCell": "5,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 2,
+        "toCell": "4,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,2",
+        "fromPort": 2,
+        "toCell": "5,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 1,
+        "toCell": "1,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 2,
+        "toCell": "0,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 1,
+        "toCell": "2,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 2,
+        "toCell": "1,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 1,
+        "toCell": "3,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 2,
+        "toCell": "2,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 1,
+        "toCell": "4,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 2,
+        "toCell": "3,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 1,
+        "toCell": "5,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 2,
+        "toCell": "4,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,3",
+        "fromPort": 2,
+        "toCell": "5,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 1,
+        "toCell": "1,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 2,
+        "toCell": "0,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 1,
+        "toCell": "2,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 2,
+        "toCell": "1,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 1,
+        "toCell": "3,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 2,
+        "toCell": "2,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 1,
+        "toCell": "4,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 2,
+        "toCell": "3,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 1,
+        "toCell": "5,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 2,
+        "toCell": "4,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,4",
+        "fromPort": 2,
+        "toCell": "5,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,5",
+        "fromPort": 1,
+        "toCell": "1,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,5",
+        "fromPort": 1,
+        "toCell": "2,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,5",
+        "fromPort": 1,
+        "toCell": "3,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,5",
+        "fromPort": 1,
+        "toCell": "4,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,5",
+        "fromPort": 1,
+        "toCell": "5,5",
+        "toPort": 3
+      }
+    ],
+    "arrows": [
+      {
+        "id": "top-left",
+        "head": {
+          "cellId": "1,1",
+          "exitPort": 3
+        },
+        "body": [
+          "0,1",
+          "0,0",
+          "1,0"
+        ]
+      },
+      {
+        "id": "top-mid",
+        "head": {
+          "cellId": "3,1",
+          "exitPort": 3
+        },
+        "body": [
+          "2,1",
+          "2,0",
+          "3,0"
+        ]
+      },
+      {
+        "id": "top-right",
+        "head": {
+          "cellId": "5,1",
+          "exitPort": 3
+        },
+        "body": [
+          "4,1",
+          "4,0",
+          "5,0"
+        ]
+      },
+      {
+        "id": "mid-left",
+        "head": {
+          "cellId": "0,2",
+          "exitPort": 1
+        },
+        "body": [
+          "1,2",
+          "1,3",
+          "0,3"
+        ]
+      },
+      {
+        "id": "mid-mid",
+        "head": {
+          "cellId": "2,2",
+          "exitPort": 1
+        },
+        "body": [
+          "3,2",
+          "3,3",
+          "2,3"
+        ]
+      },
+      {
+        "id": "mid-right",
+        "head": {
+          "cellId": "4,2",
+          "exitPort": 1
+        },
+        "body": [
+          "5,2",
+          "5,3",
+          "4,3"
+        ]
+      },
+      {
+        "id": "bottom-left",
+        "head": {
+          "cellId": "1,5",
+          "exitPort": 3
+        },
+        "body": [
+          "0,5",
+          "0,4",
+          "1,4"
+        ]
+      },
+      {
+        "id": "bottom-mid",
+        "head": {
+          "cellId": "3,5",
+          "exitPort": 3
+        },
+        "body": [
+          "2,5",
+          "2,4",
+          "3,4"
+        ]
+      },
+      {
+        "id": "bottom-right",
+        "head": {
+          "cellId": "5,5",
+          "exitPort": 3
+        },
+        "body": [
+          "4,5",
+          "4,4",
+          "5,4"
+        ]
+      }
+    ],
+    "name": "Desafío B",
+    "difficulty": "medium"
+  },
+  {
+    "id": "level-advanced",
+    "allowedMoves": 10,
+    "cells": [
+      {
+        "id": "0,0",
+        "portCount": 4
+      },
+      {
+        "id": "1,0",
+        "portCount": 4
+      },
+      {
+        "id": "2,0",
+        "portCount": 4
+      },
+      {
+        "id": "3,0",
+        "portCount": 4
+      },
+      {
+        "id": "4,0",
+        "portCount": 4
+      },
+      {
+        "id": "5,0",
+        "portCount": 4
+      },
+      {
+        "id": "0,1",
+        "portCount": 4
+      },
+      {
+        "id": "1,1",
+        "portCount": 4
+      },
+      {
+        "id": "2,1",
+        "portCount": 4
+      },
+      {
+        "id": "3,1",
+        "portCount": 4
+      },
+      {
+        "id": "4,1",
+        "portCount": 4
+      },
+      {
+        "id": "5,1",
+        "portCount": 4
+      },
+      {
+        "id": "0,2",
+        "portCount": 4
+      },
+      {
+        "id": "1,2",
+        "portCount": 4
+      },
+      {
+        "id": "2,2",
+        "portCount": 4
+      },
+      {
+        "id": "3,2",
+        "portCount": 4
+      },
+      {
+        "id": "4,2",
+        "portCount": 4
+      },
+      {
+        "id": "5,2",
+        "portCount": 4
+      },
+      {
+        "id": "0,3",
+        "portCount": 4
+      },
+      {
+        "id": "1,3",
+        "portCount": 4
+      },
+      {
+        "id": "2,3",
+        "portCount": 4
+      },
+      {
+        "id": "3,3",
+        "portCount": 4
+      },
+      {
+        "id": "4,3",
+        "portCount": 4
+      },
+      {
+        "id": "5,3",
+        "portCount": 4
+      },
+      {
+        "id": "0,4",
+        "portCount": 4
+      },
+      {
+        "id": "1,4",
+        "portCount": 4
+      },
+      {
+        "id": "2,4",
+        "portCount": 4
+      },
+      {
+        "id": "3,4",
+        "portCount": 4
+      },
+      {
+        "id": "4,4",
+        "portCount": 4
+      },
+      {
+        "id": "5,4",
+        "portCount": 4
+      },
+      {
+        "id": "0,5",
+        "portCount": 4
+      },
+      {
+        "id": "1,5",
+        "portCount": 4
+      },
+      {
+        "id": "2,5",
+        "portCount": 4
+      },
+      {
+        "id": "3,5",
+        "portCount": 4
+      },
+      {
+        "id": "4,5",
+        "portCount": 4
+      },
+      {
+        "id": "5,5",
+        "portCount": 4
+      }
+    ],
+    "connections": [
+      {
+        "fromCell": "0,0",
+        "fromPort": 1,
+        "toCell": "1,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,0",
+        "fromPort": 2,
+        "toCell": "0,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 1,
+        "toCell": "2,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 2,
+        "toCell": "1,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 1,
+        "toCell": "3,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 2,
+        "toCell": "2,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 1,
+        "toCell": "4,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 2,
+        "toCell": "3,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 1,
+        "toCell": "5,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 2,
+        "toCell": "4,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,0",
+        "fromPort": 2,
+        "toCell": "5,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 1,
+        "toCell": "1,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 2,
+        "toCell": "0,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 1,
+        "toCell": "2,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 2,
+        "toCell": "1,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 1,
+        "toCell": "3,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 2,
+        "toCell": "2,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 1,
+        "toCell": "4,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 2,
+        "toCell": "3,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 1,
+        "toCell": "5,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 2,
+        "toCell": "4,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,1",
+        "fromPort": 2,
+        "toCell": "5,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 1,
+        "toCell": "1,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 2,
+        "toCell": "0,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 1,
+        "toCell": "2,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 2,
+        "toCell": "1,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 1,
+        "toCell": "3,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 2,
+        "toCell": "2,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 1,
+        "toCell": "4,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 2,
+        "toCell": "3,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 1,
+        "toCell": "5,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 2,
+        "toCell": "4,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,2",
+        "fromPort": 2,
+        "toCell": "5,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 1,
+        "toCell": "1,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 2,
+        "toCell": "0,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 1,
+        "toCell": "2,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 2,
+        "toCell": "1,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 1,
+        "toCell": "3,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 2,
+        "toCell": "2,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 1,
+        "toCell": "4,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 2,
+        "toCell": "3,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 1,
+        "toCell": "5,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 2,
+        "toCell": "4,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,3",
+        "fromPort": 2,
+        "toCell": "5,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 1,
+        "toCell": "1,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 2,
+        "toCell": "0,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 1,
+        "toCell": "2,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 2,
+        "toCell": "1,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 1,
+        "toCell": "3,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 2,
+        "toCell": "2,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 1,
+        "toCell": "4,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 2,
+        "toCell": "3,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 1,
+        "toCell": "5,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 2,
+        "toCell": "4,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,4",
+        "fromPort": 2,
+        "toCell": "5,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,5",
+        "fromPort": 1,
+        "toCell": "1,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,5",
+        "fromPort": 1,
+        "toCell": "2,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,5",
+        "fromPort": 1,
+        "toCell": "3,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,5",
+        "fromPort": 1,
+        "toCell": "4,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,5",
+        "fromPort": 1,
+        "toCell": "5,5",
+        "toPort": 3
+      }
+    ],
+    "arrows": [
+      {
+        "id": "left",
+        "head": {
+          "cellId": "0,1",
+          "exitPort": 2
+        },
+        "body": [
+          "0,2",
+          "0,3",
+          "0,4",
+          "0,5"
+        ]
+      },
+      {
+        "id": "bottom",
+        "head": {
+          "cellId": "5,5",
+          "exitPort": 3
+        },
+        "body": [
+          "4,5",
+          "3,5",
+          "2,5",
+          "1,5"
+        ]
+      },
+      {
+        "id": "right",
+        "head": {
+          "cellId": "5,0",
+          "exitPort": 2
+        },
+        "body": [
+          "5,1",
+          "5,2",
+          "5,3",
+          "5,4"
+        ]
+      },
+      {
+        "id": "top",
+        "head": {
+          "cellId": "0,0",
+          "exitPort": 1
+        },
+        "body": [
+          "1,0",
+          "2,0",
+          "3,0",
+          "4,0"
+        ]
+      },
+      {
+        "id": "row-1",
+        "head": {
+          "cellId": "1,1",
+          "exitPort": 1
+        },
+        "body": [
+          "2,1",
+          "3,1",
+          "4,1"
+        ]
+      },
+      {
+        "id": "row-2",
+        "head": {
+          "cellId": "4,2",
+          "exitPort": 3
+        },
+        "body": [
+          "3,2",
+          "2,2",
+          "1,2"
+        ]
+      },
+      {
+        "id": "row-3",
+        "head": {
+          "cellId": "1,3",
+          "exitPort": 1
+        },
+        "body": [
+          "2,3",
+          "3,3",
+          "4,3"
+        ]
+      },
+      {
+        "id": "row-4",
+        "head": {
+          "cellId": "4,4",
+          "exitPort": 3
+        },
+        "body": [
+          "3,4",
+          "2,4",
+          "1,4"
+        ]
+      }
+    ],
+    "name": "Avanzado",
+    "difficulty": "hard"
+  },
+  {
+    "id": "level-expert",
+    "allowedMoves": 12,
+    "cells": [
+      {
+        "id": "0,0",
+        "portCount": 4
+      },
+      {
+        "id": "1,0",
+        "portCount": 4
+      },
+      {
+        "id": "2,0",
+        "portCount": 4
+      },
+      {
+        "id": "3,0",
+        "portCount": 4
+      },
+      {
+        "id": "4,0",
+        "portCount": 4
+      },
+      {
+        "id": "5,0",
+        "portCount": 4
+      },
+      {
+        "id": "6,0",
+        "portCount": 4
+      },
+      {
+        "id": "0,1",
+        "portCount": 4
+      },
+      {
+        "id": "1,1",
+        "portCount": 4
+      },
+      {
+        "id": "2,1",
+        "portCount": 4
+      },
+      {
+        "id": "3,1",
+        "portCount": 4
+      },
+      {
+        "id": "4,1",
+        "portCount": 4
+      },
+      {
+        "id": "5,1",
+        "portCount": 4
+      },
+      {
+        "id": "6,1",
+        "portCount": 4
+      },
+      {
+        "id": "0,2",
+        "portCount": 4
+      },
+      {
+        "id": "1,2",
+        "portCount": 4
+      },
+      {
+        "id": "2,2",
+        "portCount": 4
+      },
+      {
+        "id": "3,2",
+        "portCount": 4
+      },
+      {
+        "id": "4,2",
+        "portCount": 4
+      },
+      {
+        "id": "5,2",
+        "portCount": 4
+      },
+      {
+        "id": "6,2",
+        "portCount": 4
+      },
+      {
+        "id": "0,3",
+        "portCount": 4
+      },
+      {
+        "id": "1,3",
+        "portCount": 4
+      },
+      {
+        "id": "2,3",
+        "portCount": 4
+      },
+      {
+        "id": "3,3",
+        "portCount": 4
+      },
+      {
+        "id": "4,3",
+        "portCount": 4
+      },
+      {
+        "id": "5,3",
+        "portCount": 4
+      },
+      {
+        "id": "6,3",
+        "portCount": 4
+      },
+      {
+        "id": "0,4",
+        "portCount": 4
+      },
+      {
+        "id": "1,4",
+        "portCount": 4
+      },
+      {
+        "id": "2,4",
+        "portCount": 4
+      },
+      {
+        "id": "3,4",
+        "portCount": 4
+      },
+      {
+        "id": "4,4",
+        "portCount": 4
+      },
+      {
+        "id": "5,4",
+        "portCount": 4
+      },
+      {
+        "id": "6,4",
+        "portCount": 4
+      },
+      {
+        "id": "0,5",
+        "portCount": 4
+      },
+      {
+        "id": "1,5",
+        "portCount": 4
+      },
+      {
+        "id": "2,5",
+        "portCount": 4
+      },
+      {
+        "id": "3,5",
+        "portCount": 4
+      },
+      {
+        "id": "4,5",
+        "portCount": 4
+      },
+      {
+        "id": "5,5",
+        "portCount": 4
+      },
+      {
+        "id": "6,5",
+        "portCount": 4
+      },
+      {
+        "id": "0,6",
+        "portCount": 4
+      },
+      {
+        "id": "1,6",
+        "portCount": 4
+      },
+      {
+        "id": "2,6",
+        "portCount": 4
+      },
+      {
+        "id": "3,6",
+        "portCount": 4
+      },
+      {
+        "id": "4,6",
+        "portCount": 4
+      },
+      {
+        "id": "5,6",
+        "portCount": 4
+      },
+      {
+        "id": "6,6",
+        "portCount": 4
+      }
+    ],
+    "connections": [
+      {
+        "fromCell": "0,0",
+        "fromPort": 1,
+        "toCell": "1,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,0",
+        "fromPort": 2,
+        "toCell": "0,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 1,
+        "toCell": "2,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,0",
+        "fromPort": 2,
+        "toCell": "1,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 1,
+        "toCell": "3,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,0",
+        "fromPort": 2,
+        "toCell": "2,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 1,
+        "toCell": "4,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,0",
+        "fromPort": 2,
+        "toCell": "3,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 1,
+        "toCell": "5,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,0",
+        "fromPort": 2,
+        "toCell": "4,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,0",
+        "fromPort": 1,
+        "toCell": "6,0",
+        "toPort": 3
+      },
+      {
+        "fromCell": "5,0",
+        "fromPort": 2,
+        "toCell": "5,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "6,0",
+        "fromPort": 2,
+        "toCell": "6,1",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 1,
+        "toCell": "1,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,1",
+        "fromPort": 2,
+        "toCell": "0,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 1,
+        "toCell": "2,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,1",
+        "fromPort": 2,
+        "toCell": "1,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 1,
+        "toCell": "3,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,1",
+        "fromPort": 2,
+        "toCell": "2,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 1,
+        "toCell": "4,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,1",
+        "fromPort": 2,
+        "toCell": "3,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 1,
+        "toCell": "5,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,1",
+        "fromPort": 2,
+        "toCell": "4,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,1",
+        "fromPort": 1,
+        "toCell": "6,1",
+        "toPort": 3
+      },
+      {
+        "fromCell": "5,1",
+        "fromPort": 2,
+        "toCell": "5,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "6,1",
+        "fromPort": 2,
+        "toCell": "6,2",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 1,
+        "toCell": "1,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,2",
+        "fromPort": 2,
+        "toCell": "0,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 1,
+        "toCell": "2,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,2",
+        "fromPort": 2,
+        "toCell": "1,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 1,
+        "toCell": "3,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,2",
+        "fromPort": 2,
+        "toCell": "2,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 1,
+        "toCell": "4,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,2",
+        "fromPort": 2,
+        "toCell": "3,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 1,
+        "toCell": "5,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,2",
+        "fromPort": 2,
+        "toCell": "4,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,2",
+        "fromPort": 1,
+        "toCell": "6,2",
+        "toPort": 3
+      },
+      {
+        "fromCell": "5,2",
+        "fromPort": 2,
+        "toCell": "5,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "6,2",
+        "fromPort": 2,
+        "toCell": "6,3",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 1,
+        "toCell": "1,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,3",
+        "fromPort": 2,
+        "toCell": "0,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 1,
+        "toCell": "2,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,3",
+        "fromPort": 2,
+        "toCell": "1,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 1,
+        "toCell": "3,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,3",
+        "fromPort": 2,
+        "toCell": "2,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 1,
+        "toCell": "4,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,3",
+        "fromPort": 2,
+        "toCell": "3,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 1,
+        "toCell": "5,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,3",
+        "fromPort": 2,
+        "toCell": "4,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,3",
+        "fromPort": 1,
+        "toCell": "6,3",
+        "toPort": 3
+      },
+      {
+        "fromCell": "5,3",
+        "fromPort": 2,
+        "toCell": "5,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "6,3",
+        "fromPort": 2,
+        "toCell": "6,4",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 1,
+        "toCell": "1,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,4",
+        "fromPort": 2,
+        "toCell": "0,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 1,
+        "toCell": "2,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,4",
+        "fromPort": 2,
+        "toCell": "1,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 1,
+        "toCell": "3,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,4",
+        "fromPort": 2,
+        "toCell": "2,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 1,
+        "toCell": "4,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,4",
+        "fromPort": 2,
+        "toCell": "3,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 1,
+        "toCell": "5,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,4",
+        "fromPort": 2,
+        "toCell": "4,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,4",
+        "fromPort": 1,
+        "toCell": "6,4",
+        "toPort": 3
+      },
+      {
+        "fromCell": "5,4",
+        "fromPort": 2,
+        "toCell": "5,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "6,4",
+        "fromPort": 2,
+        "toCell": "6,5",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,5",
+        "fromPort": 1,
+        "toCell": "1,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "0,5",
+        "fromPort": 2,
+        "toCell": "0,6",
+        "toPort": 0
+      },
+      {
+        "fromCell": "1,5",
+        "fromPort": 1,
+        "toCell": "2,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,5",
+        "fromPort": 2,
+        "toCell": "1,6",
+        "toPort": 0
+      },
+      {
+        "fromCell": "2,5",
+        "fromPort": 1,
+        "toCell": "3,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,5",
+        "fromPort": 2,
+        "toCell": "2,6",
+        "toPort": 0
+      },
+      {
+        "fromCell": "3,5",
+        "fromPort": 1,
+        "toCell": "4,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,5",
+        "fromPort": 2,
+        "toCell": "3,6",
+        "toPort": 0
+      },
+      {
+        "fromCell": "4,5",
+        "fromPort": 1,
+        "toCell": "5,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,5",
+        "fromPort": 2,
+        "toCell": "4,6",
+        "toPort": 0
+      },
+      {
+        "fromCell": "5,5",
+        "fromPort": 1,
+        "toCell": "6,5",
+        "toPort": 3
+      },
+      {
+        "fromCell": "5,5",
+        "fromPort": 2,
+        "toCell": "5,6",
+        "toPort": 0
+      },
+      {
+        "fromCell": "6,5",
+        "fromPort": 2,
+        "toCell": "6,6",
+        "toPort": 0
+      },
+      {
+        "fromCell": "0,6",
+        "fromPort": 1,
+        "toCell": "1,6",
+        "toPort": 3
+      },
+      {
+        "fromCell": "1,6",
+        "fromPort": 1,
+        "toCell": "2,6",
+        "toPort": 3
+      },
+      {
+        "fromCell": "2,6",
+        "fromPort": 1,
+        "toCell": "3,6",
+        "toPort": 3
+      },
+      {
+        "fromCell": "3,6",
+        "fromPort": 1,
+        "toCell": "4,6",
+        "toPort": 3
+      },
+      {
+        "fromCell": "4,6",
+        "fromPort": 1,
+        "toCell": "5,6",
+        "toPort": 3
+      },
+      {
+        "fromCell": "5,6",
+        "fromPort": 1,
+        "toCell": "6,6",
+        "toPort": 3
+      }
+    ],
+    "arrows": [
+      {
+        "id": "outer-left",
+        "head": {
+          "cellId": "0,1",
+          "exitPort": 2
+        },
+        "body": [
+          "0,2",
+          "0,3",
+          "0,4",
+          "0,5",
+          "0,6"
+        ]
+      },
+      {
+        "id": "outer-bottom",
+        "head": {
+          "cellId": "6,6",
+          "exitPort": 3
+        },
+        "body": [
+          "5,6",
+          "4,6",
+          "3,6",
+          "2,6",
+          "1,6"
+        ]
+      },
+      {
+        "id": "outer-right",
+        "head": {
+          "cellId": "6,0",
+          "exitPort": 2
+        },
+        "body": [
+          "6,1",
+          "6,2",
+          "6,3",
+          "6,4",
+          "6,5"
+        ]
+      },
+      {
+        "id": "outer-top",
+        "head": {
+          "cellId": "0,0",
+          "exitPort": 1
+        },
+        "body": [
+          "1,0",
+          "2,0",
+          "3,0",
+          "4,0",
+          "5,0"
+        ]
+      },
+      {
+        "id": "inner-left",
+        "head": {
+          "cellId": "1,2",
+          "exitPort": 2
+        },
+        "body": [
+          "1,3",
+          "1,4",
+          "1,5"
+        ]
+      },
+      {
+        "id": "inner-bottom",
+        "head": {
+          "cellId": "5,5",
+          "exitPort": 3
+        },
+        "body": [
+          "4,5",
+          "3,5",
+          "2,5"
+        ]
+      },
+      {
+        "id": "inner-right",
+        "head": {
+          "cellId": "5,1",
+          "exitPort": 2
+        },
+        "body": [
+          "5,2",
+          "5,3",
+          "5,4"
+        ]
+      },
+      {
+        "id": "inner-top",
+        "head": {
+          "cellId": "1,1",
+          "exitPort": 1
+        },
+        "body": [
+          "2,1",
+          "3,1",
+          "4,1"
+        ]
+      },
+      {
+        "id": "core-hook",
+        "head": {
+          "cellId": "2,2",
+          "exitPort": 1
+        },
+        "body": [
+          "3,2",
+          "4,2",
+          "4,3",
+          "4,4"
+        ]
+      },
+      {
+        "id": "core-tail",
+        "head": {
+          "cellId": "3,3",
+          "exitPort": 3
+        },
+        "body": [
+          "2,3",
+          "2,4",
+          "3,4"
+        ]
+      }
+    ],
+    "name": "Experto",
+    "difficulty": "veryHard"
   }
 ]
