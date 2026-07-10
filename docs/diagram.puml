@@ -1,0 +1,91 @@
+@startuml diagram
+!theme plain
+skinparam componentStyle uml2
+skinparam packageStyle rectangle
+skinparam DefaultFontName Urbanist
+
+title Clean Architecture - Arrow Maze Auth Module (JSON Persistence)
+
+' --- CAPAS ---
+package "Main (Composition Root)" #EFEFEF {
+  [index.ts] as Index
+  [AuthFactory] as Factory
+}
+
+package "Presentation Layer (Express)" #D4E6F1 {
+  [AuthRoutes] as Routes
+  [AuthController] as Controller
+  [AuthMiddleware] as Middleware
+}
+
+package "Infrastructure Layer (File System & Jobs)" #D5F5E3 {
+  [JsonAccountRepository] as AccRepoImpl
+  [JsonSessionRepository] as SessRepoImpl
+  [BcryptCryptoService] as CryptoImpl
+  [JwtTokenService] as TokenImpl
+  [BlacklistCleanupJob] as CronJob
+}
+
+package "Application Layer (Use Cases)" #FCF3CF {
+  [RegisterAccount] as UseCaseReg
+  [Login] as UseCaseLog
+  [Logout] as UseCaseOut
+  
+  interface "ICryptoService" as ICrypto
+  interface "ITokenService" as IToken
+}
+
+package "Domain Layer (Core)" #FADBD8 {
+  [Account Entity] as Account
+  [Session Entity] as Session
+  [Email VO] as Email
+  [Password VO] as Password
+  
+  interface "IAccountRepository" as IAccRepo
+  interface "ISessionRepository" as ISessRepo
+}
+
+' --- RELACIONES Y DEPENDENCIAS ---
+
+' Main inyecta todo
+Index --> Factory
+Factory .down.> Routes : "crea"
+Factory .down.> AccRepoImpl : "instancia"
+Factory .down.> CronJob : "arranca"
+Factory .down.> UseCaseReg : "ensambla"
+
+' Presentación llama a Aplicación
+Routes --> Controller
+Routes --> Middleware
+Controller --> UseCaseReg
+Controller --> UseCaseLog
+Controller --> UseCaseOut
+Middleware --> IToken
+Middleware --> ISessRepo
+
+' Infraestructura implementa contratos de Aplicación/Dominio
+AccRepoImpl ..|> IAccRepo : " implements"
+SessRepoImpl ..|> ISessRepo : " implements"
+CryptoImpl ..|> ICrypto : " implements"
+TokenImpl ..|> IToken : " implements"
+CronJob --> ISessRepo : " usa"
+
+' Aplicación orquesta usando contratos de Dominio/Aplicación
+UseCaseReg --> IAccRepo
+UseCaseReg --> ICrypto
+UseCaseReg --> Account
+UseCaseReg --> Email
+UseCaseReg --> Password
+
+UseCaseLog --> IAccRepo
+UseCaseLog --> ICrypto
+UseCaseLog --> IToken
+UseCaseLog --> Email
+
+UseCaseOut --> IToken
+UseCaseOut --> ISessRepo
+
+' Dominio compone
+Account --> Email
+
+@enduml

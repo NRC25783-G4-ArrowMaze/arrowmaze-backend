@@ -1,26 +1,6 @@
-# AI Usage — Arrow Maze Backend
-
-Este archivo registra el uso de herramientas de IA generativa en el desarrollo de **Arrow Maze Backend**, en cumplimiento de las reglas del proyecto.
-
-Cada cambio significativo asistido por IA debe añadir una nueva entrada al final, con el formato definido más abajo. Mantener orden cronológico inverso (lo más reciente primero) **no** es necesario; preferimos orden cronológico natural (lo más antiguo arriba) para que sea fácil leer la evolución del proyecto.
-
-## Formato de cada entrada
-
-```md
-### YYYY-MM-DD — <Resumen de la tarea>
-- **Herramienta:** <Cursor / Claude / GPT / Copilot / etc.>
-- **Modelo / versión:** <si se conoce>
-- **Autor humano responsable:** <nombre o handle>
-- **Prompt(s) representativo(s):**
-  - "..."
-- **Salida tomada de la IA:** <archivos / bloques principales generados>
-- **Modificaciones manuales del equipo:** <qué se ajustó, por qué>
-- **Validación realizada:** <tests, lint, revisión humana>
-```
-
----
-
-## Registro
+> 🔎 **Procedencia:** entrada recuperada del historial git (commit `6bf868a`, 2026-05-07).
+> Fue eliminada accidentalmente de `AI_USAGE.md` en el commit `71e99d8` (2026-06-06) al
+> reformatear el archivo. Restaurada durante la migración al registro modular (2026-07-06).
 
 ### 2026-05-07 — Bootstrap de las reglas del repositorio
 
@@ -45,7 +25,3 @@ Cada cambio significativo asistido por IA debe añadir una nueva entrada al fina
 - **Validación realizada:**
   - Revisión cruzada de las reglas contra el enunciado original del proyecto Arrow Maze para asegurar cobertura completa de los puntos solicitados (estructura de repos, Conventional Commits, PRs, IA, README, Clean Architecture, DDD, JWT, Swagger, sincronización, SOLID, patrones GoF, AOP, Clean Code, pirámide de pruebas, CI/CD, control de versiones del esquema, migraciones, independencia del motor).
   - No se ejecuta lint ni test porque el repositorio aún no contiene código fuente ni configuración de un stack concreto; estas validaciones se incorporarán al introducir el primer scaffold del backend.
-
----
-
-> ¿Vas a contribuir? Recuerda añadir tu propia entrada a este archivo en el mismo PR donde introduces los cambios asistidos por IA.

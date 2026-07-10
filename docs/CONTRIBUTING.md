@@ -1,6 +1,6 @@
 # Guía de Contribución — Arrow Maze Backend
 
-Este documento resume las reglas del repositorio en formato legible para humanos. La versión normativa, aplicable también por agentes de IA, vive en [`.cursor/rules/`](./.cursor/rules/).
+Este documento resume las reglas del repositorio en formato legible para humanos. La versión normativa, aplicable también por agentes de IA, vive en [`.cursor/rules/`](../.cursor/rules/).
 
 ## 1. Estructura del proyecto
 
@@ -46,7 +46,7 @@ Este documento resume las reglas del repositorio en formato legible para humanos
 - **DDD:** lenguaje ubicuo del dominio Arrow Maze, aislamiento de la lógica de negocio respecto a infraestructura, patrón **Repositorio** como mediador entre dominio y persistencia.
 - **JWT** para autenticación, **Swagger / OpenAPI** para documentar endpoints, endpoints específicos para sincronización de progreso y gestión de niveles.
 
-Detalle completo en [`.cursor/rules/10-architecture-clean-ddd.mdc`](./.cursor/rules/10-architecture-clean-ddd.mdc).
+Detalle completo en [`.cursor/rules/10-architecture-clean-ddd.mdc`](../.cursor/rules/10-architecture-clean-ddd.mdc).
 
 ## 5. Patrones de diseño y AOP
 
@@ -56,7 +56,7 @@ Detalle completo en [`.cursor/rules/10-architecture-clean-ddd.mdc`](./.cursor/ru
   - **De comportamiento** (ej. Observer para eventos del dominio).
 - Implementar al menos un **aspecto AOP** para responsabilidades transversales (logging, manejo centralizado de excepciones, seguridad, métricas) sin contaminar la lógica de negocio.
 
-Detalle en [`.cursor/rules/20-design-patterns-aop.mdc`](./.cursor/rules/20-design-patterns-aop.mdc).
+Detalle en [`.cursor/rules/20-design-patterns-aop.mdc`](../.cursor/rules/20-design-patterns-aop.mdc).
 
 ## 6. SOLID y Clean Code
 
@@ -64,7 +64,7 @@ Detalle en [`.cursor/rules/20-design-patterns-aop.mdc`](./.cursor/rules/20-desig
 - **Clean Code:** Boy Scout Rule, nombres significativos del dominio, funciones pequeñas (una sola cosa), DRY aplicado al **conocimiento** (no al código que coincidentemente se ve igual).
 - Adherirse al **style guide oficial** del lenguaje (PEP 8 / Google Style / ESLint+Prettier).
 
-Detalle en [`.cursor/rules/30-solid-clean-code.mdc`](./.cursor/rules/30-solid-clean-code.mdc).
+Detalle en [`.cursor/rules/30-solid-clean-code.mdc`](../.cursor/rules/30-solid-clean-code.mdc).
 
 ## 7. Testing
 
@@ -75,7 +75,7 @@ Detalle en [`.cursor/rules/30-solid-clean-code.mdc`](./.cursor/rules/30-solid-cl
   - **Contrato** con Pact (recomendado) entre cliente y backend.
 - **TDD respetuoso:** si existen tests, no se modifican para forzar el "verde". El cambio va en el código de producción.
 
-Detalle en [`.cursor/rules/40-testing.mdc`](./.cursor/rules/40-testing.mdc).
+Detalle en [`.cursor/rules/40-testing.mdc`](../.cursor/rules/40-testing.mdc).
 
 ## 8. Base de datos
 
@@ -83,11 +83,12 @@ Detalle en [`.cursor/rules/40-testing.mdc`](./.cursor/rules/40-testing.mdc).
 - La base de datos es un **detalle de implementación**: el dominio depende de interfaces de repositorio, no de un motor concreto.
 - Naming en inglés y `snake_case`; índices y restricciones justificadas.
 
-Detalle en [`.cursor/rules/50-database.mdc`](./.cursor/rules/50-database.mdc).
+Detalle en [`.cursor/rules/50-database.mdc`](../.cursor/rules/50-database.mdc).
 
 ## 9. Uso de IA
 
-- Permitido y fomentado, pero **obligatorio documentarlo** en [`AI_USAGE.md`](./AI_USAGE.md) de la raíz: herramienta, prompts representativos, modificaciones manuales del equipo y validación realizada.
-- Cualquier PR generado con asistencia de IA debe incluir la entrada correspondiente en `AI_USAGE.md`.
+- Permitido y fomentado, pero **obligatorio documentarlo** en el registro modular [`.ai-usage/`](../.ai-usage/): un archivo por sesión (`YYYY-MM-DD-descripcion.md`) con herramienta, prompts representativos, modificaciones manuales del equipo y validación realizada.
+- Cualquier PR generado con asistencia de IA debe incluir su reporte en `.ai-usage/`, registrarlo en el índice (`.ai-usage/README.md`) y actualizar `.ai-usage/manifest.json`.
+- **Nunca** editar reportes de sesiones anteriores ni reescribir el registro completo; solo añadir archivos nuevos.
 
-Detalle en [`.cursor/rules/60-workflow-ai.mdc`](./.cursor/rules/60-workflow-ai.mdc).
+Detalle en [`.cursor/rules/60-workflow-ai.mdc`](../.cursor/rules/60-workflow-ai.mdc).

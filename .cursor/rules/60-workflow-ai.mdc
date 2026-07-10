@@ -48,11 +48,15 @@ Estas reglas aplican específicamente cuando un agente Cursor (u otra IA) realiz
   - CI en verde.
   - Tests añadidos / actualizados.
   - Documentación pertinente actualizada (README, docs, OpenAPI).
-  - **`AI_USAGE.md` actualizado** con el uso de IA realizado en esta tarea.
+  - **Registro `.ai-usage/` actualizado** con el uso de IA realizado en esta tarea.
 
-## Registro de uso de IA (`AI_USAGE.md`)
+## Registro de uso de IA (`.ai-usage/`)
 
-Cada vez que un agente IA produzca cambios significativos, debe **añadir una entrada** al archivo `AI_USAGE.md` de la raíz con el siguiente formato:
+El registro es **modular** (mismo modelo que `arrowmaze-game`): un archivo por sesión + `manifest.json` como fuente estructurada de verdad + `README.md` como índice. **Nunca** editar reportes de sesiones anteriores ni reescribir el registro completo.
+
+Cada vez que un agente IA produzca cambios significativos, debe:
+
+1. **Crear un nuevo archivo** `.ai-usage/YYYY-MM-DD-descripcion.md` con el siguiente formato:
 
 ```md
 ### YYYY-MM-DD — <Resumen de la tarea>
@@ -66,4 +70,7 @@ Cada vez que un agente IA produzca cambios significativos, debe **añadir una en
 - **Validación realizada:** <tests, lint, revisión humana>
 ```
 
-Esta entrada se incluye en el mismo PR que introduce los cambios.
+2. **Registrar el archivo** en el índice `.ai-usage/README.md`.
+3. **Actualizar** `.ai-usage/manifest.json` (array `entries` + `statistics` + `lastEntry`).
+
+Todo esto se incluye en el mismo PR que introduce los cambios.

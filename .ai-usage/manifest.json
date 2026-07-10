@@ -1,0 +1,335 @@
+{
+  "project": "arrow-maze-backend",
+  "aiUsageRegistry": {
+    "version": "1.0",
+    "lastUpdated": "2026-07-09T00:00:00Z",
+    "entries": [
+      {
+        "id": "2026-05-07-001",
+        "date": "2026-05-07",
+        "title": "Bootstrap de las reglas del repositorio",
+        "file": "2026-05-07-bootstrap-reglas-repositorio.md",
+        "tool": "Cursor (Cloud Agent)",
+        "model": "Claude Opus 4.7",
+        "author": "Equipo Arrow Maze",
+        "phase": "governance",
+        "feature": "repo-rules-bootstrap",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 9,
+          "files_modified": 0
+        },
+        "areas": [
+          "governance",
+          "cursor-rules",
+          "clean-architecture",
+          "ddd",
+          "testing-standards",
+          "documentation"
+        ],
+        "validation": {
+          "cross_review": "passed — reglas contrastadas contra el enunciado original del proyecto",
+          "lint_tests": "n/a — el repositorio aún no contenía código fuente"
+        },
+        "decisions": [
+          "Estructura normativa en .cursor/rules/ (00–60) con CONTRIBUTING.md como versión legible",
+          "Registro obligatorio de uso de IA en el repositorio"
+        ],
+        "notes": "Entrada recuperada del historial git (commit 6bf868a). Había sido eliminada de AI_USAGE.md en el commit 71e99d8 (2026-06-06) al reformatear el archivo; restaurada en la migración al registro modular (2026-07-06)."
+      },
+      {
+        "id": "2026-06-04-001",
+        "date": "2026-06-04",
+        "title": "Diseño de Arquitectura Base e Implementación del Módulo de Autenticación",
+        "file": "2026-06-04-arquitectura-base-modulo-autenticacion.md",
+        "tool": "Gemini",
+        "model": "Gemini 3.1 pro",
+        "author": "@SantiagoChirinos",
+        "phase": "implementation",
+        "feature": "E1/F1 — auth module",
+        "linked_session": "2026-06-06-001",
+        "status": "superseded",
+        "deliverables": {
+          "files_created": 5,
+          "files_modified": 0
+        },
+        "areas": [
+          "presentation",
+          "composition-root",
+          "factory-pattern",
+          "dependency-injection",
+          "security"
+        ],
+        "validation": {
+          "human_review": "passed — pureza de Clean Architecture",
+          "static_analysis": "passed — SonarQube (S5689 resuelto con helmet)"
+        },
+        "decisions": [
+          "Factory Pattern en capa main para DI manual escalable",
+          "Tipado estricto con import type para interfaces y contratos"
+        ],
+        "notes": "Entrada recuperada del historial git (commit 393e18a). Superseded: su contenido fue consolidado y reformateado en la entrada 2026-06-06-001, perdiendo fecha y modelo originales. Se restaura por trazabilidad; NO contar sus deliverables en agregados (duplican los de 2026-06-06-001)."
+      },
+      {
+        "id": "2026-06-04-002",
+        "date": "2026-06-04",
+        "title": "Configuración de Suite de Pruebas y Tests Unitarios (Patrón AAA)",
+        "file": "2026-06-04-suite-pruebas-unitarias-aaa.md",
+        "tool": "Gemini",
+        "model": "Gemini 3.1 pro",
+        "author": "@SantiagoChirinos",
+        "phase": "testing",
+        "feature": "E1/F1 — auth tests",
+        "linked_session": "2026-06-06-001",
+        "status": "superseded",
+        "deliverables": {
+          "files_created": 3,
+          "files_modified": 0
+        },
+        "areas": [
+          "testing",
+          "jest",
+          "aaa-pattern",
+          "mocking",
+          "typescript-config"
+        ],
+        "validation": {
+          "tests": "passed — suite completa en verde",
+          "static_analysis": "passed — S4325 resuelto con entidades reales en mocks"
+        },
+        "decisions": [
+          "Tests de caja negra sobre comportamiento observable, no implementación",
+          "Nomenclatura should_[resultado]_when_[condicion]",
+          "moduleResolution Bundler + ajustes ESM/verbatimModuleSyntax"
+        ],
+        "notes": "Entrada recuperada del historial git (commit 393e18a). Superseded: consolidada en 2026-06-06-001. Se restaura por trazabilidad; NO contar sus deliverables en agregados."
+      },
+      {
+        "id": "2026-06-06-001",
+        "date": "2026-06-06",
+        "title": "Implementación de Capa de Presentación (Auth) y Suite de Pruebas (Jest)",
+        "file": "2026-06-06-consolidado-presentacion-auth-tests.md",
+        "tool": "Gemini",
+        "model": "Gemini (versión no especificada; originalmente Gemini 3.1 pro según entradas 2026-06-04)",
+        "author": "@SantiagoChirinos",
+        "phase": "implementation",
+        "feature": "E1/F1 — auth module + tests",
+        "linked_session": ["2026-06-04-001", "2026-06-04-002"],
+        "status": "completed",
+        "deliverables": {
+          "files_created": 7,
+          "files_modified": 1
+        },
+        "areas": [
+          "presentation",
+          "composition-root",
+          "factory-pattern",
+          "testing",
+          "jest",
+          "security"
+        ],
+        "validation": {
+          "tests": "passed — suite completa en Jest",
+          "static_analysis": "passed — sin advertencias en linter ni SonarQube (S5689, S4325 resueltos)"
+        },
+        "decisions": [
+          "Inyección Modular (Factory Pattern) en main/factories",
+          "Detroit TDD: probar impacto real sobre entidades in-memory",
+          "Manejo de errores con cause en vez de I/O en capa de Aplicación"
+        ],
+        "notes": "Versión canónica del trabajo del 2026-06-04 (commits 393e18a + 71e99d8): consolidación reformateada al formato del front de las entradas 2026-06-04-001 y 2026-06-04-002. El trabajo real se hizo el 2026-06-04."
+      },
+      {
+        "id": "2026-06-13-001",
+        "date": "2026-06-13",
+        "title": "Gestión de Sesión Activa, Blacklist y Persistencia basada en JSON",
+        "file": "2026-06-13-sesion-activa-blacklist-persistencia-json.md",
+        "tool": "Gemini",
+        "model": "Gemini (versión no especificada)",
+        "author": "@SantiagoChirinos",
+        "phase": "implementation",
+        "feature": "E2 — active session management",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 5,
+          "files_modified": 2
+        },
+        "areas": [
+          "infrastructure",
+          "persistence-json",
+          "jwt-blacklist",
+          "cron-jobs",
+          "testing",
+          "middleware"
+        ],
+        "validation": {
+          "tests": "passed — suite completa en Jest con fs/promises mockeado",
+          "bdd_alignment": "passed — códigos 401/403 exactos según el Gherkin E2"
+        },
+        "decisions": [
+          "Persistencia pragmática en JSON en lugar de base de datos pesada",
+          "Blacklist por jti (JWT ID) con Cron Job de purga automática",
+          "Aislamiento de I/O en pruebas interceptando fs/promises"
+        ],
+        "notes": "Implementación de E2 (PR #8, feature16-manejo-sesion-activa). Token único JWT de 7 días sin fingerprinting."
+      },
+      {
+        "id": "2026-07-06-001",
+        "date": "2026-07-06",
+        "title": "Reestructuración documental: docs/, registro modular de IA y README",
+        "file": "2026-07-06-reestructuracion-documental-registro-modular.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Opus 4.8 + Claude Fable 5",
+        "author": "@Jrgil20",
+        "phase": "documentation",
+        "feature": "docs-restructure + ai-usage-registry",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 14,
+          "files_modified": 5,
+          "files_deleted": 1,
+          "files_renamed": 2,
+          "feature_files_synchronized": 5,
+          "sessions_recovered_from_git": 3,
+          "commits": 7
+        },
+        "areas": [
+          "documentation",
+          "specification-sync",
+          "ai-usage-registry",
+          "governance",
+          "readme",
+          "tooling"
+        ],
+        "validation": {
+          "tests": "passed — 19/19 en 5 suites con pnpm test",
+          "spec_sync": "passed — diff byte a byte contra project-core",
+          "manifest_json": "passed — JSON válido",
+          "orphan_references": "passed — cero referencias a AI_USAGE.md o enlaces rotos"
+        },
+        "decisions": [
+          "Recuperar del historial git las 3 sesiones borradas y marcarlas superseded con linked_session",
+          "Codificar la inmutabilidad de reportes en la normativa (.cursor/rules + CONTRIBUTING)",
+          "Centralizar documentación en docs/ (specs, CONTRIBUTING, diagramas UML)",
+          "pnpm como gestor de paquetes obligatorio (corrección tras uso indebido de npm)"
+        ],
+        "notes": "Primera sesión del registro modular. Rama docs/documentacion-modular con 7 commits modulares. project-core establecido como fuente única de specs para el backend."
+      },
+      {
+        "id": "2026-07-06-002",
+        "date": "2026-07-06",
+        "title": "Corrección de bugs críticos hallados en inspección (logout, build, JWT, email)",
+        "file": "2026-07-06-correccion-bugs-logout-build-jwt-email.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Fable 5",
+        "author": "@Jrgil20",
+        "phase": "bugfix",
+        "feature": "cross-cutting — auth (E1/E2), build, persistencia JSON",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 7,
+          "files_modified": 55,
+          "files_renamed": 5,
+          "commits": 8
+        },
+        "areas": [
+          "auth",
+          "jwt",
+          "build-tooling",
+          "esm",
+          "persistence-json",
+          "concurrency",
+          "composition-root",
+          "testing",
+          "repo-config"
+        ],
+        "validation": {
+          "tests": "passed — 75/75 en 20 suites (subió de 67/67 al añadir tests de regresión)",
+          "typecheck": "passed — tsc --noEmit limpio",
+          "build": "passed — pnpm build && node dist/index.js arranca sin ERR_MODULE_NOT_FOUND",
+          "e2e_smoke_test": "passed — logout revoca el token (200, antes 401), token revocado rechazado en /progress (403, antes 200), login case-insensitive (200, antes 401), JWT exp-iat = 604800s"
+        },
+        "decisions": [
+          "Build de producción migrado a ESM nodenext + extensiones .js en vez de bundler o CommonJS",
+          "Token de sesión fijado en 7 días (604800s), alineado con README y spec E2",
+          "Mutex de escritura JSON y renombres de typos incluidos; CORS y actualización de READMEs diferidos explícitamente",
+          "8 commits modulares (uno por problema) en rama fix/correcciones-inspeccion; fix: preferido sobre build:/chore: cuando el cambio repara algo roto"
+        ],
+        "notes": "Continuación de una inspección previa del mismo día que verificó 4 bugs en runtime (logout roto por bind perdido, build de producción doblemente roto, TTL de JWT inconsistente con el contrato del puerto, email case-sensitive) más riesgos de configuración (lockfile no versionado, data/ no ignorado, secreto JWT hardcodeado en LeaderboardModuleFactory, carrera read-modify-write en repos JSON). Ejecutado en modo plan con aprobación explícita del usuario antes de implementar."
+      },
+      {
+        "id": "2026-07-09-001",
+        "date": "2026-07-09",
+        "title": "Cierre del backend: patrones GoF, AOP y Swagger/OpenAPI",
+        "file": "2026-07-09-patrones-gof-aop-swagger.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Fable 5",
+        "author": "@Jrgil20",
+        "phase": "implementation",
+        "feature": "rúbrica — patrones GoF + AOP + OpenAPI",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 11,
+          "files_modified": 18,
+          "files_renamed": 2,
+          "commits": 7,
+          "pull_request": 17
+        },
+        "areas": [
+          "design-patterns",
+          "strategy",
+          "adapter",
+          "aop",
+          "error-handling",
+          "logging",
+          "openapi-swagger",
+          "documentation",
+          "testing"
+        ],
+        "validation": {
+          "tests": "passed — 109/109 en 27 suites con pnpm test (subió de 80/80)",
+          "build": "passed — pnpm build limpio",
+          "e2e_smoke_test": "passed — servidor desde dist/: /api/docs/json sirve OpenAPI 3.0.3 con 12 paths, Swagger UI 200, nivel inexistente 404 vía ErrorHandlerAspect, logout sin token 401, RequestLoggingAspect emite líneas [HTTP] en stdout"
+        },
+        "decisions": [
+          "Strategy (ranking del leaderboard) como patrón de comportamiento en lugar de forzar Command sobre un DTO con static factory",
+          "Adapter (Bcrypt/Jwt) documentado como patrón estructural explícito con tests unitarios",
+          "ErrorHandlerAspect centralizado aprovechando la propagación de promesas rechazadas de Express 5, eliminando el try/catch de los 4 controllers",
+          "Corrección de contrato: leaderboard de nivel inexistente responde 404 (LevelNotFoundError), reservando LevelRegistryError al 422 de progreso; verificado que el cliente no matchea strings de error"
+        ],
+        "notes": "Rama feature/patrones-aop-swagger con 7 commits modulares, PR #17 hacia develop. Ejecutado en modo plan (agentes Explore + Plan) con aprobación explícita antes de implementar. Dos correcciones en la propia sesión al fallar la verificación: glob de swagger con process.cwd() en vez de import.meta (ts-jest), y orden de /api/docs/json antes del app.use de Swagger UI."
+      }
+    ],
+    "statistics": {
+      "totalReports": 8,
+      "distinctWorkSessions": 7,
+      "lastUpdated": "2026-07-09T00:00:00Z",
+      "toolsUsed": [
+        "Cursor (Cloud Agent)",
+        "Gemini",
+        "Claude Code (claude.ai/code)"
+      ],
+      "modelsUsed": [
+        "Claude Opus 4.7",
+        "Claude Opus 4.8",
+        "Claude Fable 5",
+        "Gemini 3.1 pro",
+        "Gemini (versión no especificada)"
+      ],
+      "totalFilesCreated": 53,
+      "totalFilesModified": 81,
+      "totalTestsPassing": 109,
+      "totalTestSuites": 27,
+      "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
+    },
+    "lastEntry": {
+      "id": "2026-07-09-001",
+      "summary": "Cierre del backend: patrones GoF, AOP y Swagger/OpenAPI"
+    }
+  }
+}
