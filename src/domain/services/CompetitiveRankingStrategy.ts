@@ -1,13 +1,15 @@
-import type { LeaderboardEntryDTO } from "../shared/contracts/LeaderboardDTO.js";
+import type { IRankingStrategy, UnrankedEntry } from "./IRankingStrategy.js";
 
-type UnrankedEntry = Omit<LeaderboardEntryDTO, 'rank'>;
-
-export class LeaderboardSortingService {
+/**
+ * Estrategia de ranking competitivo: criterios de desempate en cascada
+ * (score DESC → movimientos ASC → tiempo ASC → fecha ASC).
+ */
+export class CompetitiveRankingStrategy implements IRankingStrategy {
   /**
    * Ordena los registros aplicando los criterios de desempate en cascada
    * y asigna la posición absoluta (rank) a cada jugador.
    */
-  public static sortAndRank<T extends UnrankedEntry>(entries: T[]): Array<T & { rank: number }> {
+  public sortAndRank<T extends UnrankedEntry>(entries: T[]): Array<T & { rank: number }> {
     const sorted = [...entries].sort((a, b) => {
       // 1° Criterio: Mayor score (DESC)
       if (b.score !== a.score) {
