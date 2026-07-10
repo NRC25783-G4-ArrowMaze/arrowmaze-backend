@@ -1,15 +1,18 @@
-import path from 'node:path';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 /**
  * Construye el spec OpenAPI leyendo las anotaciones @openapi de los
- * archivos de rutas. El glob se resuelve relativo a process.cwd() —
- * la misma convención que la persistencia en data/ — y cubre tanto
- * src/ (dev con tsx) como dist/ (producción; los JSDoc sobreviven al
- * build porque tsc no elimina comentarios).
+ * archivos de rutas. Los globs son relativos a process.cwd() y usan
+ * siempre '/' como separador: el glob interno de swagger-jsdoc no
+ * acepta '\' de Windows (path.resolve rompía la búsqueda ahí). Cubren
+ * tanto src/ (dev con tsx) como dist/ (producción; los JSDoc sobreviven
+ * al build porque tsc no elimina comentarios).
  */
 export function buildSwaggerSpec(): object {
-  const routesGlob = path.resolve(process.cwd(), '{src,dist}/presentation/routes/*.{ts,js}');
+  const routesGlobs = [
+    'src/presentation/routes/*.{ts,js}',
+    'dist/presentation/routes/*.{ts,js}'
+  ];
 
   return swaggerJsdoc({
     definition: {
@@ -160,6 +163,6 @@ export function buildSwaggerSpec(): object {
         }
       }
     },
-    apis: [routesGlob]
+    apis: routesGlobs
   });
 }
