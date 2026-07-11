@@ -1,10 +1,12 @@
 # 🎮 Arrow Maze — Backend
 
+![CI](https://github.com/NRC25783-G4-ArrowMaze/arrowmaze-backend/actions/workflows/ci.yml/badge.svg?branch=main)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5.x-000000?logo=express&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-109%2F109%20passing-brightgreen?logo=jest)
 ![pnpm](https://img.shields.io/badge/pnpm-10.x-F69220?logo=pnpm&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/architecture-Clean%20%2B%20DDD-blueviolet)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 API REST del juego de puzzles **Arrow Maze**: gestiona identidad de usuarios (registro, login, sesiones JWT), distribución y actualización de niveles (con seed de contenido inicial), progreso del jugador y leaderboards por nivel.
 
@@ -29,7 +31,7 @@ Matriz completa con dependencias en [`docs/README.md`](docs/README.md).
 
 ## 🏗️ Arquitectura
 
-**Clean Architecture + DDD** — la regla de dependencia apunta siempre hacia adentro. Diagrama de componentes en [`docs/diagram.puml`](docs/diagram.puml).
+**Clean Architecture + DDD** — la regla de dependencia apunta siempre hacia adentro. Diagrama de componentes por capas: [preview en SVG](docs/diagram.svg) · [fuente editable `docs/diagram.puml`](docs/diagram.puml).
 
 ```
 src/
@@ -270,5 +272,12 @@ tests/
 - [`docs/README.md`](docs/README.md) — índice de specs del backend, contratos externos y decisiones abiertas
 - [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) — guía de contribución (Conventional Commits, PRs, testing)
 - [`docs/features/`](docs/features/) — especificaciones Gherkin (E1, E2, F1, F2, F3)
+- [`AI_USAGE.md`](AI_USAGE.md) — resumen del uso de IA: herramientas, alcance, alucinaciones corregidas y reflexión
 - [`.ai-usage/`](.ai-usage/) — registro modular de uso de IA (manifest + un reporte por sesión)
 - [`.cursor/rules/`](.cursor/rules/) — reglas normativas del repositorio
+
+---
+
+## 📄 Licencia
+
+MIT — ver [`LICENSE`](./LICENSE).
