@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for arrowmaze-backend on 2026-07-12T13:11:24Z
+# fly.toml app configuration file generated for arrowmaze-backend on 2026-07-12T14:04:37Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'arrowmaze-backend'
-primary_region = 'iad'
+primary_region = 'dfw'
 
 [build]
 
