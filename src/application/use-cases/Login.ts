@@ -22,6 +22,20 @@ export class Login {
   ) {}
 
   async execute(request: LoginRequest): Promise<LoginResponse> {
+    // ⚠️ Bypass SOLO para desarrollo local: con LEVELS_SKIP_ROLE_CHECK=true cualquier
+    // credencial devuelve un JWT válido con rol ADMIN, para que forge entre al editor
+    // y publique mapas sin una cuenta real. Por defecto —sin la variable— el login
+    // valida credenciales normalmente. NO desplegar en entornos compartidos/producción;
+    // como salvaguarda extra, el bypass se ignora si NODE_ENV=production.
+    if (process.env.LEVELS_SKIP_ROLE_CHECK === 'true' && process.env.NODE_ENV !== 'production') {
+      const token = await this.tokenService.generate({
+        accountId: 'local-dev',
+        jti: this.generateId(),
+        role: 'ADMIN'
+      }, 604800);
+      return { token };
+    }
+
     let email: Email;
     try {
       email = Email.create(request.email);

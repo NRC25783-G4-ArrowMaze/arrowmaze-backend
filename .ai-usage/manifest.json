@@ -2,7 +2,7 @@
   "project": "arrow-maze-backend",
   "aiUsageRegistry": {
     "version": "1.0",
-    "lastUpdated": "2026-07-09T00:00:00Z",
+    "lastUpdated": "2026-07-11T00:00:00Z",
     "entries": [
       {
         "id": "2026-05-07-001",
@@ -115,7 +115,10 @@
         "author": "@SantiagoChirinos",
         "phase": "implementation",
         "feature": "E1/F1 — auth module + tests",
-        "linked_session": ["2026-06-04-001", "2026-06-04-002"],
+        "linked_session": [
+          "2026-06-04-001",
+          "2026-06-04-002"
+        ],
         "status": "completed",
         "deliverables": {
           "files_created": 7,
@@ -303,12 +306,116 @@
           "Corrección de contrato: leaderboard de nivel inexistente responde 404 (LevelNotFoundError), reservando LevelRegistryError al 422 de progreso; verificado que el cliente no matchea strings de error"
         ],
         "notes": "Rama feature/patrones-aop-swagger con 7 commits modulares, PR #17 hacia develop. Ejecutado en modo plan (agentes Explore + Plan) con aprobación explícita antes de implementar. Dos correcciones en la propia sesión al fallar la verificación: glob de swagger con process.cwd() en vez de import.meta (ts-jest), y orden de /api/docs/json antes del app.use de Swagger UI."
+      },
+      {
+        "id": "2026-07-10-001",
+        "date": "2026-07-10",
+        "title": "Seed: registra los 5 niveles del mapa del cliente",
+        "file": "2026-07-10-seed-niveles-mapa.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Fable 5",
+        "author": "Juan David",
+        "phase": "data-seed",
+        "feature": "chore/seed-niveles-mapa — habilita leaderboards por nivel del mapa",
+        "linked_session": "feature de leaderboards del cliente (arrowmaze-game, feat/leaderboards-cliente)",
+        "status": "completed",
+        "deliverables": {
+          "files_created": 0,
+          "files_modified": 1,
+          "tests_added": 0,
+          "assets_added": 0
+        },
+        "areas": [
+          "seed",
+          "levels-registry",
+          "leaderboards"
+        ],
+        "validation": {
+          "seed": "pnpm seed idempotente: 0 creados, 7 actualizados",
+          "tests": "passed — 109/109 tests, 27 suites",
+          "e2e": "GET /api/v1/leaderboards/level-initial con Bearer -> 200 {topPlayers:[],currentRecord:null} (antes 404); nivel inexistente -> 404 intacto"
+        },
+        "decisions": [
+          "seeds/levels.seed.json regenerado con toLevelDataDTO (contrato C2) desde LOCAL_LEVELS del cliente; los 2 niveles distribuidos existentes quedan intactos",
+          "name/difficulty espejados de LEVEL_METADATA del cliente (Nivel Inicial/easy, Desafio A y B/medium, Avanzado/hard, Experto/veryHard)",
+          "El script generador fue temporal y no se versiona; formalizar el exportador (scripts/export-levels-seed.ts del cliente) es follow-up aparte en arrowmaze-game"
+        ],
+        "notes": "Motivacion: sin estos niveles en el registro, GET /api/v1/leaderboards/:levelId respondia 404 (LevelRegistryError) para niveles legitimos del mapa."
+      },
+      {
+        "id": "2026-07-11-001",
+        "date": "2026-07-11",
+        "title": "Aviso al arrancar cuando el bypass de auth local está activo",
+        "file": "2026-07-11-aviso-bypass-auth-e2e.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Opus 4.8",
+        "author": "Juan David",
+        "phase": "hardening-dx",
+        "feature": "fix/aviso-bypass-auth-local — hace visible el bypass de auth en local",
+        "linked_session": "prueba E2E usuario+progreso (front y back) que motivó el hallazgo; issue backend #24, issue arrowmaze-game #70",
+        "status": "completed",
+        "deliverables": {
+          "files_created": 0,
+          "files_modified": 1,
+          "tests_added": 0,
+          "assets_added": 0
+        },
+        "areas": [
+          "auth",
+          "developer-experience",
+          "logging",
+          "e2e-testing"
+        ],
+        "decisions": [
+          "Repetir la E2E con LEVELS_SKIP_ROLE_CHECK=false para validar la auth real (con el bypass todos los usuarios colapsan a local-dev)",
+          "Convertir el hallazgo en un aviso de arranque visible en index.ts, sin tocar la lógica del bypass (ya protegido por NODE_ENV!==production)",
+          "PR contra develop con Closes #24 para autocierre del issue al fusionar"
+        ],
+        "notes": "El aviso solo se emite con bypass ON y NODE_ENV!=production. El script de E2E del front fue temporal y no se versiona.",
+        "validation": {
+          "build": "pnpm build (tsc) OK",
+          "e2e": "bypass ON -> aparece '⚠️ AUTH BYPASS ACTIVO'; bypass OFF -> sin aviso; flujo real register→login→save→get aislado por UUID, 401 sin token, high-score y 422 nivel inexistente",
+          "tests": "no aplica — cambio limitado a logging de arranque"
+        }
+      },
+      {
+        "id": "2026-07-11-002",
+        "date": "2026-07-11",
+        "title": "Soporte de collisionBehavior opcional en el DTO de nivel",
+        "file": "2026-07-11-collision-behavior-dto.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Opus 4.8",
+        "author": "@Jrgil20",
+        "phase": "feature",
+        "feature": "level-dto — collisionBehavior (par del forge PR #67)",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 0,
+          "files_modified": 2
+        },
+        "areas": [
+          "contracts",
+          "level-dto",
+          "openapi-swagger",
+          "documentation"
+        ],
+        "validation": {
+          "tests": "passed — 109/109 en 27 suites con Jest, sin regresiones",
+          "typecheck": "passed — tsc --noEmit limpio"
+        },
+        "decisions": [
+          "Campo opcional sin validacion de enum: el round-trip ya funcionaba (ManageLevel no filtra campos, el repositorio persiste verbatim); solo se anade tipado + documentacion OpenAPI",
+          "No tocar ManageLevel ni JsonLevelRepository: la exploracion probo que no hace falta",
+          "Rama del PR construida en un git worktree limpio sobre origin/develop para no arrastrar los archivos skip-worktree del bypass local de rol"
+        ],
+        "notes": "Rama fix/nivel-comportamiento-colision, PR #21 hacia develop. Par cliente PR #67 (arrowmaze-game). Follow-up opcional: validar el enum 'stay'|'return' en ManageLevel."
       }
     ],
     "statistics": {
-      "totalReports": 8,
-      "distinctWorkSessions": 7,
-      "lastUpdated": "2026-07-09T00:00:00Z",
+      "totalReports": 11,
+      "distinctWorkSessions": 10,
+      "lastUpdated": "2026-07-11T00:00:00Z",
       "toolsUsed": [
         "Cursor (Cloud Agent)",
         "Gemini",
@@ -322,14 +429,14 @@
         "Gemini (versión no especificada)"
       ],
       "totalFilesCreated": 53,
-      "totalFilesModified": 81,
+      "totalFilesModified": 84,
       "totalTestsPassing": 109,
       "totalTestSuites": 27,
       "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
     },
     "lastEntry": {
-      "id": "2026-07-09-001",
-      "summary": "Cierre del backend: patrones GoF, AOP y Swagger/OpenAPI"
+      "id": "2026-07-11-002",
+      "summary": "Soporte de collisionBehavior opcional en el DTO de nivel"
     }
   }
 }

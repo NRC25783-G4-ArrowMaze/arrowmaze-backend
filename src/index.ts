@@ -89,6 +89,19 @@ Entorno: Desarrollo
 Puerto: ${PORT}
 ========================================
     `);
+
+    // Advertencia visible: con el bypass activo el login ignora las credenciales
+    // y TODAS las sesiones se resuelven como 'local-dev' (rol ADMIN), sin
+    // aislamiento por usuario. Evita confundir una prueba local con una
+    // validación de auth real. El bypass ya se ignora si NODE_ENV=production.
+    if (process.env.LEVELS_SKIP_ROLE_CHECK === 'true' && process.env.NODE_ENV !== 'production') {
+      console.warn(`
+⚠️  AUTH BYPASS ACTIVO (LEVELS_SKIP_ROLE_CHECK=true)
+    El login NO valida credenciales: todas las sesiones se resuelven como
+    'local-dev' con rol ADMIN y el progreso NO se aísla por usuario.
+    Solo para desarrollo local. Apágalo para probar auth/aislamiento reales.
+      `);
+    }
   });
 }
 
