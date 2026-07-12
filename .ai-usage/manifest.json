@@ -2,7 +2,7 @@
   "project": "arrow-maze-backend",
   "aiUsageRegistry": {
     "version": "1.0",
-    "lastUpdated": "2026-07-10T00:00:00Z",
+    "lastUpdated": "2026-07-11T00:00:00Z",
     "entries": [
       {
         "id": "2026-05-07-001",
@@ -341,12 +341,48 @@
           "El script generador fue temporal y no se versiona; formalizar el exportador (scripts/export-levels-seed.ts del cliente) es follow-up aparte en arrowmaze-game"
         ],
         "notes": "Motivacion: sin estos niveles en el registro, GET /api/v1/leaderboards/:levelId respondia 404 (LevelRegistryError) para niveles legitimos del mapa."
+      },
+      {
+        "id": "2026-07-11-001",
+        "date": "2026-07-11",
+        "title": "Aviso al arrancar cuando el bypass de auth local está activo",
+        "file": "2026-07-11-aviso-bypass-auth-e2e.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Opus 4.8",
+        "author": "Juan David",
+        "phase": "hardening-dx",
+        "feature": "fix/aviso-bypass-auth-local — hace visible el bypass de auth en local",
+        "linked_session": "prueba E2E usuario+progreso (front y back) que motivó el hallazgo; issue backend #24, issue arrowmaze-game #70",
+        "status": "completed",
+        "deliverables": {
+          "files_created": 0,
+          "files_modified": 1,
+          "tests_added": 0,
+          "assets_added": 0
+        },
+        "areas": [
+          "auth",
+          "developer-experience",
+          "logging",
+          "e2e-testing"
+        ],
+        "decisions": [
+          "Repetir la E2E con LEVELS_SKIP_ROLE_CHECK=false para validar la auth real (con el bypass todos los usuarios colapsan a local-dev)",
+          "Convertir el hallazgo en un aviso de arranque visible en index.ts, sin tocar la lógica del bypass (ya protegido por NODE_ENV!==production)",
+          "PR contra develop con Closes #24 para autocierre del issue al fusionar"
+        ],
+        "notes": "El aviso solo se emite con bypass ON y NODE_ENV!=production. El script de E2E del front fue temporal y no se versiona.",
+        "validation": {
+          "build": "pnpm build (tsc) OK",
+          "e2e": "bypass ON -> aparece '⚠️ AUTH BYPASS ACTIVO'; bypass OFF -> sin aviso; flujo real register→login→save→get aislado por UUID, 401 sin token, high-score y 422 nivel inexistente",
+          "tests": "no aplica — cambio limitado a logging de arranque"
+        }
       }
     ],
     "statistics": {
-      "totalReports": 9,
-      "distinctWorkSessions": 8,
-      "lastUpdated": "2026-07-10T00:00:00Z",
+      "totalReports": 10,
+      "distinctWorkSessions": 9,
+      "lastUpdated": "2026-07-11T00:00:00Z",
       "toolsUsed": [
         "Cursor (Cloud Agent)",
         "Gemini",
@@ -360,14 +396,14 @@
         "Gemini (versión no especificada)"
       ],
       "totalFilesCreated": 53,
-      "totalFilesModified": 81,
+      "totalFilesModified": 82,
       "totalTestsPassing": 109,
       "totalTestSuites": 27,
       "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
     },
     "lastEntry": {
-      "id": "2026-07-10-001",
-      "summary": "Seed: registra los 5 niveles del mapa del cliente (leaderboards por nivel operativos)"
+      "id": "2026-07-11-001",
+      "summary": "Aviso al arrancar cuando el bypass de auth local (LEVELS_SKIP_ROLE_CHECK) está activo"
     }
   }
 }
