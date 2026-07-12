@@ -115,7 +115,8 @@ export function buildSwaggerSpec(): object {
               allowedMoves: { type: 'integer' },
               arrows: { type: 'array', items: { $ref: '#/components/schemas/LevelArrow' } },
               cells: { type: 'array', items: { $ref: '#/components/schemas/LevelCell' } },
-              connections: { type: 'array', items: { $ref: '#/components/schemas/LevelConnection' } }
+              connections: { type: 'array', items: { $ref: '#/components/schemas/LevelConnection' } },
+              collisionBehavior: { type: 'string', enum: ['stay', 'return'] }
             }
           },
           SaveProgressPayload: {

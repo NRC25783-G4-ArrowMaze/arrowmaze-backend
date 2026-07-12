@@ -377,11 +377,44 @@
           "e2e": "bypass ON -> aparece '⚠️ AUTH BYPASS ACTIVO'; bypass OFF -> sin aviso; flujo real register→login→save→get aislado por UUID, 401 sin token, high-score y 422 nivel inexistente",
           "tests": "no aplica — cambio limitado a logging de arranque"
         }
+      },
+      {
+        "id": "2026-07-11-002",
+        "date": "2026-07-11",
+        "title": "Soporte de collisionBehavior opcional en el DTO de nivel",
+        "file": "2026-07-11-collision-behavior-dto.md",
+        "tool": "Claude Code (claude.ai/code)",
+        "model": "Claude Opus 4.8",
+        "author": "@Jrgil20",
+        "phase": "feature",
+        "feature": "level-dto — collisionBehavior (par del forge PR #67)",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 0,
+          "files_modified": 2
+        },
+        "areas": [
+          "contracts",
+          "level-dto",
+          "openapi-swagger",
+          "documentation"
+        ],
+        "validation": {
+          "tests": "passed — 109/109 en 27 suites con Jest, sin regresiones",
+          "typecheck": "passed — tsc --noEmit limpio"
+        },
+        "decisions": [
+          "Campo opcional sin validacion de enum: el round-trip ya funcionaba (ManageLevel no filtra campos, el repositorio persiste verbatim); solo se anade tipado + documentacion OpenAPI",
+          "No tocar ManageLevel ni JsonLevelRepository: la exploracion probo que no hace falta",
+          "Rama del PR construida en un git worktree limpio sobre origin/develop para no arrastrar los archivos skip-worktree del bypass local de rol"
+        ],
+        "notes": "Rama fix/nivel-comportamiento-colision, PR #21 hacia develop. Par cliente PR #67 (arrowmaze-game). Follow-up opcional: validar el enum 'stay'|'return' en ManageLevel."
       }
     ],
     "statistics": {
-      "totalReports": 10,
-      "distinctWorkSessions": 9,
+      "totalReports": 11,
+      "distinctWorkSessions": 10,
       "lastUpdated": "2026-07-11T00:00:00Z",
       "toolsUsed": [
         "Cursor (Cloud Agent)",
@@ -396,14 +429,14 @@
         "Gemini (versión no especificada)"
       ],
       "totalFilesCreated": 53,
-      "totalFilesModified": 82,
+      "totalFilesModified": 84,
       "totalTestsPassing": 109,
       "totalTestSuites": 27,
       "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
     },
     "lastEntry": {
-      "id": "2026-07-11-001",
-      "summary": "Aviso al arrancar cuando el bypass de auth local (LEVELS_SKIP_ROLE_CHECK) está activo"
+      "id": "2026-07-11-002",
+      "summary": "Soporte de collisionBehavior opcional en el DTO de nivel"
     }
   }
 }
