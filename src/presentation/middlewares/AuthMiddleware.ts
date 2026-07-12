@@ -9,6 +9,18 @@ export class AuthMiddleware {
   ) {}
 
   public async execute(req: Request, res: Response, next: NextFunction): Promise<void> {
+    // ⚠️ Bypass SOLO para desarrollo local: con LEVELS_SKIP_ROLE_CHECK=true se omite
+    // la autenticación por completo y se inyecta una identidad ADMIN falsa (permite
+    // que forge cree/edite mapas sin iniciar sesión). Por defecto —sin la variable—
+    // la autenticación normal sigue activa. NO desplegar en entornos compartidos/producción;
+    // como salvaguarda extra, el bypass se ignora si NODE_ENV=production.
+    if (process.env.LEVELS_SKIP_ROLE_CHECK === 'true' && process.env.NODE_ENV !== 'production') {
+      req.accountId = 'local-dev';
+      req.userRole = 'ADMIN';
+      next();
+      return;
+    }
+
     try {
       const authHeader = req.headers.authorization;
       if (!authHeader?.startsWith('Bearer ')) {
