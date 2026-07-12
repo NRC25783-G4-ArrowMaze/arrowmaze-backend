@@ -39,7 +39,7 @@ volumen gratis, por eso se descartan para esta estrategia.
   ya existe y **el seed se omite** (no pisa datos).
 - `accounts.json`, `progress.json` y `blacklist.json` se crean solos en runtime al
   primer registro / progreso / logout.
-- El seed (`pnpm seed` → `tsx scripts/seed-levels.ts`) lee `seeds/levels.seed.json`
+- El seed (`pnpm seed` → `tsx src/seed.ts`; en producción `node dist/seed.js`, compilado por el build) lee `seeds/levels.seed.json`
   (versionado en git) y siembra `data/levels.json`. Por eso la imagen runtime debe
   incluir `src/`, `scripts/`, `seeds/` y `tsx` (viene en `node_modules`).
 
@@ -323,3 +323,29 @@ horizontalmente), el disparador es reemplazar la persistencia JSON:
 
 Es trabajo de infraestructura real y toca el estado congelado del repo (v1.0.x);
 por eso queda como camino futuro, no como parte de este despliegue.
+
+---
+
+## Apéndice C · Despliegue actual — Railway (jul 2026)
+
+El despliegue activo vive en **Railway** (la estrategia Fly.io de esta guía quedó
+como referencia; los requisitos de la sección 1 aplican idénticos).
+
+> **Ownership:** el proyecto de Railway vive en la cuenta personal de **Juan
+> (mayojuandavid)**. Cualquier redeploy, cambio de variables o ajuste del servicio
+> se coordina con él.
+
+- **URL:** `https://arrowmaze-backend-production.up.railway.app`
+  (API bajo `/api/v1`, Swagger en `/api/docs`).
+- **Proyecto/servicio:** `arrowmaze-backend` · volumen `arrowmaze-backend-volume`
+  montado en `/app/data` (persistencia verificada con redeploy).
+- **Variables del servicio:** `JWT_SECRET`, `NODE_ENV=production`, `CORS_ORIGIN`
+  (valores en Railway → servicio → Variables; `PORT` la inyecta la plataforma y
+  `LEVELS_SKIP_ROLE_CHECK` no se define).
+- **Settings obligatorios:** **Serverless OFF** (el cron de las 03:00 muere si la
+  máquina duerme) y Restart Policy `On Failure`. No escalar a >1 réplica (sección 9).
+- **Siembra:** automática e idempotente vía `docker-entrypoint.sh` — al boot, si no
+  existe `data/levels.json`, corre `node dist/seed.js` (seed compilado desde
+  `src/seed.ts` por el build normal; sin tsx en producción). No hay paso manual.
+- **Redeploy:** `railway up` desde la raíz del repo (sube el working tree local) o
+  `railway redeploy` para reiniciar la imagen actual.
