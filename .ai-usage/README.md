@@ -20,6 +20,8 @@ Registro centralizado de uso de herramientas de IA en el desarrollo del backend 
 | 2026-07-09 | Cierre del backend: patrones GoF, AOP y Swagger/OpenAPI | [`2026-07-09-patrones-gof-aop-swagger.md`](./2026-07-09-patrones-gof-aop-swagger.md) | Claude Code / Fable 5 | ✅ Completa |
 | 2026-07-10 | Seed: registra los 5 niveles del mapa del cliente (leaderboards por nivel operativos) | [`2026-07-10-seed-niveles-mapa.md`](./2026-07-10-seed-niveles-mapa.md) | Claude Code / Fable 5 | ✅ Completa |
 | 2026-07-11 | Aviso al arrancar cuando el bypass de auth local está activo | [`2026-07-11-aviso-bypass-auth-e2e.md`](./2026-07-11-aviso-bypass-auth-e2e.md) | Claude Code / Opus 4.8 | ✅ Completa |
+| 2026-07-11 | Soporte de `collisionBehavior` opcional en el DTO de nivel | [`2026-07-11-collision-behavior-dto.md`](./2026-07-11-collision-behavior-dto.md) | Claude Code / Opus 4.8 | ✅ Completa |
+| 2026-07-12 | Despliegue en Railway con siembra idempotente del volumen | [`2026-07-12-deploy-railway-siembra-idempotente.md`](./2026-07-12-deploy-railway-siembra-idempotente.md) | Claude Code / Fable 5 | ✅ Completa |
 
 > ⚠️ **Inconsistencia heredada (documentada):** el antiguo `AI_USAGE.md` fue reescrito
 > completo en el commit `71e99d8` (2026-06-06) en lugar de añadir entradas de forma
@@ -54,8 +56,8 @@ Opcionalmente, cerrar con un bloque `#### 📋 Resumen de la sesión` (duración
 
 ## Estadísticas
 
-- **Total de reportes:** 10 (9 sesiones de trabajo distintas; ver nota de consolidación)
-- **Última actualización:** 2026-07-11
+- **Total de reportes:** 12 (11 sesiones de trabajo distintas; ver nota de consolidación)
+- **Última actualización:** 2026-07-12
 - **Suite de tests (actual):** 109/109 ✅ en 27 suites
 - **Detalle por herramienta/modelo:** ver `manifest.json` (`aiUsageRegistry.statistics`) como fuente estructurada de verdad.
 

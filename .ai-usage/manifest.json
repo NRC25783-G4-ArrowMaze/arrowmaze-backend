@@ -2,7 +2,7 @@
   "project": "arrow-maze-backend",
   "aiUsageRegistry": {
     "version": "1.0",
-    "lastUpdated": "2026-07-11T00:00:00Z",
+    "lastUpdated": "2026-07-12T00:00:00Z",
     "entries": [
       {
         "id": "2026-05-07-001",
@@ -410,16 +410,54 @@
           "Rama del PR construida en un git worktree limpio sobre origin/develop para no arrastrar los archivos skip-worktree del bypass local de rol"
         ],
         "notes": "Rama fix/nivel-comportamiento-colision, PR #21 hacia develop. Par cliente PR #67 (arrowmaze-game). Follow-up opcional: validar el enum 'stay'|'return' en ManageLevel."
+      },
+      {
+        "id": "2026-07-12-001",
+        "date": "2026-07-12",
+        "title": "Despliegue en Railway con siembra idempotente del volumen",
+        "file": "2026-07-12-deploy-railway-siembra-idempotente.md",
+        "tool": "Claude Code (CLI)",
+        "model": "Claude Fable 5",
+        "author": "Juan David",
+        "phase": "deployment",
+        "feature": "deploy-railway — entrypoint de siembra idempotente + aprovisionamiento",
+        "linked_session": null,
+        "status": "completed",
+        "deliverables": {
+          "files_created": 2,
+          "files_modified": 4
+        },
+        "areas": [
+          "deployment",
+          "docker",
+          "seeding",
+          "infrastructure",
+          "documentation"
+        ],
+        "validation": {
+          "tests": "passed — 109/109 en 27 suites con Jest",
+          "build": "passed — tsc -p tsconfig.build.json limpio",
+          "smoke_prod": "passed — levels 200, register 201, login 200 (JWT rol USER), progress 200 con token / 401 sin token contra la URL pública",
+          "persistence": "passed — railway redeploy: cuenta de prueba sobrevive, 17 niveles sin duplicar, log del segundo boot muestra 'ya existe - se omite el seed'"
+        },
+        "decisions": [
+          "Seed compilado a dist/seed.js moviendo el entrypoint a src/seed.ts: cero tsx en produccion, compatible con pnpm prune --prod",
+          "Idempotencia por existencia de data/levels.json (criterio de DEPLOYMENT.md), no por directorio vacio: el mount puede crear lost+found",
+          ".gitattributes fuerza LF en *.sh y se verifico en bytes antes del deploy: railway up sube el working tree local desde Windows",
+          "ENTRYPOINT con sh explicito para no depender del bit de ejecucion tras checkouts en Windows"
+        ],
+        "notes": "Rama fix/deploy-railway hacia develop. URL: https://arrowmaze-backend-production.up.railway.app (API /api/v1, Swagger /api/docs). Hallazgos: el seed siembra sample-level-2 en prod; banner 'Entorno: Desarrollo' hardcodeado en index.ts; el frontend apunta a /api sin el prefijo v1. Deliverables: docker-entrypoint.sh y .gitattributes creados; Dockerfile, package.json, docs/DEPLOYMENT.md modificados y scripts/seed-levels.ts movido a src/seed.ts."
       }
     ],
     "statistics": {
-      "totalReports": 11,
-      "distinctWorkSessions": 10,
-      "lastUpdated": "2026-07-11T00:00:00Z",
+      "totalReports": 12,
+      "distinctWorkSessions": 11,
+      "lastUpdated": "2026-07-12T00:00:00Z",
       "toolsUsed": [
         "Cursor (Cloud Agent)",
         "Gemini",
-        "Claude Code (claude.ai/code)"
+        "Claude Code (claude.ai/code)",
+        "Claude Code (CLI)"
       ],
       "modelsUsed": [
         "Claude Opus 4.7",
@@ -428,15 +466,15 @@
         "Gemini 3.1 pro",
         "Gemini (versión no especificada)"
       ],
-      "totalFilesCreated": 53,
-      "totalFilesModified": 84,
+      "totalFilesCreated": 55,
+      "totalFilesModified": 88,
       "totalTestsPassing": 109,
       "totalTestSuites": 27,
       "aggregationNote": "Los agregados excluyen las entradas superseded (2026-06-04-001/002) porque sus deliverables están contenidos en 2026-06-06-001; contarlas duplicaría el trabajo."
     },
     "lastEntry": {
-      "id": "2026-07-11-002",
-      "summary": "Soporte de collisionBehavior opcional en el DTO de nivel"
+      "id": "2026-07-12-001",
+      "summary": "Despliegue en Railway con siembra idempotente del volumen"
     }
   }
 }
