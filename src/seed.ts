@@ -1,12 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { ManageLevel } from '../src/application/use-cases/ManageLevel.js';
-import { JsonLevelRepository } from '../src/infrastructure/repositories/JsonLevelRepository.js';
-import { LevelSeeder } from '../src/infrastructure/seeding/LevelSeeder.js';
-import type { LevelDataDTO } from '../src/domain/shared/contracts/LevelDataDTOs.js';
+import { ManageLevel } from './application/use-cases/ManageLevel.js';
+import { JsonLevelRepository } from './infrastructure/repositories/JsonLevelRepository.js';
+import { LevelSeeder } from './infrastructure/seeding/LevelSeeder.js';
+import type { LevelDataDTO } from './domain/shared/contracts/LevelDataDTOs.js';
 
 /**
- * Entrypoint del seed de niveles: `pnpm seed`.
+ * Entrypoint del seed de niveles: `pnpm seed` (dev) o `node dist/seed.js` (prod).
  *
  * Lee seeds/levels.seed.json (versionado; se regenera con el exportador de
  * arrowmaze-game) y lo siembra en data/levels.json (gitignoreado). Idempotente:
